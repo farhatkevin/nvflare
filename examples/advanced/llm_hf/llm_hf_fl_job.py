@@ -26,7 +26,9 @@ from nvflare.job_config.script_runner import ScriptRunner
 
 def main():
     args = define_parser()
-    train_script = "src/hf_sft_peft_fl.py"
+    # train_script = "src/hf_sft_peft_fl.py"
+    train_script = "src/pretrain_nvflare.py"   # point to your new file
+
     client_ids = args.client_ids
     num_clients = len(client_ids)
 

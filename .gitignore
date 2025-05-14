@@ -168,3 +168,8 @@ audit.log
 # python
 __pycache__
 .pyc
+
+*.npy
+*.pt
+*.pth 
+*.bin

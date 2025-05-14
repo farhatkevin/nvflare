@@ -1,0 +1,2 @@
+2025-05-12 22:45:02,667 - SimulatorClientRunner - ERROR - run_client_thread error: EOFError: 
+2025-05-13 17:57:44,593 - SimulatorClientRunner - ERROR - run_client_thread error: EOFError: 
