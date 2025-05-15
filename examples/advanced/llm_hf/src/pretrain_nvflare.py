@@ -44,6 +44,7 @@ from transformers import (
 
 import nvflare.client as flare
 
+
 import logging
 logging.getLogger("torch._dynamo").setLevel(logging.ERROR)
 logging.getLogger("torch._inductor").setLevel(logging.ERROR)
@@ -195,7 +196,7 @@ def load_npy_memmap_data_as_dataset(file_path: str) -> datasets.Dataset:
         )
 
     print(len(text_list), "len text_list")
-    text_list = text_list[:10_000] # Limit to first 100 items for testing
+    text_list = text_list[:1_000_000] # Limit to first 100 items for testing
     print(len(text_list), "len text_list")
 
     # The Dataset needs a dictionary where keys are column names
@@ -210,6 +211,43 @@ def load_npy_memmap_data_as_dataset(file_path: str) -> datasets.Dataset:
     #         raise ValueError(f"Could not convert all items in {file_path} to strings: {e}")
 
 
+class CustomTrainer(Trainer):
+    def _load_rng_state(self, checkpoint):
+        """Override to load RNG state with weights_only=False"""
+        # Hardcode the trainer state filename - it's always "trainer_state.json"
+        import json
+        rng_file = os.path.join(checkpoint, "trainer_state.json")
+        if not os.path.isfile(rng_file):
+            print(f"No RNG state found at {rng_file}")
+            return
+        
+        try:
+            # Load JSON file instead of using torch.load
+            with open(rng_file, 'r') as f:
+                checkpoint_rng_state = json.load(f)
+            
+            # The rest follows the original implementation
+            if checkpoint_rng_state is not None and "random_states" in checkpoint_rng_state:
+                random_states = checkpoint_rng_state["random_states"]
+                if "python" in random_states and random_states["python"] is not None:
+                    random.setstate(random_states["python"])
+                if "numpy" in random_states and random_states["numpy"] is not None:
+                    np.random.set_state(random_states["numpy"])
+                if "cpu_rng_state" in random_states:
+                    torch.set_rng_state(random_states["cpu_rng_state"])
+                if "cuda_rng_state" in random_states and torch.cuda.is_available():
+                    devices = list(range(torch.cuda.device_count()))
+                    if "cuda_rng_state_all" in random_states:
+                        for i, device in enumerate(devices):
+                            if i < len(random_states["cuda_rng_state_all"]):
+                                with torch.cuda.device(device):
+                                    torch.cuda.set_rng_state(random_states["cuda_rng_state_all"][i])
+                    elif "cuda_rng_state" in random_states:
+                        torch.cuda.set_rng_state(random_states["cuda_rng_state"])
+            print("RNG state successfully loaded")
+        except Exception as e:
+            print(f"Warning: Failed to load RNG state: {e}")
+            print("Continuing training with current RNG state.")
 
 def main():
     args = parse_args()
@@ -291,12 +329,12 @@ def main():
     batch_size = 2
     gra_accu_steps = 20
     # Make sure lm_ds["train"] is not empty before calculating logging_steps
-    if len(lm_ds["train"]) > 0:
-        logging_steps = max(
-            1, int(len(lm_ds["train"]) / (20 * batch_size * gra_accu_steps))
-        )
-    else:
-        logging_steps = 1 # Default if no training data (though it should have failed earlier)
+    # if len(lm_ds["train"]) > 0:
+    #     logging_steps = max(
+    #         1, int(len(lm_ds["train"]) / (20 * batch_size * gra_accu_steps))
+    #     )
+    # else:
+    logging_steps = 1 # Default if no training data (though it should have failed earlier)
     # ── model ────────────────────────────────────────────────────────────────
     default_dtype = torch.get_default_dtype()
     torch.set_default_dtype(torch.bfloat16)
@@ -348,29 +386,72 @@ def main():
     )
 
 
-
-
-    # ── NVFlare federated loop ───────────────────────────────────────────────
     flare.init()
 
     site_name = flare.get_site_name()              # e.g. "site-oasst1"
     client_id = site_name.split("-", 1)[-1]        # yields "oasst1"
 
+    # Path to store wandb run ID
+    wandb_id_file = os.path.join(args.output_path, f"wandb_run_id_{client_id}.txt")
+    resume_id = None
+
+    # Check if we have a previous run ID
+    if os.path.exists(wandb_id_file):
+        try:
+            with open(wandb_id_file, 'r') as f:
+                resume_id = f.read().strip()
+            print(f"Resuming wandb run with ID: {resume_id}")
+        except Exception as e:
+            print(f"Error reading wandb ID file: {e}")
+
     # ── W&B run (one per FL client, persists across rounds) ──────────────────
     wandb_run = wandb.init(
         entity="allenai-team1",
         project="nvflare",
-        name = f"{args.train_mode}-{client_id}-{args.model_name_or_path.rsplit('/',1)[-1]}",
-        id   = f"{client_id}-{args.model_name_or_path.rsplit('/',1)[-1]}-{int(time.time())}",   # unique per site
-        group = client_id,                      # lets you overlay curves
-        resume = "allow",
-        config = {"client_id": client_id, **train_args.to_dict()},
+        name=f"{args.train_mode}-{client_id}-{args.model_name_or_path.rsplit('/',1)[-1]}",
+        id=resume_id if resume_id else f"{client_id}-{args.model_name_or_path.rsplit('/',1)[-1]}-{int(time.time())}",
+        group=client_id,
+        resume="allow",
+        config={"client_id": client_id, **train_args.to_dict()},
     )
+
+    # Save the run ID for future rounds
+    if not resume_id:
+        os.makedirs(os.path.dirname(wandb_id_file), exist_ok=True)
+        with open(wandb_id_file, 'w') as f:
+            f.write(wandb_run.id)
+
     train_args.report_to = ["wandb"]
     train_args.run_name = wandb_run.name
 
+    # ── NVFlare federated loop ───────────────────────────────────────────────
+    # flare.init()
+
+    # site_name = flare.get_site_name()              # e.g. "site-oasst1"
+    # client_id = site_name.split("-", 1)[-1]        # yields "oasst1"
+
+    # # ── W&B run (one per FL client, persists across rounds) ──────────────────
+    # wandb_run = wandb.init(
+    #     entity="allenai-team1",
+    #     project="nvflare",
+    #     name = f"{args.train_mode}-{client_id}-{args.model_name_or_path.rsplit('/',1)[-1]}",
+    #     id   = f"{client_id}-{args.model_name_or_path.rsplit('/',1)[-1]}-{int(time.time())}",   # unique per site
+    #     group = client_id,                      # lets you overlay curves
+    #     resume = "allow",
+    #     config = {"client_id": client_id, **train_args.to_dict()},
+    # )
+    # train_args.report_to = ["wandb"]
+    # train_args.run_name = wandb_run.name
+
         # ── Trainer ──────────────────────────────────────────────────────────────
-    trainer = Trainer(
+    # trainer = Trainer(
+    #     model=model,
+    #     args=train_args,
+    #     train_dataset=lm_ds["train"],
+    #     eval_dataset=lm_ds["validation"],
+    #     data_collator=collator,
+    # )
+    trainer = CustomTrainer(
         model=model,
         args=train_args,
         train_dataset=lm_ds["train"],

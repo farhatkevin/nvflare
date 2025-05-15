@@ -1,0 +1,1309 @@
+2025-05-15 18:28:35,114 - ModelDequantizer - INFO - Using model dequantizator.
+2025-05-15 18:28:35,117 - ModelQuantizer - INFO - Using model quantizator.
+2025-05-15 18:28:35,710 - TaskScriptRunner - INFO - start task run() with full path: /workspace/NVFlare/examples/advanced/llm_hf/hf_pretrain/workdir/site-code/simulate_job/app_site-code/custom/src/pretrain_nvflare.py
+2025-05-15 18:28:35,949 - TaskScriptRunner - INFO -     smart_open supports the following transport mechanisms:
+2025-05-15 18:28:35,949 - TaskScriptRunner - INFO - 
+2025-05-15 18:28:35,950 - TaskScriptRunner - INFO -     file (smart_open/local_file.py)
+2025-05-15 18:28:35,950 - TaskScriptRunner - INFO -     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2025-05-15 18:28:35,951 - TaskScriptRunner - INFO -     Implements the transport for the file:// schema.
+2025-05-15 18:28:35,951 - TaskScriptRunner - INFO - 
+2025-05-15 18:28:35,952 - TaskScriptRunner - INFO -     ftp (smart_open/ftp.py)
+2025-05-15 18:28:35,952 - TaskScriptRunner - INFO -     ~~~~~~~~~~~~~~~~~~~~~~~
+2025-05-15 18:28:35,953 - TaskScriptRunner - INFO -     Implements I/O streams over FTP.
+2025-05-15 18:28:35,953 - TaskScriptRunner - INFO - 
+2025-05-15 18:28:35,953 - TaskScriptRunner - INFO -     gs (smart_open/gcs.py)
+2025-05-15 18:28:35,954 - TaskScriptRunner - INFO -     ~~~~~~~~~~~~~~~~~~~~~~
+2025-05-15 18:28:35,954 - TaskScriptRunner - INFO -     Implements file-like objects for reading and writing to/from GCS.
+2025-05-15 18:28:35,955 - TaskScriptRunner - INFO - 
+2025-05-15 18:28:35,955 - TaskScriptRunner - INFO -     min_part_size: int, optional
+        The minimum part size for multipart uploads. For writing only.
+    client: google.cloud.storage.Client, optional
+        The GCS client to use when working with google-cloud-storage.
+    blob_properties: dict, optional
+        Set properties on blob before writing. For writing only.
+    blob_open_kwargs: dict, optional
+        Additional keyword arguments to propagate to the blob.open method
+        of the google-cloud-storage library.
+
+2025-05-15 18:28:35,956 - TaskScriptRunner - INFO -     hdfs (smart_open/hdfs.py)
+2025-05-15 18:28:35,956 - TaskScriptRunner - INFO -     ~~~~~~~~~~~~~~~~~~~~~~~~~
+2025-05-15 18:28:35,956 - TaskScriptRunner - INFO -     Implements reading and writing to/from HDFS.
+2025-05-15 18:28:35,957 - TaskScriptRunner - INFO - 
+2025-05-15 18:28:35,957 - TaskScriptRunner - INFO -     http (smart_open/http.py)
+2025-05-15 18:28:35,957 - TaskScriptRunner - INFO -     ~~~~~~~~~~~~~~~~~~~~~~~~~
+2025-05-15 18:28:35,958 - TaskScriptRunner - INFO -     Implements file-like objects for reading from http.
+2025-05-15 18:28:35,958 - TaskScriptRunner - INFO - 
+2025-05-15 18:28:35,959 - TaskScriptRunner - INFO -     kerberos: boolean, optional
+        If True, will attempt to use the local Kerberos credentials
+    user: str, optional
+        The username for authenticating over HTTP
+    password: str, optional
+        The password for authenticating over HTTP
+    cert: str/tuple, optional
+        if String, path to ssl client cert file (.pem). If Tuple, (‘cert’, ‘key’)
+    headers: dict, optional
+        Any headers to send in the request. If ``None``, the default headers are sent:
+        ``{'Accept-Encoding': 'identity'}``. To use no headers at all,
+        set this variable to an empty dict, ``{}``.
+    buffer_size: int, optional
+        The buffer size to use when performing I/O.
+
+2025-05-15 18:28:35,959 - TaskScriptRunner - INFO -     s3 (smart_open/s3.py)
+2025-05-15 18:28:35,959 - TaskScriptRunner - INFO -     ~~~~~~~~~~~~~~~~~~~~~
+2025-05-15 18:28:35,960 - TaskScriptRunner - INFO -     Implements file-like objects for reading and writing from/to AWS S3.
+2025-05-15 18:28:35,960 - TaskScriptRunner - INFO - 
+2025-05-15 18:28:35,961 - TaskScriptRunner - INFO -     buffer_size: int, optional
+        The buffer size to use when performing I/O.
+    min_part_size: int, optional
+        The minimum part size for multipart uploads.  For writing only.
+    multipart_upload: bool, optional
+        Default: `True`
+        If set to `True`, will use multipart upload for writing to S3. If set
+        to `False`, S3 upload will use the S3 Single-Part Upload API, which
+        is more ideal for small file sizes.
+        For writing only.
+    version_id: str, optional
+        Version of the object, used when reading object.
+        If None, will fetch the most recent version.
+    defer_seek: boolean, optional
+        Default: `False`
+        If set to `True` on a file opened for reading, GetObject will not be
+        called until the first seek() or read().
+        Avoids redundant API queries when seeking before reading.
+    client: object, optional
+        The S3 client to use when working with boto3.
+        If you don't specify this, then smart_open will create a new client for you.
+    client_kwargs: dict, optional
+        Additional parameters to pass to the relevant functions of the client.
+        The keys are fully qualified method names, e.g. `S3.Client.create_multipart_upload`.
+        The values are kwargs to pass to that method each time it is called.
+    writebuffer: IO[bytes], optional
+        By default, this module will buffer data in memory using io.BytesIO
+        when writing. Pass another binary IO instance here to use it instead.
+        For example, you may pass a file object to buffer to local disk instead
+        of in RAM. Use this to keep RAM usage low at the expense of additional
+        disk IO. If you pass in an open file, then you are responsible for
+        cleaning it up after writing completes.
+
+2025-05-15 18:28:35,961 - TaskScriptRunner - INFO -     scp (smart_open/ssh.py)
+2025-05-15 18:28:35,962 - TaskScriptRunner - INFO -     ~~~~~~~~~~~~~~~~~~~~~~~
+2025-05-15 18:28:35,962 - TaskScriptRunner - INFO -     Implements I/O streams over SSH.
+2025-05-15 18:28:35,962 - TaskScriptRunner - INFO - 
+2025-05-15 18:28:35,963 - TaskScriptRunner - INFO -     mode: str, optional
+        The mode to use for opening the file.
+    host: str, optional
+        The hostname of the remote machine.  May not be None.
+    user: str, optional
+        The username to use to login to the remote machine.
+        If None, defaults to the name of the current user.
+    password: str, optional
+        The password to use to login to the remote machine.
+    port: int, optional
+        The port to connect to.
+    transport_params: dict, optional
+        Any additional settings to be passed to paramiko.SSHClient.connect
+
+2025-05-15 18:28:35,963 - TaskScriptRunner - INFO -     webhdfs (smart_open/webhdfs.py)
+2025-05-15 18:28:35,964 - TaskScriptRunner - INFO -     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2025-05-15 18:28:35,964 - TaskScriptRunner - INFO -     Implements reading and writing to/from WebHDFS.
+2025-05-15 18:28:35,964 - TaskScriptRunner - INFO - 
+2025-05-15 18:28:35,965 - TaskScriptRunner - INFO -     min_part_size: int, optional
+        For writing only.
+
+2025-05-15 18:28:35,965 - TaskScriptRunner - INFO -     Examples
+2025-05-15 18:28:35,966 - TaskScriptRunner - INFO -     --------
+2025-05-15 18:28:35,966 - TaskScriptRunner - INFO - 
+2025-05-15 18:28:35,966 - TaskScriptRunner - INFO -     See README.rst
+2025-05-15 18:28:35,967 - TaskScriptRunner - INFO -     This function also supports transparent compression and decompression 
+2025-05-15 18:28:35,967 - TaskScriptRunner - INFO -     using the following codecs:
+2025-05-15 18:28:35,967 - TaskScriptRunner - INFO - 
+2025-05-15 18:28:35,968 - TaskScriptRunner - INFO -     * .bz2
+2025-05-15 18:28:35,968 - TaskScriptRunner - INFO -     * .gz
+2025-05-15 18:28:35,969 - TaskScriptRunner - INFO - 
+2025-05-15 18:28:35,969 - TaskScriptRunner - INFO -     The function depends on the file extension to determine the appropriate codec.
+2025-05-15 18:28:35,969 - TaskScriptRunner - INFO -     Supported URI schemes are:
+2025-05-15 18:28:35,970 - TaskScriptRunner - INFO - 
+2025-05-15 18:28:35,970 - TaskScriptRunner - INFO -     * file
+2025-05-15 18:28:35,971 - TaskScriptRunner - INFO -     * ftp
+2025-05-15 18:28:35,971 - TaskScriptRunner - INFO -     * gs
+2025-05-15 18:28:35,971 - TaskScriptRunner - INFO -     * hdfs
+2025-05-15 18:28:35,972 - TaskScriptRunner - INFO -     * http
+2025-05-15 18:28:35,972 - TaskScriptRunner - INFO -     * s3
+2025-05-15 18:28:35,972 - TaskScriptRunner - INFO -     * scp
+2025-05-15 18:28:35,973 - TaskScriptRunner - INFO -     * webhdfs
+2025-05-15 18:28:35,973 - TaskScriptRunner - INFO - 
+2025-05-15 18:28:35,974 - TaskScriptRunner - INFO -     Valid URI examples::
+2025-05-15 18:28:35,974 - TaskScriptRunner - INFO - 
+2025-05-15 18:28:35,974 - TaskScriptRunner - INFO -     * ./local/path/file
+2025-05-15 18:28:35,975 - TaskScriptRunner - INFO -     * ~/local/path/file
+2025-05-15 18:28:35,975 - TaskScriptRunner - INFO -     * local/path/file
+2025-05-15 18:28:35,975 - TaskScriptRunner - INFO -     * ./local/path/file.gz
+2025-05-15 18:28:35,976 - TaskScriptRunner - INFO -     * file:///home/user/file
+2025-05-15 18:28:35,976 - TaskScriptRunner - INFO -     * file:///home/user/file.bz2
+2025-05-15 18:28:35,977 - TaskScriptRunner - INFO -     * ftp://username@host/path/file
+2025-05-15 18:28:35,977 - TaskScriptRunner - INFO -     * ftp://username:password@host/path/file
+2025-05-15 18:28:35,977 - TaskScriptRunner - INFO -     * ftp://username:password@host:port/path/file
+2025-05-15 18:28:35,978 - TaskScriptRunner - INFO -     * ftps://username@host/path/file
+2025-05-15 18:28:35,978 - TaskScriptRunner - INFO -     * ftps://username:password@host/path/file
+2025-05-15 18:28:35,978 - TaskScriptRunner - INFO -     * ftps://username:password@host:port/path/file
+2025-05-15 18:28:35,979 - TaskScriptRunner - INFO -     * hdfs:///path/file
+2025-05-15 18:28:35,979 - TaskScriptRunner - INFO -     * hdfs://path/file
+2025-05-15 18:28:35,979 - TaskScriptRunner - INFO -     * viewfs:///path/file
+2025-05-15 18:28:35,980 - TaskScriptRunner - INFO -     * viewfs://path/file
+2025-05-15 18:28:35,980 - TaskScriptRunner - INFO -     * s3://my_bucket/my_key
+2025-05-15 18:28:35,981 - TaskScriptRunner - INFO -     * s3://my_key:my_secret@my_bucket/my_key
+2025-05-15 18:28:35,981 - TaskScriptRunner - INFO -     * s3://my_key:my_secret@my_server:my_port@my_bucket/my_key
+2025-05-15 18:28:35,981 - TaskScriptRunner - INFO -     * ssh://username@host/path/file
+2025-05-15 18:28:35,982 - TaskScriptRunner - INFO -     * ssh://username@host//path/file
+2025-05-15 18:28:35,982 - TaskScriptRunner - INFO -     * scp://username@host/path/file
+2025-05-15 18:28:35,982 - TaskScriptRunner - INFO -     * sftp://username@host/path/file
+2025-05-15 18:28:35,983 - TaskScriptRunner - INFO -     * webhdfs://host:port/path/file
+2025-05-15 18:28:41,325 - TaskScriptRunner - INFO - Attempting to load training data from: /workspace/NVFlare/examples/advanced/llm_hf/data/code/train.npy
+2025-05-15 18:28:41,328 - TaskScriptRunner - INFO - Loading data from /workspace/NVFlare/examples/advanced/llm_hf/data/code/train.npy...
+2025-05-15 18:28:41,332 - TaskScriptRunner - INFO - data_array shape: (988118026,)
+2025-05-15 18:28:41,336 - TaskScriptRunner - INFO - data_array dtype: uint32
+2025-05-15 18:28:41,337 - TaskScriptRunner - INFO - data_array size: 988118026
+2025-05-15 18:28:58,709 - TaskScriptRunner - INFO - 988118026 len text_list
+2025-05-15 18:29:06,802 - TaskScriptRunner - INFO - 1000000 len text_list
+2025-05-15 18:29:07,026 - TaskScriptRunner - INFO - Validation data path is same as train or not specified separately. Splitting training data (from /workspace/NVFlare/examples/advanced/llm_hf/data/code/train.npy) for validation (1% test size).
+2025-05-15 18:29:07,198 - TaskScriptRunner - INFO - Dataset size: training 990000, validation 10000
+2025-05-15 18:29:07,200 - TaskScriptRunner - INFO - Raw dataset structure after loading: DatasetDict({
+    train: Dataset({
+        features: ['text'],
+        num_rows: 990000
+    })
+    validation: Dataset({
+        features: ['text'],
+        num_rows: 10000
+    })
+})
+2025-05-15 18:29:07,205 - TaskScriptRunner - INFO - 102           0 LOAD_GLOBAL              0 (isinstance)
+2025-05-15 18:29:07,206 - TaskScriptRunner - INFO -               2 LOAD_FAST                0 (examples)
+2025-05-15 18:29:07,207 - TaskScriptRunner - INFO -               4 LOAD_CONST               1 ('text')
+2025-05-15 18:29:07,208 - TaskScriptRunner - INFO -               6 BINARY_SUBSCR
+2025-05-15 18:29:07,210 - TaskScriptRunner - INFO -               8 LOAD_CONST               2 (0)
+2025-05-15 18:29:07,211 - TaskScriptRunner - INFO -              10 BINARY_SUBSCR
+2025-05-15 18:29:07,213 - TaskScriptRunner - INFO -              12 LOAD_GLOBAL              1 (int)
+2025-05-15 18:29:07,214 - TaskScriptRunner - INFO -              14 CALL_FUNCTION            2
+2025-05-15 18:29:07,215 - TaskScriptRunner - INFO -              16 POP_JUMP_IF_FALSE       14 (to 28)
+2025-05-15 18:29:07,216 - TaskScriptRunner - INFO - 
+2025-05-15 18:29:07,218 - TaskScriptRunner - INFO - 104          18 LOAD_FAST                0 (examples)
+2025-05-15 18:29:07,220 - TaskScriptRunner - INFO -              20 LOAD_CONST               1 ('text')
+2025-05-15 18:29:07,221 - TaskScriptRunner - INFO -              22 BINARY_SUBSCR
+2025-05-15 18:29:07,223 - TaskScriptRunner - INFO -              24 STORE_DEREF              0 (all_tokens)
+2025-05-15 18:29:07,224 - TaskScriptRunner - INFO -              26 JUMP_FORWARD             9 (to 46)
+2025-05-15 18:29:07,226 - TaskScriptRunner - INFO - 
+2025-05-15 18:29:07,227 - TaskScriptRunner - INFO - 107     >>   28 LOAD_GLOBAL              2 (list)
+2025-05-15 18:29:07,228 - TaskScriptRunner - INFO -              30 LOAD_GLOBAL              3 (chain)
+2025-05-15 18:29:07,229 - TaskScriptRunner - INFO -              32 LOAD_METHOD              4 (from_iterable)
+2025-05-15 18:29:07,232 - TaskScriptRunner - INFO -              34 LOAD_FAST                0 (examples)
+2025-05-15 18:29:07,233 - TaskScriptRunner - INFO -              36 LOAD_CONST               1 ('text')
+2025-05-15 18:29:07,235 - TaskScriptRunner - INFO -              38 BINARY_SUBSCR
+2025-05-15 18:29:07,237 - TaskScriptRunner - INFO -              40 CALL_METHOD              1
+2025-05-15 18:29:07,238 - TaskScriptRunner - INFO -              42 CALL_FUNCTION            1
+2025-05-15 18:29:07,239 - TaskScriptRunner - INFO -              44 STORE_DEREF              0 (all_tokens)
+2025-05-15 18:29:07,240 - TaskScriptRunner - INFO - 
+2025-05-15 18:29:07,243 - TaskScriptRunner - INFO - 110     >>   46 LOAD_GLOBAL              5 (len)
+2025-05-15 18:29:07,244 - TaskScriptRunner - INFO -              48 LOAD_DEREF               0 (all_tokens)
+2025-05-15 18:29:07,247 - TaskScriptRunner - INFO -              50 CALL_FUNCTION            1
+2025-05-15 18:29:07,248 - TaskScriptRunner - INFO -              52 LOAD_DEREF               1 (block_size)
+2025-05-15 18:29:07,249 - TaskScriptRunner - INFO -              54 BINARY_FLOOR_DIVIDE
+2025-05-15 18:29:07,251 - TaskScriptRunner - INFO -              56 LOAD_DEREF               1 (block_size)
+2025-05-15 18:29:07,253 - TaskScriptRunner - INFO -              58 BINARY_MULTIPLY
+2025-05-15 18:29:07,253 - TaskScriptRunner - INFO -              60 STORE_FAST               2 (total_len)
+2025-05-15 18:29:07,254 - TaskScriptRunner - INFO - 
+2025-05-15 18:29:07,256 - TaskScriptRunner - INFO - 114          62 LOAD_CONST               3 ('input_ids')
+2025-05-15 18:29:07,258 - TaskScriptRunner - INFO -              64 LOAD_CLOSURE             0 (all_tokens)
+2025-05-15 18:29:07,259 - TaskScriptRunner - INFO -              66 LOAD_CLOSURE             1 (block_size)
+2025-05-15 18:29:07,262 - TaskScriptRunner - INFO -              68 BUILD_TUPLE              2
+2025-05-15 18:29:07,264 - TaskScriptRunner - INFO -              70 LOAD_CONST               4 (<code object <listcomp> at 0x7fd3de81db00, file "/workspace/NVFlare/examples/advanced/llm_hf/hf_pretrain/workdir/site-code/simulate_job/app_site-code/custom/src/pretrain_nvflare.py", line 114>)
+2025-05-15 18:29:07,266 - TaskScriptRunner - INFO -              72 LOAD_CONST               5 ('group_tokens.<locals>.<listcomp>')
+2025-05-15 18:29:07,268 - TaskScriptRunner - INFO -              74 MAKE_FUNCTION            8 (closure)
+2025-05-15 18:29:07,269 - TaskScriptRunner - INFO -              76 LOAD_GLOBAL              6 (range)
+2025-05-15 18:29:07,271 - TaskScriptRunner - INFO -              78 LOAD_CONST               2 (0)
+2025-05-15 18:29:07,273 - TaskScriptRunner - INFO -              80 LOAD_FAST                2 (total_len)
+2025-05-15 18:29:07,273 - TaskScriptRunner - INFO -              82 LOAD_DEREF               1 (block_size)
+2025-05-15 18:29:07,275 - TaskScriptRunner - INFO -              84 CALL_FUNCTION            3
+2025-05-15 18:29:07,278 - TaskScriptRunner - INFO -              86 GET_ITER
+2025-05-15 18:29:07,279 - TaskScriptRunner - INFO -              88 CALL_FUNCTION            1
+2025-05-15 18:29:07,280 - TaskScriptRunner - INFO - 
+2025-05-15 18:29:07,281 - TaskScriptRunner - INFO - 113          90 BUILD_MAP                1
+2025-05-15 18:29:07,282 - TaskScriptRunner - INFO -              92 STORE_FAST               3 (result)
+2025-05-15 18:29:07,283 - TaskScriptRunner - INFO - 
+2025-05-15 18:29:07,285 - TaskScriptRunner - INFO - 118          94 LOAD_FAST                3 (result)
+2025-05-15 18:29:07,286 - TaskScriptRunner - INFO -              96 LOAD_CONST               3 ('input_ids')
+2025-05-15 18:29:07,287 - TaskScriptRunner - INFO -              98 BINARY_SUBSCR
+2025-05-15 18:29:07,289 - TaskScriptRunner - INFO -             100 LOAD_METHOD              7 (copy)
+2025-05-15 18:29:07,291 - TaskScriptRunner - INFO -             102 CALL_METHOD              0
+2025-05-15 18:29:07,292 - TaskScriptRunner - INFO -             104 LOAD_FAST                3 (result)
+2025-05-15 18:29:07,294 - TaskScriptRunner - INFO -             106 LOAD_CONST               6 ('labels')
+2025-05-15 18:29:07,295 - TaskScriptRunner - INFO -             108 STORE_SUBSCR
+2025-05-15 18:29:07,296 - TaskScriptRunner - INFO - 
+2025-05-15 18:29:07,298 - TaskScriptRunner - INFO - 120         110 LOAD_FAST                3 (result)
+2025-05-15 18:29:07,299 - TaskScriptRunner - INFO -             112 RETURN_VALUE
+2025-05-15 18:29:07,300 - TaskScriptRunner - INFO - 
+2025-05-15 18:29:07,302 - TaskScriptRunner - INFO - Disassembly of <code object <listcomp> at 0x7fd3de81db00, file "/workspace/NVFlare/examples/advanced/llm_hf/hf_pretrain/workdir/site-code/simulate_job/app_site-code/custom/src/pretrain_nvflare.py", line 114>:
+2025-05-15 18:29:07,303 - TaskScriptRunner - INFO - 114           0 BUILD_LIST               0
+2025-05-15 18:29:07,305 - TaskScriptRunner - INFO -               2 LOAD_FAST                0 (.0)
+2025-05-15 18:29:07,307 - TaskScriptRunner - INFO -         >>    4 FOR_ITER                10 (to 26)
+2025-05-15 18:29:07,309 - TaskScriptRunner - INFO -               6 STORE_FAST               1 (i)
+2025-05-15 18:29:07,311 - TaskScriptRunner - INFO -               8 LOAD_DEREF               0 (all_tokens)
+2025-05-15 18:29:07,313 - TaskScriptRunner - INFO -              10 LOAD_FAST                1 (i)
+2025-05-15 18:29:07,315 - TaskScriptRunner - INFO -              12 LOAD_FAST                1 (i)
+2025-05-15 18:29:07,316 - TaskScriptRunner - INFO -              14 LOAD_DEREF               1 (block_size)
+2025-05-15 18:29:07,318 - TaskScriptRunner - INFO -              16 BINARY_ADD
+2025-05-15 18:29:07,320 - TaskScriptRunner - INFO -              18 BUILD_SLICE              2
+2025-05-15 18:29:07,321 - TaskScriptRunner - INFO -              20 BINARY_SUBSCR
+2025-05-15 18:29:07,322 - TaskScriptRunner - INFO -              22 LIST_APPEND              2
+2025-05-15 18:29:07,324 - TaskScriptRunner - INFO -              24 JUMP_ABSOLUTE            2 (to 4)
+2025-05-15 18:29:07,326 - TaskScriptRunner - INFO -         >>   26 RETURN_VALUE
+2025-05-15 18:29:07,327 - TaskScriptRunner - INFO - 114           0 BUILD_LIST               0
+2025-05-15 18:29:07,329 - TaskScriptRunner - INFO -               2 LOAD_FAST                0 (.0)
+2025-05-15 18:29:07,330 - TaskScriptRunner - INFO -         >>    4 FOR_ITER                10 (to 26)
+2025-05-15 18:29:07,331 - TaskScriptRunner - INFO -               6 STORE_FAST               1 (i)
+2025-05-15 18:29:07,333 - TaskScriptRunner - INFO -               8 LOAD_DEREF               0 (all_tokens)
+2025-05-15 18:29:07,334 - TaskScriptRunner - INFO -              10 LOAD_FAST                1 (i)
+2025-05-15 18:29:07,336 - TaskScriptRunner - INFO -              12 LOAD_FAST                1 (i)
+2025-05-15 18:29:07,337 - TaskScriptRunner - INFO -              14 LOAD_DEREF               1 (block_size)
+2025-05-15 18:29:07,338 - TaskScriptRunner - INFO -              16 BINARY_ADD
+2025-05-15 18:29:07,339 - TaskScriptRunner - INFO -              18 BUILD_SLICE              2
+2025-05-15 18:29:07,342 - TaskScriptRunner - INFO -              20 BINARY_SUBSCR
+2025-05-15 18:29:07,344 - TaskScriptRunner - INFO -              22 LIST_APPEND              2
+2025-05-15 18:29:07,346 - TaskScriptRunner - INFO -              24 JUMP_ABSOLUTE            2 (to 4)
+2025-05-15 18:29:07,348 - TaskScriptRunner - INFO -         >>   26 RETURN_VALUE
+2025-05-15 18:29:16,355 - TaskScriptRunner - INFO - 102           0 LOAD_GLOBAL              0 (isinstance)
+2025-05-15 18:29:16,356 - TaskScriptRunner - INFO -               2 LOAD_FAST                0 (examples)
+2025-05-15 18:29:16,356 - TaskScriptRunner - INFO -               4 LOAD_CONST               1 ('text')
+2025-05-15 18:29:16,357 - TaskScriptRunner - INFO -               6 BINARY_SUBSCR
+2025-05-15 18:29:16,358 - TaskScriptRunner - INFO -               8 LOAD_CONST               2 (0)
+2025-05-15 18:29:16,358 - TaskScriptRunner - INFO -              10 BINARY_SUBSCR
+2025-05-15 18:29:16,360 - TaskScriptRunner - INFO -              12 LOAD_GLOBAL              1 (int)
+2025-05-15 18:29:16,360 - TaskScriptRunner - INFO -              14 CALL_FUNCTION            2
+2025-05-15 18:29:16,361 - TaskScriptRunner - INFO -              16 POP_JUMP_IF_FALSE       14 (to 28)
+2025-05-15 18:29:16,361 - TaskScriptRunner - INFO - 
+2025-05-15 18:29:16,362 - TaskScriptRunner - INFO - 104          18 LOAD_FAST                0 (examples)
+2025-05-15 18:29:16,362 - TaskScriptRunner - INFO -              20 LOAD_CONST               1 ('text')
+2025-05-15 18:29:16,363 - TaskScriptRunner - INFO -              22 BINARY_SUBSCR
+2025-05-15 18:29:16,363 - TaskScriptRunner - INFO -              24 STORE_DEREF              0 (all_tokens)
+2025-05-15 18:29:16,365 - TaskScriptRunner - INFO -              26 JUMP_FORWARD             9 (to 46)
+2025-05-15 18:29:16,365 - TaskScriptRunner - INFO - 
+2025-05-15 18:29:16,366 - TaskScriptRunner - INFO - 107     >>   28 LOAD_GLOBAL              2 (list)
+2025-05-15 18:29:16,366 - TaskScriptRunner - INFO -              30 LOAD_GLOBAL              3 (chain)
+2025-05-15 18:29:16,367 - TaskScriptRunner - INFO -              32 LOAD_METHOD              4 (from_iterable)
+2025-05-15 18:29:16,367 - TaskScriptRunner - INFO -              34 LOAD_FAST                0 (examples)
+2025-05-15 18:29:16,368 - TaskScriptRunner - INFO -              36 LOAD_CONST               1 ('text')
+2025-05-15 18:29:16,368 - TaskScriptRunner - INFO -              38 BINARY_SUBSCR
+2025-05-15 18:29:16,369 - TaskScriptRunner - INFO -              40 CALL_METHOD              1
+2025-05-15 18:29:16,370 - TaskScriptRunner - INFO -              42 CALL_FUNCTION            1
+2025-05-15 18:29:16,371 - TaskScriptRunner - INFO -              44 STORE_DEREF              0 (all_tokens)
+2025-05-15 18:29:16,371 - TaskScriptRunner - INFO - 
+2025-05-15 18:29:16,372 - TaskScriptRunner - INFO - 110     >>   46 LOAD_GLOBAL              5 (len)
+2025-05-15 18:29:16,372 - TaskScriptRunner - INFO -              48 LOAD_DEREF               0 (all_tokens)
+2025-05-15 18:29:16,373 - TaskScriptRunner - INFO -              50 CALL_FUNCTION            1
+2025-05-15 18:29:16,374 - TaskScriptRunner - INFO -              52 LOAD_DEREF               1 (block_size)
+2025-05-15 18:29:16,374 - TaskScriptRunner - INFO -              54 BINARY_FLOOR_DIVIDE
+2025-05-15 18:29:16,375 - TaskScriptRunner - INFO -              56 LOAD_DEREF               1 (block_size)
+2025-05-15 18:29:16,376 - TaskScriptRunner - INFO -              58 BINARY_MULTIPLY
+2025-05-15 18:29:16,376 - TaskScriptRunner - INFO -              60 STORE_FAST               2 (total_len)
+2025-05-15 18:29:16,377 - TaskScriptRunner - INFO - 
+2025-05-15 18:29:16,377 - TaskScriptRunner - INFO - 114          62 LOAD_CONST               3 ('input_ids')
+2025-05-15 18:29:16,378 - TaskScriptRunner - INFO -              64 LOAD_CLOSURE             0 (all_tokens)
+2025-05-15 18:29:16,378 - TaskScriptRunner - INFO -              66 LOAD_CLOSURE             1 (block_size)
+2025-05-15 18:29:16,379 - TaskScriptRunner - INFO -              68 BUILD_TUPLE              2
+2025-05-15 18:29:16,379 - TaskScriptRunner - INFO -              70 LOAD_CONST               4 (<code object <listcomp> at 0x7fd3de81db00, file "/workspace/NVFlare/examples/advanced/llm_hf/hf_pretrain/workdir/site-code/simulate_job/app_site-code/custom/src/pretrain_nvflare.py", line 114>)
+2025-05-15 18:29:16,380 - TaskScriptRunner - INFO -              72 LOAD_CONST               5 ('group_tokens.<locals>.<listcomp>')
+2025-05-15 18:29:16,381 - TaskScriptRunner - INFO -              74 MAKE_FUNCTION            8 (closure)
+2025-05-15 18:29:16,381 - TaskScriptRunner - INFO -              76 LOAD_GLOBAL              6 (range)
+2025-05-15 18:29:16,382 - TaskScriptRunner - INFO -              78 LOAD_CONST               2 (0)
+2025-05-15 18:29:16,382 - TaskScriptRunner - INFO -              80 LOAD_FAST                2 (total_len)
+2025-05-15 18:29:16,383 - TaskScriptRunner - INFO -              82 LOAD_DEREF               1 (block_size)
+2025-05-15 18:29:16,383 - TaskScriptRunner - INFO -              84 CALL_FUNCTION            3
+2025-05-15 18:29:16,384 - TaskScriptRunner - INFO -              86 GET_ITER
+2025-05-15 18:29:16,384 - TaskScriptRunner - INFO -              88 CALL_FUNCTION            1
+2025-05-15 18:29:16,385 - TaskScriptRunner - INFO - 
+2025-05-15 18:29:16,385 - TaskScriptRunner - INFO - 113          90 BUILD_MAP                1
+2025-05-15 18:29:16,386 - TaskScriptRunner - INFO -              92 STORE_FAST               3 (result)
+2025-05-15 18:29:16,387 - TaskScriptRunner - INFO - 
+2025-05-15 18:29:16,387 - TaskScriptRunner - INFO - 118          94 LOAD_FAST                3 (result)
+2025-05-15 18:29:16,388 - TaskScriptRunner - INFO -              96 LOAD_CONST               3 ('input_ids')
+2025-05-15 18:29:16,388 - TaskScriptRunner - INFO -              98 BINARY_SUBSCR
+2025-05-15 18:29:16,389 - TaskScriptRunner - INFO -             100 LOAD_METHOD              7 (copy)
+2025-05-15 18:29:16,389 - TaskScriptRunner - INFO -             102 CALL_METHOD              0
+2025-05-15 18:29:16,390 - TaskScriptRunner - INFO -             104 LOAD_FAST                3 (result)
+2025-05-15 18:29:16,390 - TaskScriptRunner - INFO -             106 LOAD_CONST               6 ('labels')
+2025-05-15 18:29:16,391 - TaskScriptRunner - INFO -             108 STORE_SUBSCR
+2025-05-15 18:29:16,391 - TaskScriptRunner - INFO - 
+2025-05-15 18:29:16,392 - TaskScriptRunner - INFO - 120         110 LOAD_FAST                3 (result)
+2025-05-15 18:29:16,393 - TaskScriptRunner - INFO -             112 RETURN_VALUE
+2025-05-15 18:29:16,393 - TaskScriptRunner - INFO - 
+2025-05-15 18:29:16,394 - TaskScriptRunner - INFO - Disassembly of <code object <listcomp> at 0x7fd3de81db00, file "/workspace/NVFlare/examples/advanced/llm_hf/hf_pretrain/workdir/site-code/simulate_job/app_site-code/custom/src/pretrain_nvflare.py", line 114>:
+2025-05-15 18:29:16,394 - TaskScriptRunner - INFO - 114           0 BUILD_LIST               0
+2025-05-15 18:29:16,395 - TaskScriptRunner - INFO -               2 LOAD_FAST                0 (.0)
+2025-05-15 18:29:16,395 - TaskScriptRunner - INFO -         >>    4 FOR_ITER                10 (to 26)
+2025-05-15 18:29:16,396 - TaskScriptRunner - INFO -               6 STORE_FAST               1 (i)
+2025-05-15 18:29:16,396 - TaskScriptRunner - INFO -               8 LOAD_DEREF               0 (all_tokens)
+2025-05-15 18:29:16,397 - TaskScriptRunner - INFO -              10 LOAD_FAST                1 (i)
+2025-05-15 18:29:16,398 - TaskScriptRunner - INFO -              12 LOAD_FAST                1 (i)
+2025-05-15 18:29:16,398 - TaskScriptRunner - INFO -              14 LOAD_DEREF               1 (block_size)
+2025-05-15 18:29:16,399 - TaskScriptRunner - INFO -              16 BINARY_ADD
+2025-05-15 18:29:16,399 - TaskScriptRunner - INFO -              18 BUILD_SLICE              2
+2025-05-15 18:29:16,400 - TaskScriptRunner - INFO -              20 BINARY_SUBSCR
+2025-05-15 18:29:16,400 - TaskScriptRunner - INFO -              22 LIST_APPEND              2
+2025-05-15 18:29:16,401 - TaskScriptRunner - INFO -              24 JUMP_ABSOLUTE            2 (to 4)
+2025-05-15 18:29:16,401 - TaskScriptRunner - INFO -         >>   26 RETURN_VALUE
+2025-05-15 18:29:16,402 - TaskScriptRunner - INFO - 114           0 BUILD_LIST               0
+2025-05-15 18:29:16,402 - TaskScriptRunner - INFO -               2 LOAD_FAST                0 (.0)
+2025-05-15 18:29:16,403 - TaskScriptRunner - INFO -         >>    4 FOR_ITER                10 (to 26)
+2025-05-15 18:29:16,404 - TaskScriptRunner - INFO -               6 STORE_FAST               1 (i)
+2025-05-15 18:29:16,404 - TaskScriptRunner - INFO -               8 LOAD_DEREF               0 (all_tokens)
+2025-05-15 18:29:16,405 - TaskScriptRunner - INFO -              10 LOAD_FAST                1 (i)
+2025-05-15 18:29:16,405 - TaskScriptRunner - INFO -              12 LOAD_FAST                1 (i)
+2025-05-15 18:29:16,406 - TaskScriptRunner - INFO -              14 LOAD_DEREF               1 (block_size)
+2025-05-15 18:29:16,406 - TaskScriptRunner - INFO -              16 BINARY_ADD
+2025-05-15 18:29:16,407 - TaskScriptRunner - INFO -              18 BUILD_SLICE              2
+2025-05-15 18:29:16,407 - TaskScriptRunner - INFO -              20 BINARY_SUBSCR
+2025-05-15 18:29:16,408 - TaskScriptRunner - INFO -              22 LIST_APPEND              2
+2025-05-15 18:29:16,408 - TaskScriptRunner - INFO -              24 JUMP_ABSOLUTE            2 (to 4)
+2025-05-15 18:29:16,409 - TaskScriptRunner - INFO -         >>   26 RETURN_VALUE
+2025-05-15 18:29:17,692 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=53edd170-ca16-40ba-beb1-c6e588e0f38b] - Running dequantization...
+2025-05-15 18:29:17,694 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=53edd170-ca16-40ba-beb1-c6e588e0f38b] - Running dequantization on 179 variables
+2025-05-15 18:29:17,929 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=53edd170-ca16-40ba-beb1-c6e588e0f38b] - Dequantized 179/179 params. Before dequantization: 2832.25 MB with meta: 0.00 MB. After dequantization: 5664.51 MB.
+2025-05-15 18:29:17,932 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=53edd170-ca16-40ba-beb1-c6e588e0f38b] - Dequantized back to {'model.model.embed_tokens.weight': 'float32', 'model.model.layers.0.self_attn.q_proj.weight': 'float32', 'model.model.layers.0.self_attn.k_proj.weight': 'float32', 'model.model.layers.0.self_attn.v_proj.weight': 'float32', 'model.model.layers.0.self_attn.o_proj.weight': 'float32', 'model.model.layers.0.self_attn.q_norm.weight': 'float32', 'model.model.layers.0.self_attn.k_norm.weight': 'float32', 'model.model.layers.0.mlp.gate_proj.weight': 'float32', 'model.model.layers.0.mlp.up_proj.weight': 'float32', 'model.model.layers.0.mlp.down_proj.weight': 'float32', 'model.model.layers.0.post_attention_layernorm.weight': 'float32', 'model.model.layers.0.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.1.self_attn.q_proj.weight': 'float32', 'model.model.layers.1.self_attn.k_proj.weight': 'float32', 'model.model.layers.1.self_attn.v_proj.weight': 'float32', 'model.model.layers.1.self_attn.o_proj.weight': 'float32', 'model.model.layers.1.self_attn.q_norm.weight': 'float32', 'model.model.layers.1.self_attn.k_norm.weight': 'float32', 'model.model.layers.1.mlp.gate_proj.weight': 'float32', 'model.model.layers.1.mlp.up_proj.weight': 'float32', 'model.model.layers.1.mlp.down_proj.weight': 'float32', 'model.model.layers.1.post_attention_layernorm.weight': 'float32', 'model.model.layers.1.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.2.self_attn.q_proj.weight': 'float32', 'model.model.layers.2.self_attn.k_proj.weight': 'float32', 'model.model.layers.2.self_attn.v_proj.weight': 'float32', 'model.model.layers.2.self_attn.o_proj.weight': 'float32', 'model.model.layers.2.self_attn.q_norm.weight': 'float32', 'model.model.layers.2.self_attn.k_norm.weight': 'float32', 'model.model.layers.2.mlp.gate_proj.weight': 'float32', 'model.model.layers.2.mlp.up_proj.weight': 'float32', 'model.model.layers.2.mlp.down_proj.weight': 'float32', 'model.model.layers.2.post_attention_layernorm.weight': 'float32', 'model.model.layers.2.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.3.self_attn.q_proj.weight': 'float32', 'model.model.layers.3.self_attn.k_proj.weight': 'float32', 'model.model.layers.3.self_attn.v_proj.weight': 'float32', 'model.model.layers.3.self_attn.o_proj.weight': 'float32', 'model.model.layers.3.self_attn.q_norm.weight': 'float32', 'model.model.layers.3.self_attn.k_norm.weight': 'float32', 'model.model.layers.3.mlp.gate_proj.weight': 'float32', 'model.model.layers.3.mlp.up_proj.weight': 'float32', 'model.model.layers.3.mlp.down_proj.weight': 'float32', 'model.model.layers.3.post_attention_layernorm.weight': 'float32', 'model.model.layers.3.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.4.self_attn.q_proj.weight': 'float32', 'model.model.layers.4.self_attn.k_proj.weight': 'float32', 'model.model.layers.4.self_attn.v_proj.weight': 'float32', 'model.model.layers.4.self_attn.o_proj.weight': 'float32', 'model.model.layers.4.self_attn.q_norm.weight': 'float32', 'model.model.layers.4.self_attn.k_norm.weight': 'float32', 'model.model.layers.4.mlp.gate_proj.weight': 'float32', 'model.model.layers.4.mlp.up_proj.weight': 'float32', 'model.model.layers.4.mlp.down_proj.weight': 'float32', 'model.model.layers.4.post_attention_layernorm.weight': 'float32', 'model.model.layers.4.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.5.self_attn.q_proj.weight': 'float32', 'model.model.layers.5.self_attn.k_proj.weight': 'float32', 'model.model.layers.5.self_attn.v_proj.weight': 'float32', 'model.model.layers.5.self_attn.o_proj.weight': 'float32', 'model.model.layers.5.self_attn.q_norm.weight': 'float32', 'model.model.layers.5.self_attn.k_norm.weight': 'float32', 'model.model.layers.5.mlp.gate_proj.weight': 'float32', 'model.model.layers.5.mlp.up_proj.weight': 'float32', 'model.model.layers.5.mlp.down_proj.weight': 'float32', 'model.model.layers.5.post_attention_layernorm.weight': 'float32', 'model.model.layers.5.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.6.self_attn.q_proj.weight': 'float32', 'model.model.layers.6.self_attn.k_proj.weight': 'float32', 'model.model.layers.6.self_attn.v_proj.weight': 'float32', 'model.model.layers.6.self_attn.o_proj.weight': 'float32', 'model.model.layers.6.self_attn.q_norm.weight': 'float32', 'model.model.layers.6.self_attn.k_norm.weight': 'float32', 'model.model.layers.6.mlp.gate_proj.weight': 'float32', 'model.model.layers.6.mlp.up_proj.weight': 'float32', 'model.model.layers.6.mlp.down_proj.weight': 'float32', 'model.model.layers.6.post_attention_layernorm.weight': 'float32', 'model.model.layers.6.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.7.self_attn.q_proj.weight': 'float32', 'model.model.layers.7.self_attn.k_proj.weight': 'float32', 'model.model.layers.7.self_attn.v_proj.weight': 'float32', 'model.model.layers.7.self_attn.o_proj.weight': 'float32', 'model.model.layers.7.self_attn.q_norm.weight': 'float32', 'model.model.layers.7.self_attn.k_norm.weight': 'float32', 'model.model.layers.7.mlp.gate_proj.weight': 'float32', 'model.model.layers.7.mlp.up_proj.weight': 'float32', 'model.model.layers.7.mlp.down_proj.weight': 'float32', 'model.model.layers.7.post_attention_layernorm.weight': 'float32', 'model.model.layers.7.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.8.self_attn.q_proj.weight': 'float32', 'model.model.layers.8.self_attn.k_proj.weight': 'float32', 'model.model.layers.8.self_attn.v_proj.weight': 'float32', 'model.model.layers.8.self_attn.o_proj.weight': 'float32', 'model.model.layers.8.self_attn.q_norm.weight': 'float32', 'model.model.layers.8.self_attn.k_norm.weight': 'float32', 'model.model.layers.8.mlp.gate_proj.weight': 'float32', 'model.model.layers.8.mlp.up_proj.weight': 'float32', 'model.model.layers.8.mlp.down_proj.weight': 'float32', 'model.model.layers.8.post_attention_layernorm.weight': 'float32', 'model.model.layers.8.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.9.self_attn.q_proj.weight': 'float32', 'model.model.layers.9.self_attn.k_proj.weight': 'float32', 'model.model.layers.9.self_attn.v_proj.weight': 'float32', 'model.model.layers.9.self_attn.o_proj.weight': 'float32', 'model.model.layers.9.self_attn.q_norm.weight': 'float32', 'model.model.layers.9.self_attn.k_norm.weight': 'float32', 'model.model.layers.9.mlp.gate_proj.weight': 'float32', 'model.model.layers.9.mlp.up_proj.weight': 'float32', 'model.model.layers.9.mlp.down_proj.weight': 'float32', 'model.model.layers.9.post_attention_layernorm.weight': 'float32', 'model.model.layers.9.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.10.self_attn.q_proj.weight': 'float32', 'model.model.layers.10.self_attn.k_proj.weight': 'float32', 'model.model.layers.10.self_attn.v_proj.weight': 'float32', 'model.model.layers.10.self_attn.o_proj.weight': 'float32', 'model.model.layers.10.self_attn.q_norm.weight': 'float32', 'model.model.layers.10.self_attn.k_norm.weight': 'float32', 'model.model.layers.10.mlp.gate_proj.weight': 'float32', 'model.model.layers.10.mlp.up_proj.weight': 'float32', 'model.model.layers.10.mlp.down_proj.weight': 'float32', 'model.model.layers.10.post_attention_layernorm.weight': 'float32', 'model.model.layers.10.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.11.self_attn.q_proj.weight': 'float32', 'model.model.layers.11.self_attn.k_proj.weight': 'float32', 'model.model.layers.11.self_attn.v_proj.weight': 'float32', 'model.model.layers.11.self_attn.o_proj.weight': 'float32', 'model.model.layers.11.self_attn.q_norm.weight': 'float32', 'model.model.layers.11.self_attn.k_norm.weight': 'float32', 'model.model.layers.11.mlp.gate_proj.weight': 'float32', 'model.model.layers.11.mlp.up_proj.weight': 'float32', 'model.model.layers.11.mlp.down_proj.weight': 'float32', 'model.model.layers.11.post_attention_layernorm.weight': 'float32', 'model.model.layers.11.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.12.self_attn.q_proj.weight': 'float32', 'model.model.layers.12.self_attn.k_proj.weight': 'float32', 'model.model.layers.12.self_attn.v_proj.weight': 'float32', 'model.model.layers.12.self_attn.o_proj.weight': 'float32', 'model.model.layers.12.self_attn.q_norm.weight': 'float32', 'model.model.layers.12.self_attn.k_norm.weight': 'float32', 'model.model.layers.12.mlp.gate_proj.weight': 'float32', 'model.model.layers.12.mlp.up_proj.weight': 'float32', 'model.model.layers.12.mlp.down_proj.weight': 'float32', 'model.model.layers.12.post_attention_layernorm.weight': 'float32', 'model.model.layers.12.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.13.self_attn.q_proj.weight': 'float32', 'model.model.layers.13.self_attn.k_proj.weight': 'float32', 'model.model.layers.13.self_attn.v_proj.weight': 'float32', 'model.model.layers.13.self_attn.o_proj.weight': 'float32', 'model.model.layers.13.self_attn.q_norm.weight': 'float32', 'model.model.layers.13.self_attn.k_norm.weight': 'float32', 'model.model.layers.13.mlp.gate_proj.weight': 'float32', 'model.model.layers.13.mlp.up_proj.weight': 'float32', 'model.model.layers.13.mlp.down_proj.weight': 'float32', 'model.model.layers.13.post_attention_layernorm.weight': 'float32', 'model.model.layers.13.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.14.self_attn.q_proj.weight': 'float32', 'model.model.layers.14.self_attn.k_proj.weight': 'float32', 'model.model.layers.14.self_attn.v_proj.weight': 'float32', 'model.model.layers.14.self_attn.o_proj.weight': 'float32', 'model.model.layers.14.self_attn.q_norm.weight': 'float32', 'model.model.layers.14.self_attn.k_norm.weight': 'float32', 'model.model.layers.14.mlp.gate_proj.weight': 'float32', 'model.model.layers.14.mlp.up_proj.weight': 'float32', 'model.model.layers.14.mlp.down_proj.weight': 'float32', 'model.model.layers.14.post_attention_layernorm.weight': 'float32', 'model.model.layers.14.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.15.self_attn.q_proj.weight': 'float32', 'model.model.layers.15.self_attn.k_proj.weight': 'float32', 'model.model.layers.15.self_attn.v_proj.weight': 'float32', 'model.model.layers.15.self_attn.o_proj.weight': 'float32', 'model.model.layers.15.self_attn.q_norm.weight': 'float32', 'model.model.layers.15.self_attn.k_norm.weight': 'float32', 'model.model.layers.15.mlp.gate_proj.weight': 'float32', 'model.model.layers.15.mlp.up_proj.weight': 'float32', 'model.model.layers.15.mlp.down_proj.weight': 'float32', 'model.model.layers.15.post_attention_layernorm.weight': 'float32', 'model.model.layers.15.post_feedforward_layernorm.weight': 'float32', 'model.model.norm.weight': 'float32', 'model.lm_head.weight': 'float32'}
+2025-05-15 18:29:17,934 - PTInProcessClientAPIExecutor - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=53edd170-ca16-40ba-beb1-c6e588e0f38b] - execute for task (train)
+2025-05-15 18:29:17,936 - PTInProcessClientAPIExecutor - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=53edd170-ca16-40ba-beb1-c6e588e0f38b] - send data to peer
+2025-05-15 18:29:17,938 - PTInProcessClientAPIExecutor - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=53edd170-ca16-40ba-beb1-c6e588e0f38b] - sending payload to peer
+2025-05-15 18:29:17,940 - PTInProcessClientAPIExecutor - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=53edd170-ca16-40ba-beb1-c6e588e0f38b] - Waiting for result from peer
+2025-05-15 18:29:22,142 - TaskScriptRunner - INFO - --- federated round 0 ---
+2025-05-15 18:29:23,966 - TaskScriptRunner - INFO - {'eval_loss': 10.129779815673828, 'eval_model_preparation_time': 0.0065, 'eval_runtime': 1.1693, 'eval_samples_per_second': 59.864, 'eval_steps_per_second': 7.697}
+2025-05-15 18:29:23,968 - TaskScriptRunner - INFO - eval metrics: {'eval_loss': 10.129779815673828, 'eval_model_preparation_time': 0.0065, 'eval_runtime': 1.1693, 'eval_samples_per_second': 59.864, 'eval_steps_per_second': 7.697, 'perplexity': 25078.84185558966}
+2025-05-15 18:29:26,118 - TaskScriptRunner - INFO - {'loss': 9.9829, 'grad_norm': 14.5625, 'learning_rate': 0.0, 'epoch': 0.005772005772005772}
+2025-05-15 18:29:27,319 - TaskScriptRunner - INFO - {'loss': 10.0735, 'grad_norm': 14.125, 'learning_rate': 8.333333333333333e-05, 'epoch': 0.011544011544011544}
+2025-05-15 18:29:28,367 - TaskScriptRunner - INFO - {'loss': 9.2063, 'grad_norm': 10.375, 'learning_rate': 0.00016666666666666666, 'epoch': 0.017316017316017316}
+2025-05-15 18:29:29,427 - TaskScriptRunner - INFO - {'loss': 9.8324, 'grad_norm': 30.0, 'learning_rate': 0.00025, 'epoch': 0.023088023088023088}
+2025-05-15 18:29:30,475 - TaskScriptRunner - INFO - {'loss': 11.5662, 'grad_norm': 51.5, 'learning_rate': 0.0003333333333333333, 'epoch': 0.02886002886002886}
+2025-05-15 18:29:31,526 - TaskScriptRunner - INFO - {'loss': 12.038, 'grad_norm': 61.25, 'learning_rate': 0.0004166666666666667, 'epoch': 0.03463203463203463}
+2025-05-15 18:29:32,578 - TaskScriptRunner - INFO - {'loss': 9.3774, 'grad_norm': 18.875, 'learning_rate': 0.0005, 'epoch': 0.04040404040404041}
+2025-05-15 18:29:33,625 - TaskScriptRunner - INFO - {'loss': 9.5477, 'grad_norm': 8.625, 'learning_rate': 0.0004999557652060729, 'epoch': 0.046176046176046176}
+2025-05-15 18:29:34,672 - TaskScriptRunner - INFO - {'loss': 10.8648, 'grad_norm': 31.625, 'learning_rate': 0.0004998230764780276, 'epoch': 0.05194805194805195}
+2025-05-15 18:29:35,723 - TaskScriptRunner - INFO - {'loss': 9.0822, 'grad_norm': 16.75, 'learning_rate': 0.0004996019807715324, 'epoch': 0.05772005772005772}
+2025-05-15 18:29:36,775 - TaskScriptRunner - INFO - {'loss': 8.7376, 'grad_norm': 6.84375, 'learning_rate': 0.0004992925563275714, 'epoch': 0.06349206349206349}
+2025-05-15 18:29:37,832 - TaskScriptRunner - INFO - {'loss': 8.8624, 'grad_norm': 22.25, 'learning_rate': 0.0004988949126447567, 'epoch': 0.06926406926406926}
+2025-05-15 18:29:38,883 - TaskScriptRunner - INFO - {'loss': 8.4415, 'grad_norm': 5.0, 'learning_rate': 0.0004984091904405792, 'epoch': 0.07503607503607504}
+2025-05-15 18:29:39,931 - TaskScriptRunner - INFO - {'loss': 8.8092, 'grad_norm': 14.9375, 'learning_rate': 0.000497835561601612, 'epoch': 0.08080808080808081}
+2025-05-15 18:29:40,984 - TaskScriptRunner - INFO - {'loss': 9.3403, 'grad_norm': 30.5, 'learning_rate': 0.0004971742291226826, 'epoch': 0.08658008658008658}
+2025-05-15 18:29:42,034 - TaskScriptRunner - INFO - {'loss': 9.1326, 'grad_norm': 21.5, 'learning_rate': 0.0004964254270350387, 'epoch': 0.09235209235209235}
+2025-05-15 18:29:43,089 - TaskScriptRunner - INFO - {'loss': 8.5939, 'grad_norm': 6.09375, 'learning_rate': 0.0004955894203235284, 'epoch': 0.09812409812409813}
+2025-05-15 18:29:44,139 - TaskScriptRunner - INFO - {'loss': 8.6717, 'grad_norm': 10.4375, 'learning_rate': 0.0004946665048328287, 'epoch': 0.1038961038961039}
+2025-05-15 18:29:45,189 - TaskScriptRunner - INFO - {'loss': 8.3633, 'grad_norm': 4.375, 'learning_rate': 0.0004936570071627517, 'epoch': 0.10966810966810966}
+2025-05-15 18:29:46,241 - TaskScriptRunner - INFO - {'loss': 8.385, 'grad_norm': 7.9375, 'learning_rate': 0.0004925612845526691, 'epoch': 0.11544011544011544}
+2025-05-15 18:29:47,290 - TaskScriptRunner - INFO - {'loss': 8.1043, 'grad_norm': 2.75, 'learning_rate': 0.0004913797247550911, 'epoch': 0.12121212121212122}
+2025-05-15 18:29:48,338 - TaskScriptRunner - INFO - {'loss': 8.2422, 'grad_norm': 5.71875, 'learning_rate': 0.0004901127458984516, 'epoch': 0.12698412698412698}
+2025-05-15 18:29:49,386 - TaskScriptRunner - INFO - {'loss': 8.2323, 'grad_norm': 5.46875, 'learning_rate': 0.0004887607963391394, 'epoch': 0.13275613275613277}
+2025-05-15 18:29:50,433 - TaskScriptRunner - INFO - {'loss': 8.2145, 'grad_norm': 5.59375, 'learning_rate': 0.00048732435450283564, 'epoch': 0.13852813852813853}
+2025-05-15 18:29:51,485 - TaskScriptRunner - INFO - {'loss': 8.1502, 'grad_norm': 4.21875, 'learning_rate': 0.00048580392871520943, 'epoch': 0.1443001443001443}
+2025-05-15 18:29:52,535 - TaskScriptRunner - INFO - {'loss': 8.2143, 'grad_norm': 3.28125, 'learning_rate': 0.00048420005702203196, 'epoch': 0.15007215007215008}
+2025-05-15 18:29:53,584 - TaskScriptRunner - INFO - {'loss': 8.2088, 'grad_norm': 3.9375, 'learning_rate': 0.00048251330699877374, 'epoch': 0.15584415584415584}
+2025-05-15 18:29:54,634 - TaskScriptRunner - INFO - {'loss': 8.1592, 'grad_norm': 2.671875, 'learning_rate': 0.00048074427554975236, 'epoch': 0.16161616161616163}
+2025-05-15 18:29:55,682 - TaskScriptRunner - INFO - {'loss': 8.1112, 'grad_norm': 2.640625, 'learning_rate': 0.00047889358869690056, 'epoch': 0.1673881673881674}
+2025-05-15 18:29:56,735 - TaskScriptRunner - INFO - {'loss': 8.1882, 'grad_norm': 3.6875, 'learning_rate': 0.0004769619013582309, 'epoch': 0.17316017316017315}
+2025-05-15 18:29:57,785 - TaskScriptRunner - INFO - {'loss': 8.157, 'grad_norm': 2.78125, 'learning_rate': 0.00047494989711607415, 'epoch': 0.17893217893217894}
+2025-05-15 18:29:58,831 - TaskScriptRunner - INFO - {'loss': 8.1928, 'grad_norm': 2.1875, 'learning_rate': 0.0004728582879751746, 'epoch': 0.1847041847041847}
+2025-05-15 18:29:59,882 - TaskScriptRunner - INFO - {'loss': 8.1253, 'grad_norm': 3.65625, 'learning_rate': 0.00047068781411072687, 'epoch': 0.19047619047619047}
+2025-05-15 18:30:00,932 - TaskScriptRunner - INFO - {'loss': 8.1661, 'grad_norm': 2.09375, 'learning_rate': 0.00046843924360644385, 'epoch': 0.19624819624819625}
+2025-05-15 18:30:01,980 - TaskScriptRunner - INFO - {'loss': 8.1769, 'grad_norm': 4.3125, 'learning_rate': 0.00046611337218274864, 'epoch': 0.20202020202020202}
+2025-05-15 18:30:03,030 - TaskScriptRunner - INFO - {'loss': 8.2317, 'grad_norm': 3.046875, 'learning_rate': 0.0004637110229151863, 'epoch': 0.2077922077922078}
+2025-05-15 18:30:04,077 - TaskScriptRunner - INFO - {'loss': 8.1467, 'grad_norm': 2.625, 'learning_rate': 0.00046123304594315517, 'epoch': 0.21356421356421357}
+2025-05-15 18:30:05,125 - TaskScriptRunner - INFO - {'loss': 8.2042, 'grad_norm': 4.03125, 'learning_rate': 0.0004586803181690609, 'epoch': 0.21933621933621933}
+2025-05-15 18:30:06,181 - TaskScriptRunner - INFO - {'loss': 8.1968, 'grad_norm': 2.90625, 'learning_rate': 0.0004560537429479998, 'epoch': 0.22510822510822512}
+2025-05-15 18:30:07,230 - TaskScriptRunner - INFO - {'loss': 8.1421, 'grad_norm': 2.78125, 'learning_rate': 0.00045335424976808116, 'epoch': 0.23088023088023088}
+2025-05-15 18:30:08,283 - TaskScriptRunner - INFO - {'loss': 8.1562, 'grad_norm': 2.8125, 'learning_rate': 0.0004505827939215009, 'epoch': 0.23665223665223664}
+2025-05-15 18:30:09,331 - TaskScriptRunner - INFO - {'loss': 8.0573, 'grad_norm': 2.671875, 'learning_rate': 0.00044774035616648516, 'epoch': 0.24242424242424243}
+2025-05-15 18:30:10,378 - TaskScriptRunner - INFO - {'loss': 8.2113, 'grad_norm': 3.015625, 'learning_rate': 0.0004448279423802207, 'epoch': 0.2481962481962482}
+2025-05-15 18:30:11,435 - TaskScriptRunner - INFO - {'loss': 8.0617, 'grad_norm': 2.375, 'learning_rate': 0.0004418465832028967, 'epoch': 0.25396825396825395}
+2025-05-15 18:30:12,485 - TaskScriptRunner - INFO - {'loss': 8.1265, 'grad_norm': 2.125, 'learning_rate': 0.00043879733367298404, 'epoch': 0.2597402597402597}
+2025-05-15 18:30:13,532 - TaskScriptRunner - INFO - {'loss': 8.137, 'grad_norm': 2.125, 'learning_rate': 0.00043568127285387924, 'epoch': 0.26551226551226553}
+2025-05-15 18:30:14,581 - TaskScriptRunner - INFO - {'loss': 8.1275, 'grad_norm': 2.0625, 'learning_rate': 0.00043249950345204804, 'epoch': 0.2712842712842713}
+2025-05-15 18:30:15,631 - TaskScriptRunner - INFO - {'loss': 8.0685, 'grad_norm': 1.8125, 'learning_rate': 0.0004292531514268008, 'epoch': 0.27705627705627706}
+2025-05-15 18:30:16,685 - TaskScriptRunner - INFO - {'loss': 8.0958, 'grad_norm': 3.03125, 'learning_rate': 0.00042594336559184035, 'epoch': 0.2828282828282828}
+2025-05-15 18:30:17,735 - TaskScriptRunner - INFO - {'loss': 8.062, 'grad_norm': 2.484375, 'learning_rate': 0.0004225713172087216, 'epoch': 0.2886002886002886}
+2025-05-15 18:30:18,784 - TaskScriptRunner - INFO - {'loss': 8.0802, 'grad_norm': 1.8984375, 'learning_rate': 0.0004191381995723672, 'epoch': 0.2943722943722944}
+2025-05-15 18:30:19,832 - TaskScriptRunner - INFO - {'loss': 8.1133, 'grad_norm': 2.21875, 'learning_rate': 0.00041564522758878654, 'epoch': 0.30014430014430016}
+2025-05-15 18:30:20,879 - TaskScriptRunner - INFO - {'loss': 8.0476, 'grad_norm': 1.96875, 'learning_rate': 0.0004120936373451467, 'epoch': 0.3059163059163059}
+2025-05-15 18:30:21,928 - TaskScriptRunner - INFO - {'loss': 8.0834, 'grad_norm': 1.7421875, 'learning_rate': 0.000408484685672348, 'epoch': 0.3116883116883117}
+2025-05-15 18:30:22,981 - TaskScriptRunner - INFO - {'loss': 8.057, 'grad_norm': 2.03125, 'learning_rate': 0.0004048196497002588, 'epoch': 0.31746031746031744}
+2025-05-15 18:30:24,029 - TaskScriptRunner - INFO - {'loss': 8.0262, 'grad_norm': 2.28125, 'learning_rate': 0.0004010998264057667, 'epoch': 0.32323232323232326}
+2025-05-15 18:30:25,079 - TaskScriptRunner - INFO - {'loss': 8.0431, 'grad_norm': 1.6640625, 'learning_rate': 0.0003973265321538069, 'epoch': 0.329004329004329}
+2025-05-15 18:30:26,130 - TaskScriptRunner - INFO - {'loss': 8.0947, 'grad_norm': 1.8984375, 'learning_rate': 0.0003935011022315284, 'epoch': 0.3347763347763348}
+2025-05-15 18:30:27,178 - TaskScriptRunner - INFO - {'loss': 8.1085, 'grad_norm': 2.078125, 'learning_rate': 0.00038962489037576583, 'epoch': 0.34054834054834054}
+2025-05-15 18:30:28,239 - TaskScriptRunner - INFO - {'loss': 8.0925, 'grad_norm': 1.7578125, 'learning_rate': 0.0003856992682939803, 'epoch': 0.3463203463203463}
+2025-05-15 18:30:29,286 - TaskScriptRunner - INFO - {'loss': 8.1044, 'grad_norm': 1.8203125, 'learning_rate': 0.0003817256251788425, 'epoch': 0.35209235209235207}
+2025-05-15 18:30:30,333 - TaskScriptRunner - INFO - {'loss': 8.0263, 'grad_norm': 1.984375, 'learning_rate': 0.00037770536721662694, 'epoch': 0.3578643578643579}
+2025-05-15 18:30:31,388 - TaskScriptRunner - INFO - {'loss': 8.1046, 'grad_norm': 1.9609375, 'learning_rate': 0.0003736399170895938, 'epoch': 0.36363636363636365}
+2025-05-15 18:30:32,438 - TaskScriptRunner - INFO - {'loss': 8.0857, 'grad_norm': 1.8671875, 'learning_rate': 0.0003695307134725316, 'epoch': 0.3694083694083694}
+2025-05-15 18:30:33,494 - TaskScriptRunner - INFO - {'loss': 7.9992, 'grad_norm': 1.8359375, 'learning_rate': 0.0003653792105236422, 'epoch': 0.37518037518037517}
+2025-05-15 18:30:34,544 - TaskScriptRunner - INFO - {'loss': 8.0316, 'grad_norm': 1.640625, 'learning_rate': 0.00036118687736994487, 'epoch': 0.38095238095238093}
+2025-05-15 18:30:35,594 - TaskScriptRunner - INFO - {'loss': 8.0453, 'grad_norm': 1.9765625, 'learning_rate': 0.0003569551975873847, 'epoch': 0.38672438672438675}
+2025-05-15 18:30:36,645 - TaskScriptRunner - INFO - {'loss': 8.0653, 'grad_norm': 1.6875, 'learning_rate': 0.00035268566867582683, 'epoch': 0.3924963924963925}
+2025-05-15 18:30:37,694 - TaskScriptRunner - INFO - {'loss': 8.0296, 'grad_norm': 1.765625, 'learning_rate': 0.0003483798015291239, 'epoch': 0.39826839826839827}
+2025-05-15 18:30:38,746 - TaskScriptRunner - INFO - {'loss': 8.1144, 'grad_norm': 2.046875, 'learning_rate': 0.00034403911990044307, 'epoch': 0.40404040404040403}
+2025-05-15 18:30:39,795 - TaskScriptRunner - INFO - {'loss': 7.9971, 'grad_norm': 2.453125, 'learning_rate': 0.00033966515986304317, 'epoch': 0.4098124098124098}
+2025-05-15 18:30:40,842 - TaskScriptRunner - INFO - {'loss': 8.0769, 'grad_norm': 1.7890625, 'learning_rate': 0.0003352594692666915, 'epoch': 0.4155844155844156}
+2025-05-15 18:30:41,901 - TaskScriptRunner - INFO - {'loss': 8.0346, 'grad_norm': 1.84375, 'learning_rate': 0.000330823607189913, 'epoch': 0.4213564213564214}
+2025-05-15 18:30:42,949 - TaskScriptRunner - INFO - {'loss': 8.0492, 'grad_norm': 1.8203125, 'learning_rate': 0.0003263591433882666, 'epoch': 0.42712842712842713}
+2025-05-15 18:30:43,996 - TaskScriptRunner - INFO - {'loss': 8.0107, 'grad_norm': 2.0, 'learning_rate': 0.00032186765773884244, 'epoch': 0.4329004329004329}
+2025-05-15 18:30:45,048 - TaskScriptRunner - INFO - {'loss': 8.0198, 'grad_norm': 1.5078125, 'learning_rate': 0.0003173507396811774, 'epoch': 0.43867243867243866}
+2025-05-15 18:30:46,095 - TaskScriptRunner - INFO - {'loss': 8.0375, 'grad_norm': 1.875, 'learning_rate': 0.00031280998765478727, 'epoch': 0.4444444444444444}
+2025-05-15 18:30:47,142 - TaskScriptRunner - INFO - {'loss': 8.0064, 'grad_norm': 1.703125, 'learning_rate': 0.0003082470085335133, 'epoch': 0.45021645021645024}
+2025-05-15 18:30:48,195 - TaskScriptRunner - INFO - {'loss': 8.072, 'grad_norm': 2.015625, 'learning_rate': 0.00030366341705688466, 'epoch': 0.455988455988456}
+2025-05-15 18:30:49,243 - TaskScriptRunner - INFO - {'loss': 7.9727, 'grad_norm': 1.796875, 'learning_rate': 0.0002990608352586965, 'epoch': 0.46176046176046176}
+2025-05-15 18:30:50,294 - TaskScriptRunner - INFO - {'loss': 8.0572, 'grad_norm': 1.8984375, 'learning_rate': 0.00029444089189300783, 'epoch': 0.4675324675324675}
+2025-05-15 18:30:51,341 - TaskScriptRunner - INFO - {'loss': 7.9624, 'grad_norm': 1.8359375, 'learning_rate': 0.00028980522185776065, 'epoch': 0.4733044733044733}
+2025-05-15 18:30:52,392 - TaskScriptRunner - INFO - {'loss': 8.0296, 'grad_norm': 1.5, 'learning_rate': 0.00028515546561622466, 'epoch': 0.4790764790764791}
+2025-05-15 18:30:53,443 - TaskScriptRunner - INFO - {'loss': 7.9691, 'grad_norm': 1.890625, 'learning_rate': 0.000280493268616473, 'epoch': 0.48484848484848486}
+2025-05-15 18:30:54,490 - TaskScriptRunner - INFO - {'loss': 7.982, 'grad_norm': 1.703125, 'learning_rate': 0.0002758202807090941, 'epoch': 0.4906204906204906}
+2025-05-15 18:30:55,538 - TaskScriptRunner - INFO - {'loss': 7.9991, 'grad_norm': 1.828125, 'learning_rate': 0.00027113815556334474, 'epoch': 0.4963924963924964}
+2025-05-15 18:30:56,597 - TaskScriptRunner - INFO - {'loss': 7.9295, 'grad_norm': 1.7109375, 'learning_rate': 0.00026644855008195267, 'epoch': 0.5021645021645021}
+2025-05-15 18:30:57,647 - TaskScriptRunner - INFO - {'loss': 8.0512, 'grad_norm': 1.453125, 'learning_rate': 0.0002617531238147744, 'epoch': 0.5079365079365079}
+2025-05-15 18:30:58,697 - TaskScriptRunner - INFO - {'loss': 7.9438, 'grad_norm': 2.234375, 'learning_rate': 0.0002570535383715165, 'epoch': 0.5137085137085137}
+2025-05-15 18:30:59,746 - TaskScriptRunner - INFO - {'loss': 7.9315, 'grad_norm': 1.6640625, 'learning_rate': 0.0002523514568337281, 'epoch': 0.5194805194805194}
+2025-05-15 18:31:00,796 - TaskScriptRunner - INFO - {'loss': 7.9477, 'grad_norm': 1.9921875, 'learning_rate': 0.000247648543166272, 'epoch': 0.5252525252525253}
+2025-05-15 18:31:01,853 - TaskScriptRunner - INFO - {'loss': 8.0017, 'grad_norm': 2.171875, 'learning_rate': 0.00024294646162848353, 'epoch': 0.5310245310245311}
+2025-05-15 18:31:02,901 - TaskScriptRunner - INFO - {'loss': 7.958, 'grad_norm': 1.3671875, 'learning_rate': 0.00023824687618522567, 'epoch': 0.5367965367965368}
+2025-05-15 18:31:03,948 - TaskScriptRunner - INFO - {'loss': 8.0388, 'grad_norm': 1.953125, 'learning_rate': 0.00023355144991804737, 'epoch': 0.5425685425685426}
+2025-05-15 18:31:04,997 - TaskScriptRunner - INFO - {'loss': 8.0198, 'grad_norm': 1.8359375, 'learning_rate': 0.00022886184443665522, 'epoch': 0.5483405483405484}
+2025-05-15 18:31:06,044 - TaskScriptRunner - INFO - {'loss': 8.0289, 'grad_norm': 1.46875, 'learning_rate': 0.0002241797192909059, 'epoch': 0.5541125541125541}
+2025-05-15 18:31:07,099 - TaskScriptRunner - INFO - {'loss': 7.9571, 'grad_norm': 1.71875, 'learning_rate': 0.000219506731383527, 'epoch': 0.5598845598845599}
+2025-05-15 18:31:08,149 - TaskScriptRunner - INFO - {'loss': 7.977, 'grad_norm': 1.8203125, 'learning_rate': 0.0002148445343837755, 'epoch': 0.5656565656565656}
+2025-05-15 18:31:09,197 - TaskScriptRunner - INFO - {'loss': 8.0177, 'grad_norm': 1.5, 'learning_rate': 0.00021019477814223942, 'epoch': 0.5714285714285714}
+2025-05-15 18:31:10,255 - TaskScriptRunner - INFO - {'loss': 8.0195, 'grad_norm': 1.5703125, 'learning_rate': 0.0002055591081069922, 'epoch': 0.5772005772005772}
+2025-05-15 18:31:11,302 - TaskScriptRunner - INFO - {'loss': 7.9327, 'grad_norm': 1.7265625, 'learning_rate': 0.00020093916474130352, 'epoch': 0.5829725829725829}
+2025-05-15 18:31:12,352 - TaskScriptRunner - INFO - {'loss': 7.9211, 'grad_norm': 1.5078125, 'learning_rate': 0.00019633658294311535, 'epoch': 0.5887445887445888}
+2025-05-15 18:31:13,402 - TaskScriptRunner - INFO - {'loss': 7.9637, 'grad_norm': 1.8046875, 'learning_rate': 0.0001917529914664867, 'epoch': 0.5945165945165946}
+2025-05-15 18:31:14,449 - TaskScriptRunner - INFO - {'loss': 7.9785, 'grad_norm': 1.8984375, 'learning_rate': 0.00018719001234521283, 'epoch': 0.6002886002886003}
+2025-05-15 18:31:15,499 - TaskScriptRunner - INFO - {'loss': 8.0137, 'grad_norm': 1.5625, 'learning_rate': 0.00018264926031882274, 'epoch': 0.6060606060606061}
+2025-05-15 18:31:16,547 - TaskScriptRunner - INFO - {'loss': 7.9462, 'grad_norm': 1.5390625, 'learning_rate': 0.00017813234226115766, 'epoch': 0.6118326118326118}
+2025-05-15 18:31:17,597 - TaskScriptRunner - INFO - {'loss': 7.9456, 'grad_norm': 1.9765625, 'learning_rate': 0.00017364085661173345, 'epoch': 0.6176046176046176}
+2025-05-15 18:31:18,653 - TaskScriptRunner - INFO - {'loss': 7.9988, 'grad_norm': 1.6953125, 'learning_rate': 0.000169176392810087, 'epoch': 0.6233766233766234}
+2025-05-15 18:31:19,703 - TaskScriptRunner - INFO - {'loss': 7.9011, 'grad_norm': 1.5, 'learning_rate': 0.0001647405307333085, 'epoch': 0.6291486291486291}
+2025-05-15 18:31:20,751 - TaskScriptRunner - INFO - {'loss': 7.9402, 'grad_norm': 1.65625, 'learning_rate': 0.00016033484013695687, 'epoch': 0.6349206349206349}
+2025-05-15 18:31:21,801 - TaskScriptRunner - INFO - {'loss': 7.9126, 'grad_norm': 2.09375, 'learning_rate': 0.00015596088009955694, 'epoch': 0.6406926406926406}
+2025-05-15 18:31:22,853 - TaskScriptRunner - INFO - {'loss': 7.9838, 'grad_norm': 2.03125, 'learning_rate': 0.00015162019847087617, 'epoch': 0.6464646464646465}
+2025-05-15 18:31:23,911 - TaskScriptRunner - INFO - {'loss': 7.8632, 'grad_norm': 1.234375, 'learning_rate': 0.00014731433132417315, 'epoch': 0.6522366522366523}
+2025-05-15 18:31:24,959 - TaskScriptRunner - INFO - {'loss': 7.9836, 'grad_norm': 1.359375, 'learning_rate': 0.00014304480241261527, 'epoch': 0.658008658008658}
+2025-05-15 18:31:26,006 - TaskScriptRunner - INFO - {'loss': 8.0018, 'grad_norm': 1.4921875, 'learning_rate': 0.0001388131226300552, 'epoch': 0.6637806637806638}
+2025-05-15 18:31:27,061 - TaskScriptRunner - INFO - {'loss': 7.9257, 'grad_norm': 1.578125, 'learning_rate': 0.0001346207894763578, 'epoch': 0.6695526695526696}
+2025-05-15 18:31:28,108 - TaskScriptRunner - INFO - {'loss': 8.0056, 'grad_norm': 1.4296875, 'learning_rate': 0.0001304692865274683, 'epoch': 0.6753246753246753}
+2025-05-15 18:31:29,157 - TaskScriptRunner - INFO - {'loss': 7.9562, 'grad_norm': 1.21875, 'learning_rate': 0.0001263600829104062, 'epoch': 0.6810966810966811}
+2025-05-15 18:31:30,208 - TaskScriptRunner - INFO - {'loss': 7.9725, 'grad_norm': 1.40625, 'learning_rate': 0.00012229463278337307, 'epoch': 0.6868686868686869}
+2025-05-15 18:31:31,256 - TaskScriptRunner - INFO - {'loss': 7.9155, 'grad_norm': 1.2421875, 'learning_rate': 0.00011827437482115758, 'epoch': 0.6926406926406926}
+2025-05-15 18:31:32,307 - TaskScriptRunner - INFO - {'loss': 7.9656, 'grad_norm': 1.375, 'learning_rate': 0.00011430073170601968, 'epoch': 0.6984126984126984}
+2025-05-15 18:31:33,357 - TaskScriptRunner - INFO - {'loss': 7.9116, 'grad_norm': 1.265625, 'learning_rate': 0.00011037510962423425, 'epoch': 0.7041847041847041}
+2025-05-15 18:31:34,405 - TaskScriptRunner - INFO - {'loss': 8.0221, 'grad_norm': 1.28125, 'learning_rate': 0.0001064988977684716, 'epoch': 0.70995670995671}
+2025-05-15 18:31:35,455 - TaskScriptRunner - INFO - {'loss': 8.0241, 'grad_norm': 1.4609375, 'learning_rate': 0.00010267346784619325, 'epoch': 0.7157287157287158}
+2025-05-15 18:31:36,504 - TaskScriptRunner - INFO - {'loss': 7.9424, 'grad_norm': 1.4609375, 'learning_rate': 9.890017359423326e-05, 'epoch': 0.7215007215007215}
+2025-05-15 18:31:37,568 - TaskScriptRunner - INFO - {'loss': 7.902, 'grad_norm': 1.390625, 'learning_rate': 9.518035029974126e-05, 'epoch': 0.7272727272727273}
+2025-05-15 18:31:38,628 - TaskScriptRunner - INFO - {'loss': 7.9318, 'grad_norm': 1.265625, 'learning_rate': 9.151531432765204e-05, 'epoch': 0.733044733044733}
+2025-05-15 18:31:39,676 - TaskScriptRunner - INFO - {'loss': 7.9299, 'grad_norm': 1.234375, 'learning_rate': 8.790636265485333e-05, 'epoch': 0.7388167388167388}
+2025-05-15 18:31:40,728 - TaskScriptRunner - INFO - {'loss': 7.9018, 'grad_norm': 1.1796875, 'learning_rate': 8.435477241121353e-05, 'epoch': 0.7445887445887446}
+2025-05-15 18:31:41,778 - TaskScriptRunner - INFO - {'loss': 7.9427, 'grad_norm': 1.5, 'learning_rate': 8.086180042763284e-05, 'epoch': 0.7503607503607503}
+2025-05-15 18:31:42,828 - TaskScriptRunner - INFO - {'loss': 7.9319, 'grad_norm': 1.203125, 'learning_rate': 7.742868279127849e-05, 'epoch': 0.7561327561327561}
+2025-05-15 18:31:43,881 - TaskScriptRunner - INFO - {'loss': 7.9433, 'grad_norm': 1.21875, 'learning_rate': 7.405663440815968e-05, 'epoch': 0.7619047619047619}
+2025-05-15 18:31:44,930 - TaskScriptRunner - INFO - {'loss': 7.9456, 'grad_norm': 1.3203125, 'learning_rate': 7.074684857319927e-05, 'epoch': 0.7676767676767676}
+2025-05-15 18:31:45,979 - TaskScriptRunner - INFO - {'loss': 7.912, 'grad_norm': 1.234375, 'learning_rate': 6.750049654795198e-05, 'epoch': 0.7734487734487735}
+2025-05-15 18:31:47,029 - TaskScriptRunner - INFO - {'loss': 7.9466, 'grad_norm': 1.2265625, 'learning_rate': 6.431872714612072e-05, 'epoch': 0.7792207792207793}
+2025-05-15 18:31:48,081 - TaskScriptRunner - INFO - {'loss': 7.9205, 'grad_norm': 1.359375, 'learning_rate': 6.120266632701598e-05, 'epoch': 0.784992784992785}
+2025-05-15 18:31:49,143 - TaskScriptRunner - INFO - {'loss': 7.9046, 'grad_norm': 1.3125, 'learning_rate': 5.815341679710326e-05, 'epoch': 0.7907647907647908}
+2025-05-15 18:31:50,191 - TaskScriptRunner - INFO - {'loss': 7.9473, 'grad_norm': 1.2578125, 'learning_rate': 5.517205761977939e-05, 'epoch': 0.7965367965367965}
+2025-05-15 18:31:51,240 - TaskScriptRunner - INFO - {'loss': 7.8508, 'grad_norm': 1.1796875, 'learning_rate': 5.225964383351489e-05, 'epoch': 0.8023088023088023}
+2025-05-15 18:31:52,303 - TaskScriptRunner - INFO - {'loss': 7.9217, 'grad_norm': 1.125, 'learning_rate': 4.941720607849912e-05, 'epoch': 0.8080808080808081}
+2025-05-15 18:31:53,353 - TaskScriptRunner - INFO - {'loss': 7.9105, 'grad_norm': 1.21875, 'learning_rate': 4.664575023191886e-05, 'epoch': 0.8138528138528138}
+2025-05-15 18:31:54,401 - TaskScriptRunner - INFO - {'loss': 7.9154, 'grad_norm': 1.1796875, 'learning_rate': 4.394625705200012e-05, 'epoch': 0.8196248196248196}
+2025-05-15 18:31:55,455 - TaskScriptRunner - INFO - {'loss': 7.8561, 'grad_norm': 1.3203125, 'learning_rate': 4.131968183093912e-05, 'epoch': 0.8253968253968254}
+2025-05-15 18:31:56,504 - TaskScriptRunner - INFO - {'loss': 8.0501, 'grad_norm': 1.3984375, 'learning_rate': 3.876695405684485e-05, 'epoch': 0.8311688311688312}
+2025-05-15 18:31:57,563 - TaskScriptRunner - INFO - {'loss': 7.9667, 'grad_norm': 1.203125, 'learning_rate': 3.628897708481377e-05, 'epoch': 0.836940836940837}
+2025-05-15 18:31:58,611 - TaskScriptRunner - INFO - {'loss': 7.899, 'grad_norm': 1.2109375, 'learning_rate': 3.388662781725141e-05, 'epoch': 0.8427128427128427}
+2025-05-15 18:31:59,660 - TaskScriptRunner - INFO - {'loss': 7.8567, 'grad_norm': 1.1328125, 'learning_rate': 3.1560756393556184e-05, 'epoch': 0.8484848484848485}
+2025-05-15 18:32:00,710 - TaskScriptRunner - INFO - {'loss': 7.973, 'grad_norm': 1.296875, 'learning_rate': 2.9312185889273145e-05, 'epoch': 0.8542568542568543}
+2025-05-15 18:32:01,759 - TaskScriptRunner - INFO - {'loss': 7.8728, 'grad_norm': 1.1953125, 'learning_rate': 2.7141712024825378e-05, 'epoch': 0.86002886002886}
+2025-05-15 18:32:02,814 - TaskScriptRunner - INFO - {'loss': 7.8931, 'grad_norm': 1.15625, 'learning_rate': 2.505010288392587e-05, 'epoch': 0.8658008658008658}
+2025-05-15 18:32:03,870 - TaskScriptRunner - INFO - {'loss': 7.9046, 'grad_norm': 1.2265625, 'learning_rate': 2.3038098641769088e-05, 'epoch': 0.8715728715728716}
+2025-05-15 18:32:04,917 - TaskScriptRunner - INFO - {'loss': 7.9571, 'grad_norm': 1.2265625, 'learning_rate': 2.1106411303099453e-05, 'epoch': 0.8773448773448773}
+2025-05-15 18:32:05,977 - TaskScriptRunner - INFO - {'loss': 7.942, 'grad_norm': 1.203125, 'learning_rate': 1.9255724450247676e-05, 'epoch': 0.8831168831168831}
+2025-05-15 18:32:07,051 - TaskScriptRunner - INFO - {'loss': 7.9148, 'grad_norm': 1.265625, 'learning_rate': 1.7486693001226267e-05, 'epoch': 0.8888888888888888}
+2025-05-15 18:32:08,124 - TaskScriptRunner - INFO - {'loss': 7.9268, 'grad_norm': 1.2734375, 'learning_rate': 1.579994297796808e-05, 'epoch': 0.8946608946608947}
+2025-05-15 18:32:09,207 - TaskScriptRunner - INFO - {'loss': 7.8032, 'grad_norm': 1.2890625, 'learning_rate': 1.4196071284790529e-05, 'epoch': 0.9004329004329005}
+2025-05-15 18:32:10,302 - TaskScriptRunner - INFO - {'loss': 7.9132, 'grad_norm': 1.1875, 'learning_rate': 1.2675645497164351e-05, 'epoch': 0.9062049062049062}
+2025-05-15 18:32:11,392 - TaskScriptRunner - INFO - {'loss': 7.9581, 'grad_norm': 1.171875, 'learning_rate': 1.1239203660860647e-05, 'epoch': 0.911976911976912}
+2025-05-15 18:32:12,488 - TaskScriptRunner - INFO - {'loss': 7.9374, 'grad_norm': 1.2421875, 'learning_rate': 9.88725410154842e-06, 'epoch': 0.9177489177489178}
+2025-05-15 18:32:13,583 - TaskScriptRunner - INFO - {'loss': 7.9449, 'grad_norm': 1.2109375, 'learning_rate': 8.620275244908826e-06, 'epoch': 0.9235209235209235}
+2025-05-15 18:32:14,689 - TaskScriptRunner - INFO - {'loss': 7.9258, 'grad_norm': 1.2109375, 'learning_rate': 7.438715447331018e-06, 'epoch': 0.9292929292929293}
+2025-05-15 18:32:15,786 - TaskScriptRunner - INFO - {'loss': 7.9198, 'grad_norm': 1.234375, 'learning_rate': 6.342992837248235e-06, 'epoch': 0.935064935064935}
+2025-05-15 18:32:16,886 - TaskScriptRunner - INFO - {'loss': 7.9402, 'grad_norm': 1.2578125, 'learning_rate': 5.333495167171354e-06, 'epoch': 0.9408369408369408}
+2025-05-15 18:32:17,979 - TaskScriptRunner - INFO - {'loss': 8.0436, 'grad_norm': 1.328125, 'learning_rate': 4.410579676471571e-06, 'epoch': 0.9466089466089466}
+2025-05-15 18:32:19,067 - TaskScriptRunner - INFO - {'loss': 7.9191, 'grad_norm': 1.265625, 'learning_rate': 3.5745729649613034e-06, 'epoch': 0.9523809523809523}
+2025-05-15 18:32:20,161 - TaskScriptRunner - INFO - {'loss': 7.8881, 'grad_norm': 1.25, 'learning_rate': 2.8257708773173627e-06, 'epoch': 0.9581529581529582}
+2025-05-15 18:32:21,250 - TaskScriptRunner - INFO - {'loss': 7.9092, 'grad_norm': 1.25, 'learning_rate': 2.1644383983880357e-06, 'epoch': 0.963924963924964}
+2025-05-15 18:32:22,301 - TaskScriptRunner - INFO - {'loss': 7.9875, 'grad_norm': 1.1953125, 'learning_rate': 1.5908095594207582e-06, 'epoch': 0.9696969696969697}
+2025-05-15 18:32:23,420 - TaskScriptRunner - INFO - {'loss': 7.962, 'grad_norm': 1.2578125, 'learning_rate': 1.1050873552433394e-06, 'epoch': 0.9754689754689755}
+2025-05-15 18:32:24,502 - TaskScriptRunner - INFO - {'loss': 7.9649, 'grad_norm': 1.1953125, 'learning_rate': 7.074436724286704e-07, 'epoch': 0.9812409812409812}
+2025-05-15 18:32:25,602 - TaskScriptRunner - INFO - {'loss': 7.9409, 'grad_norm': 1.203125, 'learning_rate': 3.9801922846766094e-07, 'epoch': 0.987012987012987}
+2025-05-15 18:32:26,690 - TaskScriptRunner - INFO - {'loss': 7.894, 'grad_norm': 1.203125, 'learning_rate': 1.7692352197240524e-07, 'epoch': 0.9927849927849928}
+2025-05-15 18:32:27,782 - TaskScriptRunner - INFO - {'loss': 7.9152, 'grad_norm': 1.265625, 'learning_rate': 4.423479392709484e-08, 'epoch': 0.9985569985569985}
+2025-05-15 18:32:43,635 - TaskScriptRunner - INFO - {'train_runtime': 199.4467, 'train_samples_per_second': 34.746, 'train_steps_per_second': 0.867, 'train_loss': 8.17569182511699, 'epoch': 0.9985569985569985}
+2025-05-15 18:32:45,749 - ModelQuantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=53edd170-ca16-40ba-beb1-c6e588e0f38b] - Running quantization...
+2025-05-15 18:32:45,750 - ModelQuantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=53edd170-ca16-40ba-beb1-c6e588e0f38b] - Running quantization on 179 variables
+2025-05-15 18:32:52,807 - ModelQuantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=53edd170-ca16-40ba-beb1-c6e588e0f38b] - Quantized 179/179 params. Before quantization: 5664.51 MB. After quantization: 2832.25 MB with meta: 0.00 MB.
+2025-05-15 18:32:52,809 - ModelQuantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=53edd170-ca16-40ba-beb1-c6e588e0f38b] - Quantized from {'model.model.embed_tokens.weight': 'float32', 'model.model.layers.0.self_attn.q_proj.weight': 'float32', 'model.model.layers.0.self_attn.k_proj.weight': 'float32', 'model.model.layers.0.self_attn.v_proj.weight': 'float32', 'model.model.layers.0.self_attn.o_proj.weight': 'float32', 'model.model.layers.0.self_attn.q_norm.weight': 'float32', 'model.model.layers.0.self_attn.k_norm.weight': 'float32', 'model.model.layers.0.mlp.gate_proj.weight': 'float32', 'model.model.layers.0.mlp.up_proj.weight': 'float32', 'model.model.layers.0.mlp.down_proj.weight': 'float32', 'model.model.layers.0.post_attention_layernorm.weight': 'float32', 'model.model.layers.0.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.1.self_attn.q_proj.weight': 'float32', 'model.model.layers.1.self_attn.k_proj.weight': 'float32', 'model.model.layers.1.self_attn.v_proj.weight': 'float32', 'model.model.layers.1.self_attn.o_proj.weight': 'float32', 'model.model.layers.1.self_attn.q_norm.weight': 'float32', 'model.model.layers.1.self_attn.k_norm.weight': 'float32', 'model.model.layers.1.mlp.gate_proj.weight': 'float32', 'model.model.layers.1.mlp.up_proj.weight': 'float32', 'model.model.layers.1.mlp.down_proj.weight': 'float32', 'model.model.layers.1.post_attention_layernorm.weight': 'float32', 'model.model.layers.1.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.2.self_attn.q_proj.weight': 'float32', 'model.model.layers.2.self_attn.k_proj.weight': 'float32', 'model.model.layers.2.self_attn.v_proj.weight': 'float32', 'model.model.layers.2.self_attn.o_proj.weight': 'float32', 'model.model.layers.2.self_attn.q_norm.weight': 'float32', 'model.model.layers.2.self_attn.k_norm.weight': 'float32', 'model.model.layers.2.mlp.gate_proj.weight': 'float32', 'model.model.layers.2.mlp.up_proj.weight': 'float32', 'model.model.layers.2.mlp.down_proj.weight': 'float32', 'model.model.layers.2.post_attention_layernorm.weight': 'float32', 'model.model.layers.2.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.3.self_attn.q_proj.weight': 'float32', 'model.model.layers.3.self_attn.k_proj.weight': 'float32', 'model.model.layers.3.self_attn.v_proj.weight': 'float32', 'model.model.layers.3.self_attn.o_proj.weight': 'float32', 'model.model.layers.3.self_attn.q_norm.weight': 'float32', 'model.model.layers.3.self_attn.k_norm.weight': 'float32', 'model.model.layers.3.mlp.gate_proj.weight': 'float32', 'model.model.layers.3.mlp.up_proj.weight': 'float32', 'model.model.layers.3.mlp.down_proj.weight': 'float32', 'model.model.layers.3.post_attention_layernorm.weight': 'float32', 'model.model.layers.3.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.4.self_attn.q_proj.weight': 'float32', 'model.model.layers.4.self_attn.k_proj.weight': 'float32', 'model.model.layers.4.self_attn.v_proj.weight': 'float32', 'model.model.layers.4.self_attn.o_proj.weight': 'float32', 'model.model.layers.4.self_attn.q_norm.weight': 'float32', 'model.model.layers.4.self_attn.k_norm.weight': 'float32', 'model.model.layers.4.mlp.gate_proj.weight': 'float32', 'model.model.layers.4.mlp.up_proj.weight': 'float32', 'model.model.layers.4.mlp.down_proj.weight': 'float32', 'model.model.layers.4.post_attention_layernorm.weight': 'float32', 'model.model.layers.4.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.5.self_attn.q_proj.weight': 'float32', 'model.model.layers.5.self_attn.k_proj.weight': 'float32', 'model.model.layers.5.self_attn.v_proj.weight': 'float32', 'model.model.layers.5.self_attn.o_proj.weight': 'float32', 'model.model.layers.5.self_attn.q_norm.weight': 'float32', 'model.model.layers.5.self_attn.k_norm.weight': 'float32', 'model.model.layers.5.mlp.gate_proj.weight': 'float32', 'model.model.layers.5.mlp.up_proj.weight': 'float32', 'model.model.layers.5.mlp.down_proj.weight': 'float32', 'model.model.layers.5.post_attention_layernorm.weight': 'float32', 'model.model.layers.5.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.6.self_attn.q_proj.weight': 'float32', 'model.model.layers.6.self_attn.k_proj.weight': 'float32', 'model.model.layers.6.self_attn.v_proj.weight': 'float32', 'model.model.layers.6.self_attn.o_proj.weight': 'float32', 'model.model.layers.6.self_attn.q_norm.weight': 'float32', 'model.model.layers.6.self_attn.k_norm.weight': 'float32', 'model.model.layers.6.mlp.gate_proj.weight': 'float32', 'model.model.layers.6.mlp.up_proj.weight': 'float32', 'model.model.layers.6.mlp.down_proj.weight': 'float32', 'model.model.layers.6.post_attention_layernorm.weight': 'float32', 'model.model.layers.6.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.7.self_attn.q_proj.weight': 'float32', 'model.model.layers.7.self_attn.k_proj.weight': 'float32', 'model.model.layers.7.self_attn.v_proj.weight': 'float32', 'model.model.layers.7.self_attn.o_proj.weight': 'float32', 'model.model.layers.7.self_attn.q_norm.weight': 'float32', 'model.model.layers.7.self_attn.k_norm.weight': 'float32', 'model.model.layers.7.mlp.gate_proj.weight': 'float32', 'model.model.layers.7.mlp.up_proj.weight': 'float32', 'model.model.layers.7.mlp.down_proj.weight': 'float32', 'model.model.layers.7.post_attention_layernorm.weight': 'float32', 'model.model.layers.7.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.8.self_attn.q_proj.weight': 'float32', 'model.model.layers.8.self_attn.k_proj.weight': 'float32', 'model.model.layers.8.self_attn.v_proj.weight': 'float32', 'model.model.layers.8.self_attn.o_proj.weight': 'float32', 'model.model.layers.8.self_attn.q_norm.weight': 'float32', 'model.model.layers.8.self_attn.k_norm.weight': 'float32', 'model.model.layers.8.mlp.gate_proj.weight': 'float32', 'model.model.layers.8.mlp.up_proj.weight': 'float32', 'model.model.layers.8.mlp.down_proj.weight': 'float32', 'model.model.layers.8.post_attention_layernorm.weight': 'float32', 'model.model.layers.8.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.9.self_attn.q_proj.weight': 'float32', 'model.model.layers.9.self_attn.k_proj.weight': 'float32', 'model.model.layers.9.self_attn.v_proj.weight': 'float32', 'model.model.layers.9.self_attn.o_proj.weight': 'float32', 'model.model.layers.9.self_attn.q_norm.weight': 'float32', 'model.model.layers.9.self_attn.k_norm.weight': 'float32', 'model.model.layers.9.mlp.gate_proj.weight': 'float32', 'model.model.layers.9.mlp.up_proj.weight': 'float32', 'model.model.layers.9.mlp.down_proj.weight': 'float32', 'model.model.layers.9.post_attention_layernorm.weight': 'float32', 'model.model.layers.9.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.10.self_attn.q_proj.weight': 'float32', 'model.model.layers.10.self_attn.k_proj.weight': 'float32', 'model.model.layers.10.self_attn.v_proj.weight': 'float32', 'model.model.layers.10.self_attn.o_proj.weight': 'float32', 'model.model.layers.10.self_attn.q_norm.weight': 'float32', 'model.model.layers.10.self_attn.k_norm.weight': 'float32', 'model.model.layers.10.mlp.gate_proj.weight': 'float32', 'model.model.layers.10.mlp.up_proj.weight': 'float32', 'model.model.layers.10.mlp.down_proj.weight': 'float32', 'model.model.layers.10.post_attention_layernorm.weight': 'float32', 'model.model.layers.10.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.11.self_attn.q_proj.weight': 'float32', 'model.model.layers.11.self_attn.k_proj.weight': 'float32', 'model.model.layers.11.self_attn.v_proj.weight': 'float32', 'model.model.layers.11.self_attn.o_proj.weight': 'float32', 'model.model.layers.11.self_attn.q_norm.weight': 'float32', 'model.model.layers.11.self_attn.k_norm.weight': 'float32', 'model.model.layers.11.mlp.gate_proj.weight': 'float32', 'model.model.layers.11.mlp.up_proj.weight': 'float32', 'model.model.layers.11.mlp.down_proj.weight': 'float32', 'model.model.layers.11.post_attention_layernorm.weight': 'float32', 'model.model.layers.11.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.12.self_attn.q_proj.weight': 'float32', 'model.model.layers.12.self_attn.k_proj.weight': 'float32', 'model.model.layers.12.self_attn.v_proj.weight': 'float32', 'model.model.layers.12.self_attn.o_proj.weight': 'float32', 'model.model.layers.12.self_attn.q_norm.weight': 'float32', 'model.model.layers.12.self_attn.k_norm.weight': 'float32', 'model.model.layers.12.mlp.gate_proj.weight': 'float32', 'model.model.layers.12.mlp.up_proj.weight': 'float32', 'model.model.layers.12.mlp.down_proj.weight': 'float32', 'model.model.layers.12.post_attention_layernorm.weight': 'float32', 'model.model.layers.12.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.13.self_attn.q_proj.weight': 'float32', 'model.model.layers.13.self_attn.k_proj.weight': 'float32', 'model.model.layers.13.self_attn.v_proj.weight': 'float32', 'model.model.layers.13.self_attn.o_proj.weight': 'float32', 'model.model.layers.13.self_attn.q_norm.weight': 'float32', 'model.model.layers.13.self_attn.k_norm.weight': 'float32', 'model.model.layers.13.mlp.gate_proj.weight': 'float32', 'model.model.layers.13.mlp.up_proj.weight': 'float32', 'model.model.layers.13.mlp.down_proj.weight': 'float32', 'model.model.layers.13.post_attention_layernorm.weight': 'float32', 'model.model.layers.13.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.14.self_attn.q_proj.weight': 'float32', 'model.model.layers.14.self_attn.k_proj.weight': 'float32', 'model.model.layers.14.self_attn.v_proj.weight': 'float32', 'model.model.layers.14.self_attn.o_proj.weight': 'float32', 'model.model.layers.14.self_attn.q_norm.weight': 'float32', 'model.model.layers.14.self_attn.k_norm.weight': 'float32', 'model.model.layers.14.mlp.gate_proj.weight': 'float32', 'model.model.layers.14.mlp.up_proj.weight': 'float32', 'model.model.layers.14.mlp.down_proj.weight': 'float32', 'model.model.layers.14.post_attention_layernorm.weight': 'float32', 'model.model.layers.14.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.15.self_attn.q_proj.weight': 'float32', 'model.model.layers.15.self_attn.k_proj.weight': 'float32', 'model.model.layers.15.self_attn.v_proj.weight': 'float32', 'model.model.layers.15.self_attn.o_proj.weight': 'float32', 'model.model.layers.15.self_attn.q_norm.weight': 'float32', 'model.model.layers.15.self_attn.k_norm.weight': 'float32', 'model.model.layers.15.mlp.gate_proj.weight': 'float32', 'model.model.layers.15.mlp.up_proj.weight': 'float32', 'model.model.layers.15.mlp.down_proj.weight': 'float32', 'model.model.layers.15.post_attention_layernorm.weight': 'float32', 'model.model.layers.15.post_feedforward_layernorm.weight': 'float32', 'model.model.norm.weight': 'float32', 'model.lm_head.weight': 'float32'} to float16
+2025-05-15 18:37:37,791 - ModelDequantizer - INFO - Using model dequantizator.
+2025-05-15 18:37:37,793 - ModelQuantizer - INFO - Using model quantizator.
+2025-05-15 18:37:38,315 - TaskScriptRunner - INFO - start task run() with full path: /workspace/NVFlare/examples/advanced/llm_hf/hf_pretrain/workdir/site-code/simulate_job/app_site-code/custom/src/pretrain_nvflare.py
+2025-05-15 18:37:38,552 - TaskScriptRunner - INFO -     smart_open supports the following transport mechanisms:
+2025-05-15 18:37:38,553 - TaskScriptRunner - INFO - 
+2025-05-15 18:37:38,554 - TaskScriptRunner - INFO -     file (smart_open/local_file.py)
+2025-05-15 18:37:38,554 - TaskScriptRunner - INFO -     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2025-05-15 18:37:38,554 - TaskScriptRunner - INFO -     Implements the transport for the file:// schema.
+2025-05-15 18:37:38,555 - TaskScriptRunner - INFO - 
+2025-05-15 18:37:38,555 - TaskScriptRunner - INFO -     ftp (smart_open/ftp.py)
+2025-05-15 18:37:38,556 - TaskScriptRunner - INFO -     ~~~~~~~~~~~~~~~~~~~~~~~
+2025-05-15 18:37:38,556 - TaskScriptRunner - INFO -     Implements I/O streams over FTP.
+2025-05-15 18:37:38,556 - TaskScriptRunner - INFO - 
+2025-05-15 18:37:38,557 - TaskScriptRunner - INFO -     gs (smart_open/gcs.py)
+2025-05-15 18:37:38,557 - TaskScriptRunner - INFO -     ~~~~~~~~~~~~~~~~~~~~~~
+2025-05-15 18:37:38,558 - TaskScriptRunner - INFO -     Implements file-like objects for reading and writing to/from GCS.
+2025-05-15 18:37:38,558 - TaskScriptRunner - INFO - 
+2025-05-15 18:37:38,559 - TaskScriptRunner - INFO -     min_part_size: int, optional
+        The minimum part size for multipart uploads. For writing only.
+    client: google.cloud.storage.Client, optional
+        The GCS client to use when working with google-cloud-storage.
+    blob_properties: dict, optional
+        Set properties on blob before writing. For writing only.
+    blob_open_kwargs: dict, optional
+        Additional keyword arguments to propagate to the blob.open method
+        of the google-cloud-storage library.
+
+2025-05-15 18:37:38,559 - TaskScriptRunner - INFO -     hdfs (smart_open/hdfs.py)
+2025-05-15 18:37:38,559 - TaskScriptRunner - INFO -     ~~~~~~~~~~~~~~~~~~~~~~~~~
+2025-05-15 18:37:38,560 - TaskScriptRunner - INFO -     Implements reading and writing to/from HDFS.
+2025-05-15 18:37:38,560 - TaskScriptRunner - INFO - 
+2025-05-15 18:37:38,560 - TaskScriptRunner - INFO -     http (smart_open/http.py)
+2025-05-15 18:37:38,561 - TaskScriptRunner - INFO -     ~~~~~~~~~~~~~~~~~~~~~~~~~
+2025-05-15 18:37:38,561 - TaskScriptRunner - INFO -     Implements file-like objects for reading from http.
+2025-05-15 18:37:38,562 - TaskScriptRunner - INFO - 
+2025-05-15 18:37:38,562 - TaskScriptRunner - INFO -     kerberos: boolean, optional
+        If True, will attempt to use the local Kerberos credentials
+    user: str, optional
+        The username for authenticating over HTTP
+    password: str, optional
+        The password for authenticating over HTTP
+    cert: str/tuple, optional
+        if String, path to ssl client cert file (.pem). If Tuple, (‘cert’, ‘key’)
+    headers: dict, optional
+        Any headers to send in the request. If ``None``, the default headers are sent:
+        ``{'Accept-Encoding': 'identity'}``. To use no headers at all,
+        set this variable to an empty dict, ``{}``.
+    buffer_size: int, optional
+        The buffer size to use when performing I/O.
+
+2025-05-15 18:37:38,562 - TaskScriptRunner - INFO -     s3 (smart_open/s3.py)
+2025-05-15 18:37:38,563 - TaskScriptRunner - INFO -     ~~~~~~~~~~~~~~~~~~~~~
+2025-05-15 18:37:38,563 - TaskScriptRunner - INFO -     Implements file-like objects for reading and writing from/to AWS S3.
+2025-05-15 18:37:38,564 - TaskScriptRunner - INFO - 
+2025-05-15 18:37:38,564 - TaskScriptRunner - INFO -     buffer_size: int, optional
+        The buffer size to use when performing I/O.
+    min_part_size: int, optional
+        The minimum part size for multipart uploads.  For writing only.
+    multipart_upload: bool, optional
+        Default: `True`
+        If set to `True`, will use multipart upload for writing to S3. If set
+        to `False`, S3 upload will use the S3 Single-Part Upload API, which
+        is more ideal for small file sizes.
+        For writing only.
+    version_id: str, optional
+        Version of the object, used when reading object.
+        If None, will fetch the most recent version.
+    defer_seek: boolean, optional
+        Default: `False`
+        If set to `True` on a file opened for reading, GetObject will not be
+        called until the first seek() or read().
+        Avoids redundant API queries when seeking before reading.
+    client: object, optional
+        The S3 client to use when working with boto3.
+        If you don't specify this, then smart_open will create a new client for you.
+    client_kwargs: dict, optional
+        Additional parameters to pass to the relevant functions of the client.
+        The keys are fully qualified method names, e.g. `S3.Client.create_multipart_upload`.
+        The values are kwargs to pass to that method each time it is called.
+    writebuffer: IO[bytes], optional
+        By default, this module will buffer data in memory using io.BytesIO
+        when writing. Pass another binary IO instance here to use it instead.
+        For example, you may pass a file object to buffer to local disk instead
+        of in RAM. Use this to keep RAM usage low at the expense of additional
+        disk IO. If you pass in an open file, then you are responsible for
+        cleaning it up after writing completes.
+
+2025-05-15 18:37:38,565 - TaskScriptRunner - INFO -     scp (smart_open/ssh.py)
+2025-05-15 18:37:38,565 - TaskScriptRunner - INFO -     ~~~~~~~~~~~~~~~~~~~~~~~
+2025-05-15 18:37:38,565 - TaskScriptRunner - INFO -     Implements I/O streams over SSH.
+2025-05-15 18:37:38,566 - TaskScriptRunner - INFO - 
+2025-05-15 18:37:38,566 - TaskScriptRunner - INFO -     mode: str, optional
+        The mode to use for opening the file.
+    host: str, optional
+        The hostname of the remote machine.  May not be None.
+    user: str, optional
+        The username to use to login to the remote machine.
+        If None, defaults to the name of the current user.
+    password: str, optional
+        The password to use to login to the remote machine.
+    port: int, optional
+        The port to connect to.
+    transport_params: dict, optional
+        Any additional settings to be passed to paramiko.SSHClient.connect
+
+2025-05-15 18:37:38,567 - TaskScriptRunner - INFO -     webhdfs (smart_open/webhdfs.py)
+2025-05-15 18:37:38,567 - TaskScriptRunner - INFO -     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2025-05-15 18:37:38,567 - TaskScriptRunner - INFO -     Implements reading and writing to/from WebHDFS.
+2025-05-15 18:37:38,568 - TaskScriptRunner - INFO - 
+2025-05-15 18:37:38,568 - TaskScriptRunner - INFO -     min_part_size: int, optional
+        For writing only.
+
+2025-05-15 18:37:38,568 - TaskScriptRunner - INFO -     Examples
+2025-05-15 18:37:38,569 - TaskScriptRunner - INFO -     --------
+2025-05-15 18:37:38,569 - TaskScriptRunner - INFO - 
+2025-05-15 18:37:38,570 - TaskScriptRunner - INFO -     See README.rst
+2025-05-15 18:37:38,570 - TaskScriptRunner - INFO -     This function also supports transparent compression and decompression 
+2025-05-15 18:37:38,570 - TaskScriptRunner - INFO -     using the following codecs:
+2025-05-15 18:37:38,571 - TaskScriptRunner - INFO - 
+2025-05-15 18:37:38,571 - TaskScriptRunner - INFO -     * .bz2
+2025-05-15 18:37:38,571 - TaskScriptRunner - INFO -     * .gz
+2025-05-15 18:37:38,572 - TaskScriptRunner - INFO - 
+2025-05-15 18:37:38,572 - TaskScriptRunner - INFO -     The function depends on the file extension to determine the appropriate codec.
+2025-05-15 18:37:38,573 - TaskScriptRunner - INFO -     Supported URI schemes are:
+2025-05-15 18:37:38,573 - TaskScriptRunner - INFO - 
+2025-05-15 18:37:38,573 - TaskScriptRunner - INFO -     * file
+2025-05-15 18:37:38,574 - TaskScriptRunner - INFO -     * ftp
+2025-05-15 18:37:38,574 - TaskScriptRunner - INFO -     * gs
+2025-05-15 18:37:38,574 - TaskScriptRunner - INFO -     * hdfs
+2025-05-15 18:37:38,575 - TaskScriptRunner - INFO -     * http
+2025-05-15 18:37:38,575 - TaskScriptRunner - INFO -     * s3
+2025-05-15 18:37:38,575 - TaskScriptRunner - INFO -     * scp
+2025-05-15 18:37:38,576 - TaskScriptRunner - INFO -     * webhdfs
+2025-05-15 18:37:38,576 - TaskScriptRunner - INFO - 
+2025-05-15 18:37:38,577 - TaskScriptRunner - INFO -     Valid URI examples::
+2025-05-15 18:37:38,577 - TaskScriptRunner - INFO - 
+2025-05-15 18:37:38,577 - TaskScriptRunner - INFO -     * ./local/path/file
+2025-05-15 18:37:38,578 - TaskScriptRunner - INFO -     * ~/local/path/file
+2025-05-15 18:37:38,578 - TaskScriptRunner - INFO -     * local/path/file
+2025-05-15 18:37:38,578 - TaskScriptRunner - INFO -     * ./local/path/file.gz
+2025-05-15 18:37:38,579 - TaskScriptRunner - INFO -     * file:///home/user/file
+2025-05-15 18:37:38,579 - TaskScriptRunner - INFO -     * file:///home/user/file.bz2
+2025-05-15 18:37:38,579 - TaskScriptRunner - INFO -     * ftp://username@host/path/file
+2025-05-15 18:37:38,580 - TaskScriptRunner - INFO -     * ftp://username:password@host/path/file
+2025-05-15 18:37:38,580 - TaskScriptRunner - INFO -     * ftp://username:password@host:port/path/file
+2025-05-15 18:37:38,581 - TaskScriptRunner - INFO -     * ftps://username@host/path/file
+2025-05-15 18:37:38,581 - TaskScriptRunner - INFO -     * ftps://username:password@host/path/file
+2025-05-15 18:37:38,581 - TaskScriptRunner - INFO -     * ftps://username:password@host:port/path/file
+2025-05-15 18:37:38,582 - TaskScriptRunner - INFO -     * hdfs:///path/file
+2025-05-15 18:37:38,582 - TaskScriptRunner - INFO -     * hdfs://path/file
+2025-05-15 18:37:38,582 - TaskScriptRunner - INFO -     * viewfs:///path/file
+2025-05-15 18:37:38,583 - TaskScriptRunner - INFO -     * viewfs://path/file
+2025-05-15 18:37:38,583 - TaskScriptRunner - INFO -     * s3://my_bucket/my_key
+2025-05-15 18:37:38,583 - TaskScriptRunner - INFO -     * s3://my_key:my_secret@my_bucket/my_key
+2025-05-15 18:37:38,584 - TaskScriptRunner - INFO -     * s3://my_key:my_secret@my_server:my_port@my_bucket/my_key
+2025-05-15 18:37:38,584 - TaskScriptRunner - INFO -     * ssh://username@host/path/file
+2025-05-15 18:37:38,585 - TaskScriptRunner - INFO -     * ssh://username@host//path/file
+2025-05-15 18:37:38,585 - TaskScriptRunner - INFO -     * scp://username@host/path/file
+2025-05-15 18:37:38,585 - TaskScriptRunner - INFO -     * sftp://username@host/path/file
+2025-05-15 18:37:38,586 - TaskScriptRunner - INFO -     * webhdfs://host:port/path/file
+2025-05-15 18:38:07,651 - ModelDequantizer - INFO - Using model dequantizator.
+2025-05-15 18:38:07,653 - ModelQuantizer - INFO - Using model quantizator.
+2025-05-15 18:38:08,668 - TaskScriptRunner - INFO - start task run() with full path: /workspace/NVFlare/examples/advanced/llm_hf/hf_pretrain/workdir/site-code/simulate_job/app_site-code/custom/src/pretrain_nvflare.py
+2025-05-15 18:38:08,913 - TaskScriptRunner - INFO -     smart_open supports the following transport mechanisms:
+2025-05-15 18:38:08,914 - TaskScriptRunner - INFO - 
+2025-05-15 18:38:08,914 - TaskScriptRunner - INFO -     file (smart_open/local_file.py)
+2025-05-15 18:38:08,915 - TaskScriptRunner - INFO -     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2025-05-15 18:38:08,915 - TaskScriptRunner - INFO -     Implements the transport for the file:// schema.
+2025-05-15 18:38:08,916 - TaskScriptRunner - INFO - 
+2025-05-15 18:38:08,916 - TaskScriptRunner - INFO -     ftp (smart_open/ftp.py)
+2025-05-15 18:38:08,917 - TaskScriptRunner - INFO -     ~~~~~~~~~~~~~~~~~~~~~~~
+2025-05-15 18:38:08,917 - TaskScriptRunner - INFO -     Implements I/O streams over FTP.
+2025-05-15 18:38:08,917 - TaskScriptRunner - INFO - 
+2025-05-15 18:38:08,918 - TaskScriptRunner - INFO -     gs (smart_open/gcs.py)
+2025-05-15 18:38:08,918 - TaskScriptRunner - INFO -     ~~~~~~~~~~~~~~~~~~~~~~
+2025-05-15 18:38:08,919 - TaskScriptRunner - INFO -     Implements file-like objects for reading and writing to/from GCS.
+2025-05-15 18:38:08,919 - TaskScriptRunner - INFO - 
+2025-05-15 18:38:08,920 - TaskScriptRunner - INFO -     min_part_size: int, optional
+        The minimum part size for multipart uploads. For writing only.
+    client: google.cloud.storage.Client, optional
+        The GCS client to use when working with google-cloud-storage.
+    blob_properties: dict, optional
+        Set properties on blob before writing. For writing only.
+    blob_open_kwargs: dict, optional
+        Additional keyword arguments to propagate to the blob.open method
+        of the google-cloud-storage library.
+
+2025-05-15 18:38:08,920 - TaskScriptRunner - INFO -     hdfs (smart_open/hdfs.py)
+2025-05-15 18:38:08,920 - TaskScriptRunner - INFO -     ~~~~~~~~~~~~~~~~~~~~~~~~~
+2025-05-15 18:38:08,921 - TaskScriptRunner - INFO -     Implements reading and writing to/from HDFS.
+2025-05-15 18:38:08,921 - TaskScriptRunner - INFO - 
+2025-05-15 18:38:08,922 - TaskScriptRunner - INFO -     http (smart_open/http.py)
+2025-05-15 18:38:08,922 - TaskScriptRunner - INFO -     ~~~~~~~~~~~~~~~~~~~~~~~~~
+2025-05-15 18:38:08,922 - TaskScriptRunner - INFO -     Implements file-like objects for reading from http.
+2025-05-15 18:38:08,923 - TaskScriptRunner - INFO - 
+2025-05-15 18:38:08,923 - TaskScriptRunner - INFO -     kerberos: boolean, optional
+        If True, will attempt to use the local Kerberos credentials
+    user: str, optional
+        The username for authenticating over HTTP
+    password: str, optional
+        The password for authenticating over HTTP
+    cert: str/tuple, optional
+        if String, path to ssl client cert file (.pem). If Tuple, (‘cert’, ‘key’)
+    headers: dict, optional
+        Any headers to send in the request. If ``None``, the default headers are sent:
+        ``{'Accept-Encoding': 'identity'}``. To use no headers at all,
+        set this variable to an empty dict, ``{}``.
+    buffer_size: int, optional
+        The buffer size to use when performing I/O.
+
+2025-05-15 18:38:08,924 - TaskScriptRunner - INFO -     s3 (smart_open/s3.py)
+2025-05-15 18:38:08,924 - TaskScriptRunner - INFO -     ~~~~~~~~~~~~~~~~~~~~~
+2025-05-15 18:38:08,924 - TaskScriptRunner - INFO -     Implements file-like objects for reading and writing from/to AWS S3.
+2025-05-15 18:38:08,925 - TaskScriptRunner - INFO - 
+2025-05-15 18:38:08,925 - TaskScriptRunner - INFO -     buffer_size: int, optional
+        The buffer size to use when performing I/O.
+    min_part_size: int, optional
+        The minimum part size for multipart uploads.  For writing only.
+    multipart_upload: bool, optional
+        Default: `True`
+        If set to `True`, will use multipart upload for writing to S3. If set
+        to `False`, S3 upload will use the S3 Single-Part Upload API, which
+        is more ideal for small file sizes.
+        For writing only.
+    version_id: str, optional
+        Version of the object, used when reading object.
+        If None, will fetch the most recent version.
+    defer_seek: boolean, optional
+        Default: `False`
+        If set to `True` on a file opened for reading, GetObject will not be
+        called until the first seek() or read().
+        Avoids redundant API queries when seeking before reading.
+    client: object, optional
+        The S3 client to use when working with boto3.
+        If you don't specify this, then smart_open will create a new client for you.
+    client_kwargs: dict, optional
+        Additional parameters to pass to the relevant functions of the client.
+        The keys are fully qualified method names, e.g. `S3.Client.create_multipart_upload`.
+        The values are kwargs to pass to that method each time it is called.
+    writebuffer: IO[bytes], optional
+        By default, this module will buffer data in memory using io.BytesIO
+        when writing. Pass another binary IO instance here to use it instead.
+        For example, you may pass a file object to buffer to local disk instead
+        of in RAM. Use this to keep RAM usage low at the expense of additional
+        disk IO. If you pass in an open file, then you are responsible for
+        cleaning it up after writing completes.
+
+2025-05-15 18:38:08,926 - TaskScriptRunner - INFO -     scp (smart_open/ssh.py)
+2025-05-15 18:38:08,926 - TaskScriptRunner - INFO -     ~~~~~~~~~~~~~~~~~~~~~~~
+2025-05-15 18:38:08,927 - TaskScriptRunner - INFO -     Implements I/O streams over SSH.
+2025-05-15 18:38:08,927 - TaskScriptRunner - INFO - 
+2025-05-15 18:38:08,927 - TaskScriptRunner - INFO -     mode: str, optional
+        The mode to use for opening the file.
+    host: str, optional
+        The hostname of the remote machine.  May not be None.
+    user: str, optional
+        The username to use to login to the remote machine.
+        If None, defaults to the name of the current user.
+    password: str, optional
+        The password to use to login to the remote machine.
+    port: int, optional
+        The port to connect to.
+    transport_params: dict, optional
+        Any additional settings to be passed to paramiko.SSHClient.connect
+
+2025-05-15 18:38:08,928 - TaskScriptRunner - INFO -     webhdfs (smart_open/webhdfs.py)
+2025-05-15 18:38:08,928 - TaskScriptRunner - INFO -     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2025-05-15 18:38:08,929 - TaskScriptRunner - INFO -     Implements reading and writing to/from WebHDFS.
+2025-05-15 18:38:08,929 - TaskScriptRunner - INFO - 
+2025-05-15 18:38:08,929 - TaskScriptRunner - INFO -     min_part_size: int, optional
+        For writing only.
+
+2025-05-15 18:38:08,930 - TaskScriptRunner - INFO -     Examples
+2025-05-15 18:38:08,930 - TaskScriptRunner - INFO -     --------
+2025-05-15 18:38:08,931 - TaskScriptRunner - INFO - 
+2025-05-15 18:38:08,931 - TaskScriptRunner - INFO -     See README.rst
+2025-05-15 18:38:08,931 - TaskScriptRunner - INFO -     This function also supports transparent compression and decompression 
+2025-05-15 18:38:08,932 - TaskScriptRunner - INFO -     using the following codecs:
+2025-05-15 18:38:08,932 - TaskScriptRunner - INFO - 
+2025-05-15 18:38:08,933 - TaskScriptRunner - INFO -     * .bz2
+2025-05-15 18:38:08,933 - TaskScriptRunner - INFO -     * .gz
+2025-05-15 18:38:08,933 - TaskScriptRunner - INFO - 
+2025-05-15 18:38:08,934 - TaskScriptRunner - INFO -     The function depends on the file extension to determine the appropriate codec.
+2025-05-15 18:38:08,934 - TaskScriptRunner - INFO -     Supported URI schemes are:
+2025-05-15 18:38:08,935 - TaskScriptRunner - INFO - 
+2025-05-15 18:38:08,935 - TaskScriptRunner - INFO -     * file
+2025-05-15 18:38:08,935 - TaskScriptRunner - INFO -     * ftp
+2025-05-15 18:38:08,936 - TaskScriptRunner - INFO -     * gs
+2025-05-15 18:38:08,936 - TaskScriptRunner - INFO -     * hdfs
+2025-05-15 18:38:08,936 - TaskScriptRunner - INFO -     * http
+2025-05-15 18:38:08,937 - TaskScriptRunner - INFO -     * s3
+2025-05-15 18:38:08,937 - TaskScriptRunner - INFO -     * scp
+2025-05-15 18:38:08,938 - TaskScriptRunner - INFO -     * webhdfs
+2025-05-15 18:38:08,938 - TaskScriptRunner - INFO - 
+2025-05-15 18:38:08,938 - TaskScriptRunner - INFO -     Valid URI examples::
+2025-05-15 18:38:08,939 - TaskScriptRunner - INFO - 
+2025-05-15 18:38:08,939 - TaskScriptRunner - INFO -     * ./local/path/file
+2025-05-15 18:38:08,939 - TaskScriptRunner - INFO -     * ~/local/path/file
+2025-05-15 18:38:08,940 - TaskScriptRunner - INFO -     * local/path/file
+2025-05-15 18:38:08,940 - TaskScriptRunner - INFO -     * ./local/path/file.gz
+2025-05-15 18:38:08,941 - TaskScriptRunner - INFO -     * file:///home/user/file
+2025-05-15 18:38:08,941 - TaskScriptRunner - INFO -     * file:///home/user/file.bz2
+2025-05-15 18:38:08,941 - TaskScriptRunner - INFO -     * ftp://username@host/path/file
+2025-05-15 18:38:08,942 - TaskScriptRunner - INFO -     * ftp://username:password@host/path/file
+2025-05-15 18:38:08,942 - TaskScriptRunner - INFO -     * ftp://username:password@host:port/path/file
+2025-05-15 18:38:08,942 - TaskScriptRunner - INFO -     * ftps://username@host/path/file
+2025-05-15 18:38:08,943 - TaskScriptRunner - INFO -     * ftps://username:password@host/path/file
+2025-05-15 18:38:08,943 - TaskScriptRunner - INFO -     * ftps://username:password@host:port/path/file
+2025-05-15 18:38:08,944 - TaskScriptRunner - INFO -     * hdfs:///path/file
+2025-05-15 18:38:08,944 - TaskScriptRunner - INFO -     * hdfs://path/file
+2025-05-15 18:38:08,944 - TaskScriptRunner - INFO -     * viewfs:///path/file
+2025-05-15 18:38:08,945 - TaskScriptRunner - INFO -     * viewfs://path/file
+2025-05-15 18:38:08,945 - TaskScriptRunner - INFO -     * s3://my_bucket/my_key
+2025-05-15 18:38:08,945 - TaskScriptRunner - INFO -     * s3://my_key:my_secret@my_bucket/my_key
+2025-05-15 18:38:08,946 - TaskScriptRunner - INFO -     * s3://my_key:my_secret@my_server:my_port@my_bucket/my_key
+2025-05-15 18:38:08,946 - TaskScriptRunner - INFO -     * ssh://username@host/path/file
+2025-05-15 18:38:08,947 - TaskScriptRunner - INFO -     * ssh://username@host//path/file
+2025-05-15 18:38:08,947 - TaskScriptRunner - INFO -     * scp://username@host/path/file
+2025-05-15 18:38:08,947 - TaskScriptRunner - INFO -     * sftp://username@host/path/file
+2025-05-15 18:38:08,948 - TaskScriptRunner - INFO -     * webhdfs://host:port/path/file
+2025-05-15 18:38:13,073 - TaskScriptRunner - INFO - Attempting to load training data from: /workspace/NVFlare/examples/advanced/llm_hf/data/code/train.npy
+2025-05-15 18:38:13,074 - TaskScriptRunner - INFO - Loading data from /workspace/NVFlare/examples/advanced/llm_hf/data/code/train.npy...
+2025-05-15 18:38:13,074 - TaskScriptRunner - INFO - data_array shape: (988118026,)
+2025-05-15 18:38:13,075 - TaskScriptRunner - INFO - data_array dtype: uint32
+2025-05-15 18:38:13,075 - TaskScriptRunner - INFO - data_array size: 988118026
+2025-05-15 18:38:36,575 - TaskScriptRunner - INFO - 988118026 len text_list
+2025-05-15 18:38:43,952 - TaskScriptRunner - INFO - 1000000 len text_list
+2025-05-15 18:38:44,046 - MPM - WARNING - #### MPM: still running thread Thread-6 (check_parent_alive)
+2025-05-15 18:38:44,075 - MPM - WARNING - #### MPM: still running thread Thread-7 (run)
+2025-05-15 18:43:26,305 - ModelDequantizer - INFO - Using model dequantizator.
+2025-05-15 18:43:26,307 - ModelQuantizer - INFO - Using model quantizator.
+2025-05-15 18:43:26,829 - TaskScriptRunner - INFO - start task run() with full path: /workspace/NVFlare/examples/advanced/llm_hf/hf_pretrain/workdir/site-code/simulate_job/app_site-code/custom/src/pretrain_nvflare.py
+2025-05-15 18:43:27,064 - TaskScriptRunner - INFO -     smart_open supports the following transport mechanisms:
+2025-05-15 18:43:27,064 - TaskScriptRunner - INFO - 
+2025-05-15 18:43:27,065 - TaskScriptRunner - INFO -     file (smart_open/local_file.py)
+2025-05-15 18:43:27,065 - TaskScriptRunner - INFO -     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2025-05-15 18:43:27,066 - TaskScriptRunner - INFO -     Implements the transport for the file:// schema.
+2025-05-15 18:43:27,066 - TaskScriptRunner - INFO - 
+2025-05-15 18:43:27,066 - TaskScriptRunner - INFO -     ftp (smart_open/ftp.py)
+2025-05-15 18:43:27,067 - TaskScriptRunner - INFO -     ~~~~~~~~~~~~~~~~~~~~~~~
+2025-05-15 18:43:27,067 - TaskScriptRunner - INFO -     Implements I/O streams over FTP.
+2025-05-15 18:43:27,068 - TaskScriptRunner - INFO - 
+2025-05-15 18:43:27,068 - TaskScriptRunner - INFO -     gs (smart_open/gcs.py)
+2025-05-15 18:43:27,069 - TaskScriptRunner - INFO -     ~~~~~~~~~~~~~~~~~~~~~~
+2025-05-15 18:43:27,069 - TaskScriptRunner - INFO -     Implements file-like objects for reading and writing to/from GCS.
+2025-05-15 18:43:27,069 - TaskScriptRunner - INFO - 
+2025-05-15 18:43:27,070 - TaskScriptRunner - INFO -     min_part_size: int, optional
+        The minimum part size for multipart uploads. For writing only.
+    client: google.cloud.storage.Client, optional
+        The GCS client to use when working with google-cloud-storage.
+    blob_properties: dict, optional
+        Set properties on blob before writing. For writing only.
+    blob_open_kwargs: dict, optional
+        Additional keyword arguments to propagate to the blob.open method
+        of the google-cloud-storage library.
+
+2025-05-15 18:43:27,070 - TaskScriptRunner - INFO -     hdfs (smart_open/hdfs.py)
+2025-05-15 18:43:27,071 - TaskScriptRunner - INFO -     ~~~~~~~~~~~~~~~~~~~~~~~~~
+2025-05-15 18:43:27,071 - TaskScriptRunner - INFO -     Implements reading and writing to/from HDFS.
+2025-05-15 18:43:27,071 - TaskScriptRunner - INFO - 
+2025-05-15 18:43:27,072 - TaskScriptRunner - INFO -     http (smart_open/http.py)
+2025-05-15 18:43:27,072 - TaskScriptRunner - INFO -     ~~~~~~~~~~~~~~~~~~~~~~~~~
+2025-05-15 18:43:27,073 - TaskScriptRunner - INFO -     Implements file-like objects for reading from http.
+2025-05-15 18:43:27,073 - TaskScriptRunner - INFO - 
+2025-05-15 18:43:27,073 - TaskScriptRunner - INFO -     kerberos: boolean, optional
+        If True, will attempt to use the local Kerberos credentials
+    user: str, optional
+        The username for authenticating over HTTP
+    password: str, optional
+        The password for authenticating over HTTP
+    cert: str/tuple, optional
+        if String, path to ssl client cert file (.pem). If Tuple, (‘cert’, ‘key’)
+    headers: dict, optional
+        Any headers to send in the request. If ``None``, the default headers are sent:
+        ``{'Accept-Encoding': 'identity'}``. To use no headers at all,
+        set this variable to an empty dict, ``{}``.
+    buffer_size: int, optional
+        The buffer size to use when performing I/O.
+
+2025-05-15 18:43:27,074 - TaskScriptRunner - INFO -     s3 (smart_open/s3.py)
+2025-05-15 18:43:27,074 - TaskScriptRunner - INFO -     ~~~~~~~~~~~~~~~~~~~~~
+2025-05-15 18:43:27,075 - TaskScriptRunner - INFO -     Implements file-like objects for reading and writing from/to AWS S3.
+2025-05-15 18:43:27,075 - TaskScriptRunner - INFO - 
+2025-05-15 18:43:27,075 - TaskScriptRunner - INFO -     buffer_size: int, optional
+        The buffer size to use when performing I/O.
+    min_part_size: int, optional
+        The minimum part size for multipart uploads.  For writing only.
+    multipart_upload: bool, optional
+        Default: `True`
+        If set to `True`, will use multipart upload for writing to S3. If set
+        to `False`, S3 upload will use the S3 Single-Part Upload API, which
+        is more ideal for small file sizes.
+        For writing only.
+    version_id: str, optional
+        Version of the object, used when reading object.
+        If None, will fetch the most recent version.
+    defer_seek: boolean, optional
+        Default: `False`
+        If set to `True` on a file opened for reading, GetObject will not be
+        called until the first seek() or read().
+        Avoids redundant API queries when seeking before reading.
+    client: object, optional
+        The S3 client to use when working with boto3.
+        If you don't specify this, then smart_open will create a new client for you.
+    client_kwargs: dict, optional
+        Additional parameters to pass to the relevant functions of the client.
+        The keys are fully qualified method names, e.g. `S3.Client.create_multipart_upload`.
+        The values are kwargs to pass to that method each time it is called.
+    writebuffer: IO[bytes], optional
+        By default, this module will buffer data in memory using io.BytesIO
+        when writing. Pass another binary IO instance here to use it instead.
+        For example, you may pass a file object to buffer to local disk instead
+        of in RAM. Use this to keep RAM usage low at the expense of additional
+        disk IO. If you pass in an open file, then you are responsible for
+        cleaning it up after writing completes.
+
+2025-05-15 18:43:27,076 - TaskScriptRunner - INFO -     scp (smart_open/ssh.py)
+2025-05-15 18:43:27,076 - TaskScriptRunner - INFO -     ~~~~~~~~~~~~~~~~~~~~~~~
+2025-05-15 18:43:27,077 - TaskScriptRunner - INFO -     Implements I/O streams over SSH.
+2025-05-15 18:43:27,077 - TaskScriptRunner - INFO - 
+2025-05-15 18:43:27,078 - TaskScriptRunner - INFO -     mode: str, optional
+        The mode to use for opening the file.
+    host: str, optional
+        The hostname of the remote machine.  May not be None.
+    user: str, optional
+        The username to use to login to the remote machine.
+        If None, defaults to the name of the current user.
+    password: str, optional
+        The password to use to login to the remote machine.
+    port: int, optional
+        The port to connect to.
+    transport_params: dict, optional
+        Any additional settings to be passed to paramiko.SSHClient.connect
+
+2025-05-15 18:43:27,078 - TaskScriptRunner - INFO -     webhdfs (smart_open/webhdfs.py)
+2025-05-15 18:43:27,078 - TaskScriptRunner - INFO -     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2025-05-15 18:43:27,079 - TaskScriptRunner - INFO -     Implements reading and writing to/from WebHDFS.
+2025-05-15 18:43:27,079 - TaskScriptRunner - INFO - 
+2025-05-15 18:43:27,080 - TaskScriptRunner - INFO -     min_part_size: int, optional
+        For writing only.
+
+2025-05-15 18:43:27,080 - TaskScriptRunner - INFO -     Examples
+2025-05-15 18:43:27,080 - TaskScriptRunner - INFO -     --------
+2025-05-15 18:43:27,081 - TaskScriptRunner - INFO - 
+2025-05-15 18:43:27,081 - TaskScriptRunner - INFO -     See README.rst
+2025-05-15 18:43:27,081 - TaskScriptRunner - INFO -     This function also supports transparent compression and decompression 
+2025-05-15 18:43:27,082 - TaskScriptRunner - INFO -     using the following codecs:
+2025-05-15 18:43:27,082 - TaskScriptRunner - INFO - 
+2025-05-15 18:43:27,083 - TaskScriptRunner - INFO -     * .bz2
+2025-05-15 18:43:27,083 - TaskScriptRunner - INFO -     * .gz
+2025-05-15 18:43:27,083 - TaskScriptRunner - INFO - 
+2025-05-15 18:43:27,084 - TaskScriptRunner - INFO -     The function depends on the file extension to determine the appropriate codec.
+2025-05-15 18:43:27,084 - TaskScriptRunner - INFO -     Supported URI schemes are:
+2025-05-15 18:43:27,085 - TaskScriptRunner - INFO - 
+2025-05-15 18:43:27,085 - TaskScriptRunner - INFO -     * file
+2025-05-15 18:43:27,085 - TaskScriptRunner - INFO -     * ftp
+2025-05-15 18:43:27,086 - TaskScriptRunner - INFO -     * gs
+2025-05-15 18:43:27,086 - TaskScriptRunner - INFO -     * hdfs
+2025-05-15 18:43:27,087 - TaskScriptRunner - INFO -     * http
+2025-05-15 18:43:27,087 - TaskScriptRunner - INFO -     * s3
+2025-05-15 18:43:27,087 - TaskScriptRunner - INFO -     * scp
+2025-05-15 18:43:27,088 - TaskScriptRunner - INFO -     * webhdfs
+2025-05-15 18:43:27,088 - TaskScriptRunner - INFO - 
+2025-05-15 18:43:27,088 - TaskScriptRunner - INFO -     Valid URI examples::
+2025-05-15 18:43:27,089 - TaskScriptRunner - INFO - 
+2025-05-15 18:43:27,089 - TaskScriptRunner - INFO -     * ./local/path/file
+2025-05-15 18:43:27,090 - TaskScriptRunner - INFO -     * ~/local/path/file
+2025-05-15 18:43:27,090 - TaskScriptRunner - INFO -     * local/path/file
+2025-05-15 18:43:27,090 - TaskScriptRunner - INFO -     * ./local/path/file.gz
+2025-05-15 18:43:27,091 - TaskScriptRunner - INFO -     * file:///home/user/file
+2025-05-15 18:43:27,091 - TaskScriptRunner - INFO -     * file:///home/user/file.bz2
+2025-05-15 18:43:27,091 - TaskScriptRunner - INFO -     * ftp://username@host/path/file
+2025-05-15 18:43:27,092 - TaskScriptRunner - INFO -     * ftp://username:password@host/path/file
+2025-05-15 18:43:27,092 - TaskScriptRunner - INFO -     * ftp://username:password@host:port/path/file
+2025-05-15 18:43:27,092 - TaskScriptRunner - INFO -     * ftps://username@host/path/file
+2025-05-15 18:43:27,093 - TaskScriptRunner - INFO -     * ftps://username:password@host/path/file
+2025-05-15 18:43:27,093 - TaskScriptRunner - INFO -     * ftps://username:password@host:port/path/file
+2025-05-15 18:43:27,093 - TaskScriptRunner - INFO -     * hdfs:///path/file
+2025-05-15 18:43:27,094 - TaskScriptRunner - INFO -     * hdfs://path/file
+2025-05-15 18:43:27,094 - TaskScriptRunner - INFO -     * viewfs:///path/file
+2025-05-15 18:43:27,095 - TaskScriptRunner - INFO -     * viewfs://path/file
+2025-05-15 18:43:27,095 - TaskScriptRunner - INFO -     * s3://my_bucket/my_key
+2025-05-15 18:43:27,095 - TaskScriptRunner - INFO -     * s3://my_key:my_secret@my_bucket/my_key
+2025-05-15 18:43:27,096 - TaskScriptRunner - INFO -     * s3://my_key:my_secret@my_server:my_port@my_bucket/my_key
+2025-05-15 18:43:27,096 - TaskScriptRunner - INFO -     * ssh://username@host/path/file
+2025-05-15 18:43:27,096 - TaskScriptRunner - INFO -     * ssh://username@host//path/file
+2025-05-15 18:43:27,097 - TaskScriptRunner - INFO -     * scp://username@host/path/file
+2025-05-15 18:43:27,097 - TaskScriptRunner - INFO -     * sftp://username@host/path/file
+2025-05-15 18:43:27,098 - TaskScriptRunner - INFO -     * webhdfs://host:port/path/file
+2025-05-15 18:43:37,964 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Running dequantization...
+2025-05-15 18:43:37,965 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Running dequantization on 179 variables
+2025-05-15 18:43:38,197 - TaskScriptRunner - INFO - Attempting to load training data from: /workspace/NVFlare/examples/advanced/llm_hf/data/code/train.npy
+2025-05-15 18:43:38,198 - TaskScriptRunner - INFO - Loading data from /workspace/NVFlare/examples/advanced/llm_hf/data/code/train.npy...
+2025-05-15 18:43:38,199 - TaskScriptRunner - INFO - data_array shape: (988118026,)
+2025-05-15 18:43:38,199 - TaskScriptRunner - INFO - data_array dtype: uint32
+2025-05-15 18:43:38,200 - TaskScriptRunner - INFO - data_array size: 988118026
+2025-05-15 18:43:55,080 - TaskScriptRunner - INFO - 988118026 len text_list
+2025-05-15 18:44:02,645 - TaskScriptRunner - INFO - 1000000 len text_list
+2025-05-15 18:44:02,843 - TaskScriptRunner - INFO - Validation data path is same as train or not specified separately. Splitting training data (from /workspace/NVFlare/examples/advanced/llm_hf/data/code/train.npy) for validation (1% test size).
+2025-05-15 18:44:02,992 - TaskScriptRunner - INFO - Dataset size: training 990000, validation 10000
+2025-05-15 18:44:02,993 - TaskScriptRunner - INFO - Raw dataset structure after loading: DatasetDict({
+    train: Dataset({
+        features: ['text'],
+        num_rows: 990000
+    })
+    validation: Dataset({
+        features: ['text'],
+        num_rows: 10000
+    })
+})
+2025-05-15 18:44:02,995 - TaskScriptRunner - INFO - 102           0 LOAD_GLOBAL              0 (isinstance)
+2025-05-15 18:44:02,995 - TaskScriptRunner - INFO -               2 LOAD_FAST                0 (examples)
+2025-05-15 18:44:02,996 - TaskScriptRunner - INFO -               4 LOAD_CONST               1 ('text')
+2025-05-15 18:44:02,996 - TaskScriptRunner - INFO -               6 BINARY_SUBSCR
+2025-05-15 18:44:02,996 - TaskScriptRunner - INFO -               8 LOAD_CONST               2 (0)
+2025-05-15 18:44:02,997 - TaskScriptRunner - INFO -              10 BINARY_SUBSCR
+2025-05-15 18:44:02,997 - TaskScriptRunner - INFO -              12 LOAD_GLOBAL              1 (int)
+2025-05-15 18:44:02,998 - TaskScriptRunner - INFO -              14 CALL_FUNCTION            2
+2025-05-15 18:44:02,998 - TaskScriptRunner - INFO -              16 POP_JUMP_IF_FALSE       14 (to 28)
+2025-05-15 18:44:02,998 - TaskScriptRunner - INFO - 
+2025-05-15 18:44:02,999 - TaskScriptRunner - INFO - 104          18 LOAD_FAST                0 (examples)
+2025-05-15 18:44:02,999 - TaskScriptRunner - INFO -              20 LOAD_CONST               1 ('text')
+2025-05-15 18:44:03,000 - TaskScriptRunner - INFO -              22 BINARY_SUBSCR
+2025-05-15 18:44:03,000 - TaskScriptRunner - INFO -              24 STORE_DEREF              0 (all_tokens)
+2025-05-15 18:44:03,000 - TaskScriptRunner - INFO -              26 JUMP_FORWARD             9 (to 46)
+2025-05-15 18:44:03,001 - TaskScriptRunner - INFO - 
+2025-05-15 18:44:03,001 - TaskScriptRunner - INFO - 107     >>   28 LOAD_GLOBAL              2 (list)
+2025-05-15 18:44:03,001 - TaskScriptRunner - INFO -              30 LOAD_GLOBAL              3 (chain)
+2025-05-15 18:44:03,002 - TaskScriptRunner - INFO -              32 LOAD_METHOD              4 (from_iterable)
+2025-05-15 18:44:03,002 - TaskScriptRunner - INFO -              34 LOAD_FAST                0 (examples)
+2025-05-15 18:44:03,003 - TaskScriptRunner - INFO -              36 LOAD_CONST               1 ('text')
+2025-05-15 18:44:03,003 - TaskScriptRunner - INFO -              38 BINARY_SUBSCR
+2025-05-15 18:44:03,003 - TaskScriptRunner - INFO -              40 CALL_METHOD              1
+2025-05-15 18:44:03,004 - TaskScriptRunner - INFO -              42 CALL_FUNCTION            1
+2025-05-15 18:44:03,004 - TaskScriptRunner - INFO -              44 STORE_DEREF              0 (all_tokens)
+2025-05-15 18:44:03,005 - TaskScriptRunner - INFO - 
+2025-05-15 18:44:03,005 - TaskScriptRunner - INFO - 110     >>   46 LOAD_GLOBAL              5 (len)
+2025-05-15 18:44:03,005 - TaskScriptRunner - INFO -              48 LOAD_DEREF               0 (all_tokens)
+2025-05-15 18:44:03,006 - TaskScriptRunner - INFO -              50 CALL_FUNCTION            1
+2025-05-15 18:44:03,006 - TaskScriptRunner - INFO -              52 LOAD_DEREF               1 (block_size)
+2025-05-15 18:44:03,007 - TaskScriptRunner - INFO -              54 BINARY_FLOOR_DIVIDE
+2025-05-15 18:44:03,007 - TaskScriptRunner - INFO -              56 LOAD_DEREF               1 (block_size)
+2025-05-15 18:44:03,007 - TaskScriptRunner - INFO -              58 BINARY_MULTIPLY
+2025-05-15 18:44:03,008 - TaskScriptRunner - INFO -              60 STORE_FAST               2 (total_len)
+2025-05-15 18:44:03,008 - TaskScriptRunner - INFO - 
+2025-05-15 18:44:03,008 - TaskScriptRunner - INFO - 114          62 LOAD_CONST               3 ('input_ids')
+2025-05-15 18:44:03,009 - TaskScriptRunner - INFO -              64 LOAD_CLOSURE             0 (all_tokens)
+2025-05-15 18:44:03,009 - TaskScriptRunner - INFO -              66 LOAD_CLOSURE             1 (block_size)
+2025-05-15 18:44:03,010 - TaskScriptRunner - INFO -              68 BUILD_TUPLE              2
+2025-05-15 18:44:03,010 - TaskScriptRunner - INFO -              70 LOAD_CONST               4 (<code object <listcomp> at 0x7f5229981b00, file "/workspace/NVFlare/examples/advanced/llm_hf/hf_pretrain/workdir/site-code/simulate_job/app_site-code/custom/src/pretrain_nvflare.py", line 114>)
+2025-05-15 18:44:03,010 - TaskScriptRunner - INFO -              72 LOAD_CONST               5 ('group_tokens.<locals>.<listcomp>')
+2025-05-15 18:44:03,011 - TaskScriptRunner - INFO -              74 MAKE_FUNCTION            8 (closure)
+2025-05-15 18:44:03,011 - TaskScriptRunner - INFO -              76 LOAD_GLOBAL              6 (range)
+2025-05-15 18:44:03,012 - TaskScriptRunner - INFO -              78 LOAD_CONST               2 (0)
+2025-05-15 18:44:03,012 - TaskScriptRunner - INFO -              80 LOAD_FAST                2 (total_len)
+2025-05-15 18:44:03,013 - TaskScriptRunner - INFO -              82 LOAD_DEREF               1 (block_size)
+2025-05-15 18:44:03,013 - TaskScriptRunner - INFO -              84 CALL_FUNCTION            3
+2025-05-15 18:44:03,013 - TaskScriptRunner - INFO -              86 GET_ITER
+2025-05-15 18:44:03,014 - TaskScriptRunner - INFO -              88 CALL_FUNCTION            1
+2025-05-15 18:44:03,014 - TaskScriptRunner - INFO - 
+2025-05-15 18:44:03,014 - TaskScriptRunner - INFO - 113          90 BUILD_MAP                1
+2025-05-15 18:44:03,015 - TaskScriptRunner - INFO -              92 STORE_FAST               3 (result)
+2025-05-15 18:44:03,015 - TaskScriptRunner - INFO - 
+2025-05-15 18:44:03,016 - TaskScriptRunner - INFO - 118          94 LOAD_FAST                3 (result)
+2025-05-15 18:44:03,016 - TaskScriptRunner - INFO -              96 LOAD_CONST               3 ('input_ids')
+2025-05-15 18:44:03,016 - TaskScriptRunner - INFO -              98 BINARY_SUBSCR
+2025-05-15 18:44:03,017 - TaskScriptRunner - INFO -             100 LOAD_METHOD              7 (copy)
+2025-05-15 18:44:03,017 - TaskScriptRunner - INFO -             102 CALL_METHOD              0
+2025-05-15 18:44:03,017 - TaskScriptRunner - INFO -             104 LOAD_FAST                3 (result)
+2025-05-15 18:44:03,018 - TaskScriptRunner - INFO -             106 LOAD_CONST               6 ('labels')
+2025-05-15 18:44:03,018 - TaskScriptRunner - INFO -             108 STORE_SUBSCR
+2025-05-15 18:44:03,019 - TaskScriptRunner - INFO - 
+2025-05-15 18:44:03,019 - TaskScriptRunner - INFO - 120         110 LOAD_FAST                3 (result)
+2025-05-15 18:44:03,019 - TaskScriptRunner - INFO -             112 RETURN_VALUE
+2025-05-15 18:44:03,020 - TaskScriptRunner - INFO - 
+2025-05-15 18:44:03,020 - TaskScriptRunner - INFO - Disassembly of <code object <listcomp> at 0x7f5229981b00, file "/workspace/NVFlare/examples/advanced/llm_hf/hf_pretrain/workdir/site-code/simulate_job/app_site-code/custom/src/pretrain_nvflare.py", line 114>:
+2025-05-15 18:44:03,021 - TaskScriptRunner - INFO - 114           0 BUILD_LIST               0
+2025-05-15 18:44:03,021 - TaskScriptRunner - INFO -               2 LOAD_FAST                0 (.0)
+2025-05-15 18:44:03,021 - TaskScriptRunner - INFO -         >>    4 FOR_ITER                10 (to 26)
+2025-05-15 18:44:03,022 - TaskScriptRunner - INFO -               6 STORE_FAST               1 (i)
+2025-05-15 18:44:03,022 - TaskScriptRunner - INFO -               8 LOAD_DEREF               0 (all_tokens)
+2025-05-15 18:44:03,023 - TaskScriptRunner - INFO -              10 LOAD_FAST                1 (i)
+2025-05-15 18:44:03,023 - TaskScriptRunner - INFO -              12 LOAD_FAST                1 (i)
+2025-05-15 18:44:03,023 - TaskScriptRunner - INFO -              14 LOAD_DEREF               1 (block_size)
+2025-05-15 18:44:03,024 - TaskScriptRunner - INFO -              16 BINARY_ADD
+2025-05-15 18:44:03,024 - TaskScriptRunner - INFO -              18 BUILD_SLICE              2
+2025-05-15 18:44:03,024 - TaskScriptRunner - INFO -              20 BINARY_SUBSCR
+2025-05-15 18:44:03,025 - TaskScriptRunner - INFO -              22 LIST_APPEND              2
+2025-05-15 18:44:03,025 - TaskScriptRunner - INFO -              24 JUMP_ABSOLUTE            2 (to 4)
+2025-05-15 18:44:03,026 - TaskScriptRunner - INFO -         >>   26 RETURN_VALUE
+2025-05-15 18:44:03,026 - TaskScriptRunner - INFO - 114           0 BUILD_LIST               0
+2025-05-15 18:44:03,027 - TaskScriptRunner - INFO -               2 LOAD_FAST                0 (.0)
+2025-05-15 18:44:03,027 - TaskScriptRunner - INFO -         >>    4 FOR_ITER                10 (to 26)
+2025-05-15 18:44:03,027 - TaskScriptRunner - INFO -               6 STORE_FAST               1 (i)
+2025-05-15 18:44:03,028 - TaskScriptRunner - INFO -               8 LOAD_DEREF               0 (all_tokens)
+2025-05-15 18:44:03,028 - TaskScriptRunner - INFO -              10 LOAD_FAST                1 (i)
+2025-05-15 18:44:03,028 - TaskScriptRunner - INFO -              12 LOAD_FAST                1 (i)
+2025-05-15 18:44:03,029 - TaskScriptRunner - INFO -              14 LOAD_DEREF               1 (block_size)
+2025-05-15 18:44:03,029 - TaskScriptRunner - INFO -              16 BINARY_ADD
+2025-05-15 18:44:03,030 - TaskScriptRunner - INFO -              18 BUILD_SLICE              2
+2025-05-15 18:44:03,030 - TaskScriptRunner - INFO -              20 BINARY_SUBSCR
+2025-05-15 18:44:03,030 - TaskScriptRunner - INFO -              22 LIST_APPEND              2
+2025-05-15 18:44:03,031 - TaskScriptRunner - INFO -              24 JUMP_ABSOLUTE            2 (to 4)
+2025-05-15 18:44:03,031 - TaskScriptRunner - INFO -         >>   26 RETURN_VALUE
+2025-05-15 18:44:04,249 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.7.post_attention_layernorm.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:04,254 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.7.post_feedforward_layernorm.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:04,302 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.8.self_attn.q_norm.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:04,306 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.8.self_attn.k_norm.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:04,445 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.8.post_attention_layernorm.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:04,450 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.8.post_feedforward_layernorm.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:04,497 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.9.self_attn.q_norm.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:04,502 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.9.self_attn.k_norm.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:04,642 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.9.post_attention_layernorm.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:04,650 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.9.post_feedforward_layernorm.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:04,695 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.10.self_attn.q_norm.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:04,701 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.10.self_attn.k_norm.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:04,839 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.10.post_attention_layernorm.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:04,841 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.10.post_feedforward_layernorm.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:04,847 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.11.self_attn.q_proj.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:04,881 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.11.self_attn.q_norm.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:04,885 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.11.self_attn.k_norm.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:05,024 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.11.post_attention_layernorm.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:05,029 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.11.post_feedforward_layernorm.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:05,032 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.12.self_attn.q_proj.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:05,071 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.12.self_attn.q_norm.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:05,076 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.12.self_attn.k_norm.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:05,220 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.12.post_attention_layernorm.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:05,225 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.12.post_feedforward_layernorm.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:05,230 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.13.self_attn.q_proj.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:05,268 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.13.self_attn.q_norm.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:05,272 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.13.self_attn.k_norm.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:05,412 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.13.post_attention_layernorm.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:05,417 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.13.post_feedforward_layernorm.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:05,467 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.14.self_attn.q_norm.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:05,472 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.14.self_attn.k_norm.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:05,612 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.14.post_attention_layernorm.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:05,617 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.14.post_feedforward_layernorm.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:05,621 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.15.self_attn.q_proj.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:05,660 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.15.self_attn.q_norm.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:05,664 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.15.self_attn.k_norm.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:05,807 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.15.post_attention_layernorm.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:05,812 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.layers.15.post_feedforward_layernorm.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:05,816 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Skipping dequantization for model.model.norm.weight, quantization bit float16 >= source data bit float16
+2025-05-15 18:44:06,368 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Dequantized 140/179 params. Before dequantization: 2800.12 MB with meta: 0.00 MB. After dequantization: 5600.23 MB.
+2025-05-15 18:44:06,373 - ModelDequantizer - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Dequantized back to {'model.model.embed_tokens.weight': 'float32', 'model.model.layers.0.self_attn.q_proj.weight': 'float32', 'model.model.layers.0.self_attn.k_proj.weight': 'float32', 'model.model.layers.0.self_attn.v_proj.weight': 'float32', 'model.model.layers.0.self_attn.o_proj.weight': 'float32', 'model.model.layers.0.self_attn.q_norm.weight': 'float32', 'model.model.layers.0.self_attn.k_norm.weight': 'float32', 'model.model.layers.0.mlp.gate_proj.weight': 'float32', 'model.model.layers.0.mlp.up_proj.weight': 'float32', 'model.model.layers.0.mlp.down_proj.weight': 'float32', 'model.model.layers.0.post_attention_layernorm.weight': 'float32', 'model.model.layers.0.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.1.self_attn.q_proj.weight': 'float32', 'model.model.layers.1.self_attn.k_proj.weight': 'float32', 'model.model.layers.1.self_attn.v_proj.weight': 'float32', 'model.model.layers.1.self_attn.o_proj.weight': 'float32', 'model.model.layers.1.self_attn.q_norm.weight': 'float32', 'model.model.layers.1.self_attn.k_norm.weight': 'float32', 'model.model.layers.1.mlp.gate_proj.weight': 'float32', 'model.model.layers.1.mlp.up_proj.weight': 'float32', 'model.model.layers.1.mlp.down_proj.weight': 'float32', 'model.model.layers.1.post_attention_layernorm.weight': 'float32', 'model.model.layers.1.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.2.self_attn.q_proj.weight': 'float32', 'model.model.layers.2.self_attn.k_proj.weight': 'float32', 'model.model.layers.2.self_attn.v_proj.weight': 'float32', 'model.model.layers.2.self_attn.o_proj.weight': 'float32', 'model.model.layers.2.self_attn.q_norm.weight': 'float32', 'model.model.layers.2.self_attn.k_norm.weight': 'float32', 'model.model.layers.2.mlp.gate_proj.weight': 'float32', 'model.model.layers.2.mlp.up_proj.weight': 'float32', 'model.model.layers.2.mlp.down_proj.weight': 'float32', 'model.model.layers.2.post_attention_layernorm.weight': 'float32', 'model.model.layers.2.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.3.self_attn.q_proj.weight': 'float32', 'model.model.layers.3.self_attn.k_proj.weight': 'float32', 'model.model.layers.3.self_attn.v_proj.weight': 'float32', 'model.model.layers.3.self_attn.o_proj.weight': 'float32', 'model.model.layers.3.self_attn.q_norm.weight': 'float32', 'model.model.layers.3.self_attn.k_norm.weight': 'float32', 'model.model.layers.3.mlp.gate_proj.weight': 'float32', 'model.model.layers.3.mlp.up_proj.weight': 'float32', 'model.model.layers.3.mlp.down_proj.weight': 'float32', 'model.model.layers.3.post_attention_layernorm.weight': 'float32', 'model.model.layers.3.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.4.self_attn.q_proj.weight': 'float32', 'model.model.layers.4.self_attn.k_proj.weight': 'float32', 'model.model.layers.4.self_attn.v_proj.weight': 'float32', 'model.model.layers.4.self_attn.o_proj.weight': 'float32', 'model.model.layers.4.self_attn.q_norm.weight': 'float32', 'model.model.layers.4.self_attn.k_norm.weight': 'float32', 'model.model.layers.4.mlp.gate_proj.weight': 'float32', 'model.model.layers.4.mlp.up_proj.weight': 'float32', 'model.model.layers.4.mlp.down_proj.weight': 'float32', 'model.model.layers.4.post_attention_layernorm.weight': 'float32', 'model.model.layers.4.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.5.self_attn.q_proj.weight': 'float32', 'model.model.layers.5.self_attn.k_proj.weight': 'float32', 'model.model.layers.5.self_attn.v_proj.weight': 'float32', 'model.model.layers.5.self_attn.o_proj.weight': 'float32', 'model.model.layers.5.self_attn.q_norm.weight': 'float32', 'model.model.layers.5.self_attn.k_norm.weight': 'float32', 'model.model.layers.5.mlp.gate_proj.weight': 'float32', 'model.model.layers.5.mlp.up_proj.weight': 'float32', 'model.model.layers.5.mlp.down_proj.weight': 'float32', 'model.model.layers.5.post_attention_layernorm.weight': 'float32', 'model.model.layers.5.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.6.self_attn.q_proj.weight': 'float32', 'model.model.layers.6.self_attn.k_proj.weight': 'float32', 'model.model.layers.6.self_attn.v_proj.weight': 'float32', 'model.model.layers.6.self_attn.o_proj.weight': 'float32', 'model.model.layers.6.self_attn.q_norm.weight': 'float32', 'model.model.layers.6.self_attn.k_norm.weight': 'float32', 'model.model.layers.6.mlp.gate_proj.weight': 'float32', 'model.model.layers.6.mlp.up_proj.weight': 'float32', 'model.model.layers.6.mlp.down_proj.weight': 'float32', 'model.model.layers.6.post_attention_layernorm.weight': 'float32', 'model.model.layers.6.post_feedforward_layernorm.weight': 'float32', 'model.model.layers.7.self_attn.q_proj.weight': 'float32', 'model.model.layers.7.self_attn.k_proj.weight': 'float32', 'model.model.layers.7.self_attn.v_proj.weight': 'float32', 'model.model.layers.7.self_attn.o_proj.weight': 'float32', 'model.model.layers.7.self_attn.q_norm.weight': 'float32', 'model.model.layers.7.self_attn.k_norm.weight': 'float32', 'model.model.layers.7.mlp.gate_proj.weight': 'float32', 'model.model.layers.7.mlp.up_proj.weight': 'float32', 'model.model.layers.7.mlp.down_proj.weight': 'float32', 'model.model.layers.7.post_attention_layernorm.weight': 'float16', 'model.model.layers.7.post_feedforward_layernorm.weight': 'float16', 'model.model.layers.8.self_attn.q_proj.weight': 'float32', 'model.model.layers.8.self_attn.k_proj.weight': 'float32', 'model.model.layers.8.self_attn.v_proj.weight': 'float32', 'model.model.layers.8.self_attn.o_proj.weight': 'float32', 'model.model.layers.8.self_attn.q_norm.weight': 'float16', 'model.model.layers.8.self_attn.k_norm.weight': 'float16', 'model.model.layers.8.mlp.gate_proj.weight': 'float32', 'model.model.layers.8.mlp.up_proj.weight': 'float32', 'model.model.layers.8.mlp.down_proj.weight': 'float32', 'model.model.layers.8.post_attention_layernorm.weight': 'float16', 'model.model.layers.8.post_feedforward_layernorm.weight': 'float16', 'model.model.layers.9.self_attn.q_proj.weight': 'float32', 'model.model.layers.9.self_attn.k_proj.weight': 'float32', 'model.model.layers.9.self_attn.v_proj.weight': 'float32', 'model.model.layers.9.self_attn.o_proj.weight': 'float32', 'model.model.layers.9.self_attn.q_norm.weight': 'float16', 'model.model.layers.9.self_attn.k_norm.weight': 'float16', 'model.model.layers.9.mlp.gate_proj.weight': 'float32', 'model.model.layers.9.mlp.up_proj.weight': 'float32', 'model.model.layers.9.mlp.down_proj.weight': 'float32', 'model.model.layers.9.post_attention_layernorm.weight': 'float16', 'model.model.layers.9.post_feedforward_layernorm.weight': 'float16', 'model.model.layers.10.self_attn.q_proj.weight': 'float32', 'model.model.layers.10.self_attn.k_proj.weight': 'float32', 'model.model.layers.10.self_attn.v_proj.weight': 'float32', 'model.model.layers.10.self_attn.o_proj.weight': 'float32', 'model.model.layers.10.self_attn.q_norm.weight': 'float16', 'model.model.layers.10.self_attn.k_norm.weight': 'float16', 'model.model.layers.10.mlp.gate_proj.weight': 'float32', 'model.model.layers.10.mlp.up_proj.weight': 'float32', 'model.model.layers.10.mlp.down_proj.weight': 'float32', 'model.model.layers.10.post_attention_layernorm.weight': 'float16', 'model.model.layers.10.post_feedforward_layernorm.weight': 'float16', 'model.model.layers.11.self_attn.q_proj.weight': 'float16', 'model.model.layers.11.self_attn.k_proj.weight': 'float32', 'model.model.layers.11.self_attn.v_proj.weight': 'float32', 'model.model.layers.11.self_attn.o_proj.weight': 'float32', 'model.model.layers.11.self_attn.q_norm.weight': 'float16', 'model.model.layers.11.self_attn.k_norm.weight': 'float16', 'model.model.layers.11.mlp.gate_proj.weight': 'float32', 'model.model.layers.11.mlp.up_proj.weight': 'float32', 'model.model.layers.11.mlp.down_proj.weight': 'float32', 'model.model.layers.11.post_attention_layernorm.weight': 'float16', 'model.model.layers.11.post_feedforward_layernorm.weight': 'float16', 'model.model.layers.12.self_attn.q_proj.weight': 'float16', 'model.model.layers.12.self_attn.k_proj.weight': 'float32', 'model.model.layers.12.self_attn.v_proj.weight': 'float32', 'model.model.layers.12.self_attn.o_proj.weight': 'float32', 'model.model.layers.12.self_attn.q_norm.weight': 'float16', 'model.model.layers.12.self_attn.k_norm.weight': 'float16', 'model.model.layers.12.mlp.gate_proj.weight': 'float32', 'model.model.layers.12.mlp.up_proj.weight': 'float32', 'model.model.layers.12.mlp.down_proj.weight': 'float32', 'model.model.layers.12.post_attention_layernorm.weight': 'float16', 'model.model.layers.12.post_feedforward_layernorm.weight': 'float16', 'model.model.layers.13.self_attn.q_proj.weight': 'float16', 'model.model.layers.13.self_attn.k_proj.weight': 'float32', 'model.model.layers.13.self_attn.v_proj.weight': 'float32', 'model.model.layers.13.self_attn.o_proj.weight': 'float32', 'model.model.layers.13.self_attn.q_norm.weight': 'float16', 'model.model.layers.13.self_attn.k_norm.weight': 'float16', 'model.model.layers.13.mlp.gate_proj.weight': 'float32', 'model.model.layers.13.mlp.up_proj.weight': 'float32', 'model.model.layers.13.mlp.down_proj.weight': 'float32', 'model.model.layers.13.post_attention_layernorm.weight': 'float16', 'model.model.layers.13.post_feedforward_layernorm.weight': 'float16', 'model.model.layers.14.self_attn.q_proj.weight': 'float32', 'model.model.layers.14.self_attn.k_proj.weight': 'float32', 'model.model.layers.14.self_attn.v_proj.weight': 'float32', 'model.model.layers.14.self_attn.o_proj.weight': 'float32', 'model.model.layers.14.self_attn.q_norm.weight': 'float16', 'model.model.layers.14.self_attn.k_norm.weight': 'float16', 'model.model.layers.14.mlp.gate_proj.weight': 'float32', 'model.model.layers.14.mlp.up_proj.weight': 'float32', 'model.model.layers.14.mlp.down_proj.weight': 'float32', 'model.model.layers.14.post_attention_layernorm.weight': 'float16', 'model.model.layers.14.post_feedforward_layernorm.weight': 'float16', 'model.model.layers.15.self_attn.q_proj.weight': 'float16', 'model.model.layers.15.self_attn.k_proj.weight': 'float32', 'model.model.layers.15.self_attn.v_proj.weight': 'float32', 'model.model.layers.15.self_attn.o_proj.weight': 'float32', 'model.model.layers.15.self_attn.q_norm.weight': 'float16', 'model.model.layers.15.self_attn.k_norm.weight': 'float16', 'model.model.layers.15.mlp.gate_proj.weight': 'float32', 'model.model.layers.15.mlp.up_proj.weight': 'float32', 'model.model.layers.15.mlp.down_proj.weight': 'float32', 'model.model.layers.15.post_attention_layernorm.weight': 'float16', 'model.model.layers.15.post_feedforward_layernorm.weight': 'float16', 'model.model.norm.weight': 'float16', 'model.lm_head.weight': 'float32'}
+2025-05-15 18:44:06,380 - PTInProcessClientAPIExecutor - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - execute for task (train)
+2025-05-15 18:44:06,390 - PTInProcessClientAPIExecutor - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - send data to peer
+2025-05-15 18:44:06,392 - PTInProcessClientAPIExecutor - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - sending payload to peer
+2025-05-15 18:44:06,402 - PTInProcessClientAPIExecutor - INFO - [identity=site-code, run=simulate_job, peer=simulator_server, peer_run=simulate_job, task_name=train, task_id=25fdb978-3af6-4d39-974d-3b17b2666927] - Waiting for result from peer
+2025-05-15 18:44:07,319 - TaskScriptRunner - INFO - 102           0 LOAD_GLOBAL              0 (isinstance)
+2025-05-15 18:44:07,320 - TaskScriptRunner - INFO -               2 LOAD_FAST                0 (examples)
+2025-05-15 18:44:07,320 - TaskScriptRunner - INFO -               4 LOAD_CONST               1 ('text')
+2025-05-15 18:44:07,321 - TaskScriptRunner - INFO -               6 BINARY_SUBSCR
+2025-05-15 18:44:07,321 - TaskScriptRunner - INFO -               8 LOAD_CONST               2 (0)
+2025-05-15 18:44:07,321 - TaskScriptRunner - INFO -              10 BINARY_SUBSCR
+2025-05-15 18:44:07,322 - TaskScriptRunner - INFO -              12 LOAD_GLOBAL              1 (int)
+2025-05-15 18:44:07,322 - TaskScriptRunner - INFO -              14 CALL_FUNCTION            2
+2025-05-15 18:44:07,323 - TaskScriptRunner - INFO -              16 POP_JUMP_IF_FALSE       14 (to 28)
+2025-05-15 18:44:07,323 - TaskScriptRunner - INFO - 
+2025-05-15 18:44:07,323 - TaskScriptRunner - INFO - 104          18 LOAD_FAST                0 (examples)
+2025-05-15 18:44:07,324 - TaskScriptRunner - INFO -              20 LOAD_CONST               1 ('text')
+2025-05-15 18:44:07,324 - TaskScriptRunner - INFO -              22 BINARY_SUBSCR
+2025-05-15 18:44:07,324 - TaskScriptRunner - INFO -              24 STORE_DEREF              0 (all_tokens)
+2025-05-15 18:44:07,325 - TaskScriptRunner - INFO -              26 JUMP_FORWARD             9 (to 46)
+2025-05-15 18:44:07,325 - TaskScriptRunner - INFO - 
+2025-05-15 18:44:07,326 - TaskScriptRunner - INFO - 107     >>   28 LOAD_GLOBAL              2 (list)
+2025-05-15 18:44:07,326 - TaskScriptRunner - INFO -              30 LOAD_GLOBAL              3 (chain)
+2025-05-15 18:44:07,326 - TaskScriptRunner - INFO -              32 LOAD_METHOD              4 (from_iterable)
+2025-05-15 18:44:07,327 - TaskScriptRunner - INFO -              34 LOAD_FAST                0 (examples)
+2025-05-15 18:44:07,327 - TaskScriptRunner - INFO -              36 LOAD_CONST               1 ('text')
+2025-05-15 18:44:07,327 - TaskScriptRunner - INFO -              38 BINARY_SUBSCR
+2025-05-15 18:44:07,328 - TaskScriptRunner - INFO -              40 CALL_METHOD              1
+2025-05-15 18:44:07,328 - TaskScriptRunner - INFO -              42 CALL_FUNCTION            1
+2025-05-15 18:44:07,329 - TaskScriptRunner - INFO -              44 STORE_DEREF              0 (all_tokens)
+2025-05-15 18:44:07,329 - TaskScriptRunner - INFO - 
+2025-05-15 18:44:07,329 - TaskScriptRunner - INFO - 110     >>   46 LOAD_GLOBAL              5 (len)
+2025-05-15 18:44:07,330 - TaskScriptRunner - INFO -              48 LOAD_DEREF               0 (all_tokens)
+2025-05-15 18:44:07,330 - TaskScriptRunner - INFO -              50 CALL_FUNCTION            1
+2025-05-15 18:44:07,331 - TaskScriptRunner - INFO -              52 LOAD_DEREF               1 (block_size)
+2025-05-15 18:44:07,331 - TaskScriptRunner - INFO -              54 BINARY_FLOOR_DIVIDE
+2025-05-15 18:44:07,331 - TaskScriptRunner - INFO -              56 LOAD_DEREF               1 (block_size)
+2025-05-15 18:44:07,332 - TaskScriptRunner - INFO -              58 BINARY_MULTIPLY
+2025-05-15 18:44:07,332 - TaskScriptRunner - INFO -              60 STORE_FAST               2 (total_len)
+2025-05-15 18:44:07,332 - TaskScriptRunner - INFO - 
+2025-05-15 18:44:07,333 - TaskScriptRunner - INFO - 114          62 LOAD_CONST               3 ('input_ids')
+2025-05-15 18:44:07,333 - TaskScriptRunner - INFO -              64 LOAD_CLOSURE             0 (all_tokens)
+2025-05-15 18:44:07,334 - TaskScriptRunner - INFO -              66 LOAD_CLOSURE             1 (block_size)
+2025-05-15 18:44:07,334 - TaskScriptRunner - INFO -              68 BUILD_TUPLE              2
+2025-05-15 18:44:07,334 - TaskScriptRunner - INFO -              70 LOAD_CONST               4 (<code object <listcomp> at 0x7f5229981b00, file "/workspace/NVFlare/examples/advanced/llm_hf/hf_pretrain/workdir/site-code/simulate_job/app_site-code/custom/src/pretrain_nvflare.py", line 114>)
+2025-05-15 18:44:07,335 - TaskScriptRunner - INFO -              72 LOAD_CONST               5 ('group_tokens.<locals>.<listcomp>')
+2025-05-15 18:44:07,335 - TaskScriptRunner - INFO -              74 MAKE_FUNCTION            8 (closure)
+2025-05-15 18:44:07,335 - TaskScriptRunner - INFO -              76 LOAD_GLOBAL              6 (range)
+2025-05-15 18:44:07,336 - TaskScriptRunner - INFO -              78 LOAD_CONST               2 (0)
+2025-05-15 18:44:07,336 - TaskScriptRunner - INFO -              80 LOAD_FAST                2 (total_len)
+2025-05-15 18:44:07,337 - TaskScriptRunner - INFO -              82 LOAD_DEREF               1 (block_size)
+2025-05-15 18:44:07,337 - TaskScriptRunner - INFO -              84 CALL_FUNCTION            3
+2025-05-15 18:44:07,337 - TaskScriptRunner - INFO -              86 GET_ITER
+2025-05-15 18:44:07,338 - TaskScriptRunner - INFO -              88 CALL_FUNCTION            1
+2025-05-15 18:44:07,338 - TaskScriptRunner - INFO - 
+2025-05-15 18:44:07,338 - TaskScriptRunner - INFO - 113          90 BUILD_MAP                1
+2025-05-15 18:44:07,339 - TaskScriptRunner - INFO -              92 STORE_FAST               3 (result)
+2025-05-15 18:44:07,339 - TaskScriptRunner - INFO - 
+2025-05-15 18:44:07,340 - TaskScriptRunner - INFO - 118          94 LOAD_FAST                3 (result)
+2025-05-15 18:44:07,340 - TaskScriptRunner - INFO -              96 LOAD_CONST               3 ('input_ids')
+2025-05-15 18:44:07,340 - TaskScriptRunner - INFO -              98 BINARY_SUBSCR
+2025-05-15 18:44:07,341 - TaskScriptRunner - INFO -             100 LOAD_METHOD              7 (copy)
+2025-05-15 18:44:07,341 - TaskScriptRunner - INFO -             102 CALL_METHOD              0
+2025-05-15 18:44:07,341 - TaskScriptRunner - INFO -             104 LOAD_FAST                3 (result)
+2025-05-15 18:44:07,342 - TaskScriptRunner - INFO -             106 LOAD_CONST               6 ('labels')
+2025-05-15 18:44:07,342 - TaskScriptRunner - INFO -             108 STORE_SUBSCR
+2025-05-15 18:44:07,343 - TaskScriptRunner - INFO - 
+2025-05-15 18:44:07,343 - TaskScriptRunner - INFO - 120         110 LOAD_FAST                3 (result)
+2025-05-15 18:44:07,343 - TaskScriptRunner - INFO -             112 RETURN_VALUE
+2025-05-15 18:44:07,344 - TaskScriptRunner - INFO - 
+2025-05-15 18:44:07,344 - TaskScriptRunner - INFO - Disassembly of <code object <listcomp> at 0x7f5229981b00, file "/workspace/NVFlare/examples/advanced/llm_hf/hf_pretrain/workdir/site-code/simulate_job/app_site-code/custom/src/pretrain_nvflare.py", line 114>:
+2025-05-15 18:44:07,345 - TaskScriptRunner - INFO - 114           0 BUILD_LIST               0
+2025-05-15 18:44:07,346 - TaskScriptRunner - INFO -               2 LOAD_FAST                0 (.0)
+2025-05-15 18:44:07,346 - TaskScriptRunner - INFO -         >>    4 FOR_ITER                10 (to 26)
+2025-05-15 18:44:07,346 - TaskScriptRunner - INFO -               6 STORE_FAST               1 (i)
+2025-05-15 18:44:07,347 - TaskScriptRunner - INFO -               8 LOAD_DEREF               0 (all_tokens)
+2025-05-15 18:44:07,347 - TaskScriptRunner - INFO -              10 LOAD_FAST                1 (i)
+2025-05-15 18:44:07,347 - TaskScriptRunner - INFO -              12 LOAD_FAST                1 (i)
+2025-05-15 18:44:07,348 - TaskScriptRunner - INFO -              14 LOAD_DEREF               1 (block_size)
+2025-05-15 18:44:07,348 - TaskScriptRunner - INFO -              16 BINARY_ADD
+2025-05-15 18:44:07,349 - TaskScriptRunner - INFO -              18 BUILD_SLICE              2
+2025-05-15 18:44:07,349 - TaskScriptRunner - INFO -              20 BINARY_SUBSCR
+2025-05-15 18:44:07,349 - TaskScriptRunner - INFO -              22 LIST_APPEND              2
+2025-05-15 18:44:07,350 - TaskScriptRunner - INFO -              24 JUMP_ABSOLUTE            2 (to 4)
+2025-05-15 18:44:07,350 - TaskScriptRunner - INFO -         >>   26 RETURN_VALUE
+2025-05-15 18:44:07,351 - TaskScriptRunner - INFO - 114           0 BUILD_LIST               0
+2025-05-15 18:44:07,351 - TaskScriptRunner - INFO -               2 LOAD_FAST                0 (.0)
+2025-05-15 18:44:07,351 - TaskScriptRunner - INFO -         >>    4 FOR_ITER                10 (to 26)
+2025-05-15 18:44:07,352 - TaskScriptRunner - INFO -               6 STORE_FAST               1 (i)
+2025-05-15 18:44:07,352 - TaskScriptRunner - INFO -               8 LOAD_DEREF               0 (all_tokens)
+2025-05-15 18:44:07,352 - TaskScriptRunner - INFO -              10 LOAD_FAST                1 (i)
+2025-05-15 18:44:07,353 - TaskScriptRunner - INFO -              12 LOAD_FAST                1 (i)
+2025-05-15 18:44:07,353 - TaskScriptRunner - INFO -              14 LOAD_DEREF               1 (block_size)
+2025-05-15 18:44:07,354 - TaskScriptRunner - INFO -              16 BINARY_ADD
+2025-05-15 18:44:07,354 - TaskScriptRunner - INFO -              18 BUILD_SLICE              2
+2025-05-15 18:44:07,354 - TaskScriptRunner - INFO -              20 BINARY_SUBSCR
+2025-05-15 18:44:07,355 - TaskScriptRunner - INFO -              22 LIST_APPEND              2
+2025-05-15 18:44:07,355 - TaskScriptRunner - INFO -              24 JUMP_ABSOLUTE            2 (to 4)
+2025-05-15 18:44:07,355 - TaskScriptRunner - INFO -         >>   26 RETURN_VALUE
+2025-05-15 18:44:09,410 - TaskScriptRunner - INFO - Resuming wandb run with ID: code-OLMo-2-0425-1B-1747333758
+2025-05-15 18:44:12,702 - TaskScriptRunner - INFO - --- federated round 1 ---
+2025-05-15 18:44:14,111 - TaskScriptRunner - INFO - {'eval_loss': 9.77275276184082, 'eval_model_preparation_time': 0.0066, 'eval_runtime': 0.7895, 'eval_samples_per_second': 88.667, 'eval_steps_per_second': 11.4}
+2025-05-15 18:44:14,112 - TaskScriptRunner - INFO - eval metrics: {'eval_loss': 9.77275276184082, 'eval_model_preparation_time': 0.0066, 'eval_runtime': 0.7895, 'eval_samples_per_second': 88.667, 'eval_steps_per_second': 11.4, 'perplexity': 17549.009031195295}
+2025-05-15 18:44:33,648 - TaskScriptRunner - INFO - RNG state successfully loaded
+2025-05-15 18:44:34,936 - TaskScriptRunner - INFO - {'loss': 9.6277, 'grad_norm': 13.5625, 'learning_rate': 0.0, 'epoch': 1.0057720057720059}
+2025-05-15 18:44:36,063 - TaskScriptRunner - INFO - {'loss': 9.6951, 'grad_norm': 13.6875, 'learning_rate': 0.0002605469934405078, 'epoch': 1.0115440115440115}
+2025-05-15 18:44:37,170 - TaskScriptRunner - INFO - {'loss': 8.8685, 'grad_norm': 5.96875, 'learning_rate': 0.0002582041791754375, 'epoch': 1.0173160173160174}
+2025-05-15 18:44:38,297 - TaskScriptRunner - INFO - {'loss': 8.8405, 'grad_norm': 8.875, 'learning_rate': 0.00025586064340081516, 'epoch': 1.023088023088023}
+2025-05-15 18:44:39,410 - TaskScriptRunner - INFO - {'loss': 9.063, 'grad_norm': 11.9375, 'learning_rate': 0.00025351659221689896, 'epoch': 1.028860028860029}

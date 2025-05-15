@@ -1,0 +1,19 @@
+{
+    "name": "llm_hf_pretrain",
+    "resource_spec": {},
+    "min_clients": 3,
+    "deploy_map": {
+        "app_server": [
+            "server"
+        ],
+        "app_site-code": [
+            "site-code"
+        ],
+        "app_site-math": [
+            "site-math"
+        ],
+        "app_site-lbv1": [
+            "site-lbv1"
+        ]
+    }
+}
