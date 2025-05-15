@@ -19,6 +19,8 @@ import math
 import os
 import random
 from itertools import chain
+from dolma.core.paths import cached_path      # NEW
+from tqdm import tqdm         
 
 import datasets
 import numpy as np
@@ -72,7 +74,7 @@ def parse_args():
                         default="numpy")
     parser.add_argument("--local_epoch", type=int, default=1)
     parser.add_argument("--clean_up", type=int, default=0)
-    parser.add_argument("--block_size", type=int, default=1024)
+    parser.add_argument("--block_size", type=int, default=128)
     parser.add_argument("--gpu", type=str, default="0")
     return parser.parse_args()
 
@@ -83,17 +85,85 @@ def tokenize_function(examples, tokenizer):
     return tokenizer(examples["text"])
 
 
-def group_texts(examples, block_size):
-    """Pack tokens into fixed-length blocks for causal-LM pre-training."""
-    concatenated = {k: list(chain.from_iterable(examples[k])) for k in examples.keys()}
-    total_len = (len(next(iter(concatenated.values()))) // block_size) * block_size
+# def group_texts(examples, block_size):
+#     """Pack tokens into fixed-length blocks for causal-LM pre-training."""
+#     concatenated = {k: list(chain.from_iterable(examples[k])) for k in examples.keys()}
+#     total_len = (len(next(iter(concatenated.values()))) // block_size) * block_size
+#     result = {
+#         k: [t[i : i + block_size] for i in range(0, total_len, block_size)]
+#         for k, t in concatenated.items()
+#     }
+#     return result
+
+def group_tokens(examples, block_size):
+    """Pack token IDs into fixed-length blocks for causal-LM pre-training."""
+    # Check the structure of examples["text"] to handle different formats
+    if isinstance(examples["text"][0], int):
+        # If text contains direct integers (tokens), no need to flatten
+        all_tokens = examples["text"]
+    else:
+        # If text contains lists of tokens, flatten with chain
+        all_tokens = list(chain.from_iterable(examples["text"]))
+    
+    # Calculate total length that fits evenly into blocks
+    total_len = (len(all_tokens) // block_size) * block_size
+    
+    # Create blocks of fixed size
     result = {
-        k: [t[i : i + block_size] for i in range(0, total_len, block_size)]
-        for k, t in concatenated.items()
+        "input_ids": [all_tokens[i:i + block_size] for i in range(0, total_len, block_size)],
     }
+    
+    # For causal LM, labels are the same as input_ids
+    result["labels"] = result["input_ids"].copy()
+    
     return result
 
-def load_npy_data_as_dataset(file_path: str) -> datasets.Dataset:
+# def load_npy_data_as_dataset(file_path: str) -> datasets.Dataset:
+#     """Loads a .npy file containing text data and returns a datasets.Dataset."""
+#     if not os.path.exists(file_path):
+#         print(f"Warning: Data file not found: {file_path}. Returning empty dataset.")
+#         # Return an empty dataset with the expected "text" column
+#         return datasets.Dataset.from_dict({"text": []})
+
+#     print(f"Loading data from {file_path}...")
+#     try:
+#         # allow_pickle=True is often necessary for arrays of strings
+#         data_array = np.load(file_path, allow_pickle=True)
+#     except Exception as e:
+#         print(f"Error loading {file_path}: {e}. Returning empty dataset.")
+#         return datasets.Dataset.from_dict({"text": []})
+
+#     # Assuming data_array is a 1D array of strings.
+#     # If it's a 0-dim array containing a list (np.save might do this for lists)
+#     if data_array.ndim == 0 and isinstance(data_array.item(), list):
+#         text_list = data_array.item()
+#     elif data_array.ndim == 1:
+#         text_list = data_array.tolist()
+#     else:
+#         raise ValueError(
+#             f"Unsupported .npy file structure in {file_path}. "
+#             "Expected a 1D NumPy array of strings or a 0D array containing a list of strings."
+#         )
+    
+#     # Ensure all items are strings
+#     if not all(isinstance(item, str) for item in text_list):
+#         print(f"Warning: Not all items in {file_path} are strings. Attempting to convert.")
+#         try:
+#             text_list = [str(item) for item in text_list]
+#         except Exception as e:
+#             raise ValueError(f"Could not convert all items in {file_path} to strings: {e}")
+
+    
+#     ### TESTING REMOVE ###
+#     print(len(text_list), "len text_list")
+#     text_list = text_list[:10_000] # Limit to first 100 items for testing
+#     print(len(text_list), "len text_list")
+#     # The Dataset needs a dictionary where keys are column names
+#     return datasets.Dataset.from_dict({"text": text_list})
+
+# ──────────────────────────────────────────────────────────────────────────────
+
+def load_npy_memmap_data_as_dataset(file_path: str) -> datasets.Dataset:
     """Loads a .npy file containing text data and returns a datasets.Dataset."""
     if not os.path.exists(file_path):
         print(f"Warning: Data file not found: {file_path}. Returning empty dataset.")
@@ -103,7 +173,11 @@ def load_npy_data_as_dataset(file_path: str) -> datasets.Dataset:
     print(f"Loading data from {file_path}...")
     try:
         # allow_pickle=True is often necessary for arrays of strings
-        data_array = np.load(file_path, allow_pickle=True)
+        size = os.path.getsize(file_path)
+        data_array = np.memmap(file_path, dtype='uint32', mode='r', shape=(size // 4,))
+        print("data_array shape:", data_array.shape)
+        print("data_array dtype:", data_array.dtype)
+        print("data_array size:", data_array.size)
     except Exception as e:
         print(f"Error loading {file_path}: {e}. Returning empty dataset.")
         return datasets.Dataset.from_dict({"text": []})
@@ -119,20 +193,24 @@ def load_npy_data_as_dataset(file_path: str) -> datasets.Dataset:
             f"Unsupported .npy file structure in {file_path}. "
             "Expected a 1D NumPy array of strings or a 0D array containing a list of strings."
         )
-    
-    # Ensure all items are strings
-    if not all(isinstance(item, str) for item in text_list):
-        print(f"Warning: Not all items in {file_path} are strings. Attempting to convert.")
-        try:
-            text_list = [str(item) for item in text_list]
-        except Exception as e:
-            raise ValueError(f"Could not convert all items in {file_path} to strings: {e}")
 
+    print(len(text_list), "len text_list")
+    text_list = text_list[:10_000] # Limit to first 100 items for testing
+    print(len(text_list), "len text_list")
 
     # The Dataset needs a dictionary where keys are column names
     return datasets.Dataset.from_dict({"text": text_list})
+    
+    # # Ensure all items are strings
+    # if not all(isinstance(item, str) for item in text_list):
+    #     print(f"Warning: Not all items in {file_path} are strings. Attempting to convert.")
+    #     try:
+    #         text_list = [str(item) for item in text_list]
+    #     except Exception as e:
+    #         raise ValueError(f"Could not convert all items in {file_path} to strings: {e}")
 
-# ──────────────────────────────────────────────────────────────────────────────
+
+
 def main():
     args = parse_args()
     os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu
@@ -145,13 +223,13 @@ def main():
 
     # ── raw datasets ─────────────────────────────────────────────────────────
     print(f"Attempting to load training data from: {args.data_path_train}")
-    raw_train_ds = load_npy_data_as_dataset(args.data_path_train)
+    raw_train_ds = load_npy_memmap_data_as_dataset(args.data_path_train)
 
     # Handle validation data:
     # If a specific validation file is provided and it's different from the training file
     if args.data_path_valid and os.path.exists(args.data_path_valid) and args.data_path_valid != args.data_path_train:
         print(f"Attempting to load validation data from: {args.data_path_valid}")
-        raw_valid_ds = load_npy_data_as_dataset(args.data_path_valid)
+        raw_valid_ds = load_npy_memmap_data_as_dataset(args.data_path_valid)
         raw_ds = datasets.DatasetDict({"train": raw_train_ds, "validation": raw_valid_ds})
     # If validation path is same as train, or if train is long enough to split
     elif len(raw_train_ds) > 1: # Check if there's enough data to split
@@ -187,18 +265,19 @@ def main():
     # Validation can be empty if not enough data to split, but Trainer might complain.
     # The evaluate function handles this by returning NaN if eval_dataset is empty.
 
-    tokenised = raw_ds.map(
-        tokenize_function,
-        fn_kwargs={"tokenizer": tokenizer},
-        batched=True,
-        remove_columns=["text"],
-        desc="Tokenising",
-    )
+    # tokenised = raw_ds.map(
+    #     tokenize_function,
+    #     fn_kwargs={"tokenizer": tokenizer},
+    #     batched=True,
+    #     remove_columns=["text"],
+    #     desc="Tokenising",
+    # )
 
-    lm_ds = tokenised.map(
-        group_texts,
+    lm_ds = raw_ds.map(
+        group_tokens,
         fn_kwargs={"block_size": args.block_size},
         batched=True,
+        remove_columns=["text"],
         desc=f"Packing into {args.block_size}-token blocks",
     )
 
@@ -371,6 +450,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-#test git
