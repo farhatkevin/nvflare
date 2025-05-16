@@ -75,7 +75,7 @@ def parse_args():
                         default="numpy")
     parser.add_argument("--local_epoch", type=int, default=1)
     parser.add_argument("--clean_up", type=int, default=0)
-    parser.add_argument("--block_size", type=int, default=128)
+    parser.add_argument("--block_size", type=int, default=512)
     parser.add_argument("--gpu", type=str, default="0")
     return parser.parse_args()
 
@@ -382,9 +382,8 @@ def main():
         disable_tqdm=True,
         save_total_limit=2,
         save_safetensors=False,
-        report_to=[],              # we will handle W&B manually
+        report_to=[],              # we handle W&B manually
     )
-
 
     flare.init()
 

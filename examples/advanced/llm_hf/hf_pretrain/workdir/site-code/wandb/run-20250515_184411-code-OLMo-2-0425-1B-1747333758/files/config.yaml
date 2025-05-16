@@ -203,7 +203,7 @@ past_index:
   value: -1
 run_name:
   desc: null
-  value: pretrain
+  value: pretrain-code-OLMo-2-0425-1B
 disable_tqdm:
   desc: null
   value: true
@@ -276,7 +276,8 @@ length_column_name:
   value: length
 report_to:
   desc: null
-  value: []
+  value:
+  - wandb
 ddp_find_unused_parameters:
   desc: null
   value: null
@@ -422,17 +423,74 @@ _wandb:
       - 55
       - 71
       - 98
+      2:
+      - 1
+      - 5
+      - 11
+      - 41
+      - 49
+      - 51
+      - 53
+      - 55
+      - 71
+      - 98
       3:
+      - 5
+      - 7
       - 13
       - 14
       - 16
+      - 19
       - 23
+      - 62
       4: 3.10.6
       5: 0.16.6
       6: 4.51.3
       8:
       - 5
+      9:
+        1: transformers_trainer
       13: linux-x86_64
+    m:
+    - 1: train/global_step
+      6:
+      - 3
+    - 1: eval/loss
+      5: 1
+      6:
+      - 1
+    - 1: eval/model_preparation_time
+      5: 1
+      6:
+      - 1
+    - 1: eval/runtime
+      5: 1
+      6:
+      - 1
+    - 1: eval/samples_per_second
+      5: 1
+      6:
+      - 1
+    - 1: eval/steps_per_second
+      5: 1
+      6:
+      - 1
+    - 1: train/loss
+      5: 1
+      6:
+      - 1
+    - 1: train/grad_norm
+      5: 1
+      6:
+      - 1
+    - 1: train/learning_rate
+      5: 1
+      6:
+      - 1
+    - 1: train/epoch
+      5: 1
+      6:
+      - 1
 _attn_implementation_autoset:
   desc: null
   value: true
@@ -451,7 +509,7 @@ attention_bias:
   value: false
 attention_dropout:
   desc: null
-  value: 0
+  value: 0.0
 bad_words_ids:
   desc: null
   value: null
@@ -472,7 +530,7 @@ decoder_start_token_id:
   value: null
 diversity_penalty:
   desc: null
-  value: 0
+  value: 0.0
 do_sample:
   desc: null
   value: false
@@ -527,7 +585,7 @@ label2id:
     LABEL_1: 1
 length_penalty:
   desc: null
-  value: 1
+  value: 1.0
 max_length:
   desc: null
   value: 20
@@ -593,7 +651,7 @@ remove_invalid_values:
   value: false
 repetition_penalty:
   desc: null
-  value: 1
+  value: 1.0
 return_dict:
   desc: null
   value: true
@@ -620,7 +678,7 @@ task_specific_params:
   value: null
 temperature:
   desc: null
-  value: 1
+  value: 1.0
 tf_legacy_loss:
   desc: null
   value: false
@@ -638,7 +696,7 @@ top_k:
   value: 50
 top_p:
   desc: null
-  value: 1
+  value: 1.0
 torch_dtype:
   desc: null
   value: bfloat16
@@ -650,7 +708,7 @@ transformers_version:
   value: 4.51.3
 typical_p:
   desc: null
-  value: 1
+  value: 1.0
 use_bfloat16:
   desc: null
   value: false
