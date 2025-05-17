@@ -196,7 +196,7 @@ def load_npy_memmap_data_as_dataset(file_path: str) -> datasets.Dataset:
         )
 
     print(len(text_list), "len text_list")
-    text_list = text_list[:1_000_000] # Limit to first 100 items for testing
+    text_list = text_list[:10_000] # Limit to first 100 items for testing
     print(len(text_list), "len text_list")
 
     # The Dataset needs a dictionary where keys are column names
@@ -381,7 +381,7 @@ def main():
         lr_scheduler_type="cosine",
         disable_tqdm=True,
         save_total_limit=2,
-        save_safetensors=False,
+        save_safetensors=True,
         report_to=[],              # we handle W&B manually
     )
 
@@ -450,6 +450,7 @@ def main():
     #     eval_dataset=lm_ds["validation"],
     #     data_collator=collator,
     # )
+    
     trainer = CustomTrainer(
         model=model,
         args=train_args,
@@ -499,7 +500,8 @@ def main():
                 torch.save(global_state,
                            os.path.join(ckpt_dir, utils.WEIGHTS_NAME))
             else:
-                trainer.model.save_pretrained(ckpt_dir, safe_serialization=False)
+                # trainer.model.save_pretrained(ckpt_dir, safe_serialization=False)
+                trainer.model.save_pretrained(ckpt_dir, safe_serialization=True)
 
             # extend epochs so the next `trainer.train()` continues
             if args.clean_up:
