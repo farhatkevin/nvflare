@@ -23,6 +23,9 @@ from nvflare.app_opt.pt.quantization.dequantizer import ModelDequantizer
 from nvflare.app_opt.pt.quantization.quantizer import ModelQuantizer
 from nvflare.job_config.script_runner import ScriptRunner
 
+# subclass to save as HF global model
+from hf_file_model_persistor import HFFileModelPersistor
+
 
 def main():
     args = define_parser()
@@ -94,7 +97,16 @@ def main():
         model_args = {"path": "src.hf_sft_model.CausalLMModel", "args": {"model_name_or_path": model_name_or_path}}
         
         
-    job.to(PTFileModelPersistor(model=model_args, allow_numpy_conversion=False), "server", id="persistor")
+    # job.to(PTFileModelPersistor(model=model_args, allow_numpy_conversion=False), "server", id="persistor")
+
+    # subclass to save as HF instead
+    job.to(HFFileModelPersistor(
+        model=model_args, 
+        allow_numpy_conversion=False,
+        global_model_file_name="global_model",  # This is the directory name
+        best_global_model_file_name="best_global_model",
+        model_name_or_path=args.model_name_or_path  # Pass the model name or path
+    ), "server", id="persistor")
 
     # Add model selection widget and send to server
     job.to(IntimeModelSelector(key_metric="eval_loss", negate_key_metric=True), "server", id="model_selector")

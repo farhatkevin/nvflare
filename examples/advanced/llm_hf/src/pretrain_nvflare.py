@@ -522,7 +522,8 @@ def main():
         output_model = flare.FLModel(
             params=out_state,
             metrics={"eval_loss": eval_loss, "perplexity": eval_ppl},
-            meta={"NUM_STEPS_CURRENT_ROUND": len(lm_ds["train"])},
+            meta={"NUM_STEPS_CURRENT_ROUND": len(lm_ds["train"]), "CURRENT_ROUND": curr_round},
+
         )
         flare.send(output_model)
 
