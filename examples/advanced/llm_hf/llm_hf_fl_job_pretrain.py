@@ -117,21 +117,21 @@ def main():
         site_name = f"site-{client_id}"
 
         if train_mode.lower() == "pretrain":
-                data_path_train = os.path.abspath(
-                    os.path.join(args.data_path, client_id, "train.npy")
-                )
-                data_path_valid = os.path.abspath(
-                    os.path.join(args.data_path, client_id, "train.npy")
-                )
+            data_path_train = os.path.abspath(
+                os.path.join(args.data_path, client_id)
+            )
+            data_path_valid = os.path.abspath(
+                os.path.join(args.data_path, client_id)
+            )
         else:
             data_path_train = os.path.join(args.data_path, client_id, "training.jsonl")
             data_path_valid = os.path.join(args.data_path, client_id, "validation.jsonl")
 
 
-        # data_path_train = os.path.join(args.data_path, client_id, "training.jsonl")
-        # data_path_valid = os.path.join(args.data_path, client_id, "validation.jsonl")
-
+        # Add --max_tokens if provided
         script_args = f"--model_name_or_path {model_name_or_path} --data_path_train {data_path_train} --data_path_valid {data_path_valid} --output_path {output_path} --train_mode {train_mode} --message_mode {message_mode} --clean_up {clean_up}"
+        if hasattr(args, "max_tokens") and args.max_tokens:
+            script_args += f" --max_tokens {args.max_tokens}"
 
         if message_mode == "tensor":
             server_expected_format = "pytorch"
@@ -242,6 +242,12 @@ def define_parser():
         type=str,
         default="0",
         help="gpu assignments for simulating clients, comma separated, default to single gpu",
+    )
+    parser.add_argument(
+        "--max_tokens",
+        type=str,
+        default=None,
+        help="Maximum number of tokens to use for each client (e.g., 50B, 10M, 1000000).",
     )
     return parser.parse_args()
 

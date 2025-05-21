@@ -7,4 +7,5 @@ python3 llm_hf_fl_job_pretrain.py \
   --model_name_or_path allenai/OLMo-2-0425-1B \
   --gpu 0,1 \
   --quantize_mode float16 \
-  --threads 1  > run1.txt 2>&1
+  --threads 1  > run1.txt 2>&1 \
+  --max_tokens 7M \
