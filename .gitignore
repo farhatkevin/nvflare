@@ -173,4 +173,4 @@ __pycache__
 *.pt
 *.pth 
 *.bin
-hf_pretrain
+hf_pretrain*

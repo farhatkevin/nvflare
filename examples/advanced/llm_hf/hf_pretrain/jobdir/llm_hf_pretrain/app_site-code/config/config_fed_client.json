@@ -9,7 +9,7 @@
                 "path": "nvflare.app_opt.pt.in_process_client_api_executor.PTInProcessClientAPIExecutor",
                 "args": {
                     "task_script_path": "src/pretrain_nvflare.py",
-                    "task_script_args": "--model_name_or_path allenai/OLMo-2-0425-1B --data_path_train /workspace/NVFlare/examples/advanced/llm_hf/data/code/train.npy --data_path_valid /workspace/NVFlare/examples/advanced/llm_hf/data/code/train.npy --output_path pretrain --train_mode pretrain --message_mode numpy --clean_up 0"
+                    "task_script_args": "--model_name_or_path allenai/OLMo-2-0425-1B --data_path_train /workspace/NVFlare/examples/advanced/llm_hf/data/code/train.npy --data_path_valid /workspace/NVFlare/examples/advanced/llm_hf/data/code/train.npy --output_path pretrain --train_mode pretrain --message_mode numpy --clean_up 1"
                 }
             }
         }
