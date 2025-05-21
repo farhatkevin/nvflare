@@ -196,7 +196,7 @@ def load_npy_memmap_data_as_dataset(file_path: str) -> datasets.Dataset:
         )
 
     print(len(text_list), "len text_list")
-    text_list = text_list[:10_000] # Limit to first 100 items for testing
+    text_list = text_list[:1_000_000] # Limit to first 100 items for testing
     print(len(text_list), "len text_list")
 
     # The Dataset needs a dictionary where keys are column names
@@ -383,6 +383,7 @@ def main():
         save_total_limit=2,
         save_safetensors=True,
         report_to=[],              # we handle W&B manually
+        # device="cuda"
     )
 
     flare.init()
@@ -459,6 +460,9 @@ def main():
         data_collator=collator,
     )
     
+    # Add a file to log throughput per client
+    throughput_log_file = os.path.join(args.output_path, f"throughput_{client_id}.txt")
+
     while flare.is_running():
         input_model = flare.receive()
         curr_round = input_model.current_round
@@ -492,6 +496,7 @@ def main():
         eval_ppl = float(eval_metrics["perplexity"])
 
         # ── training ────────────────────────────────────────────────────────
+        train_start = time.time()
         if curr_round == 0:
             trainer.train()
         else:
@@ -509,6 +514,27 @@ def main():
             else:
                 trainer.args.num_train_epochs += args.local_epoch
             trainer.train(resume_from_checkpoint=True)
+        train_end = time.time()
+
+        # ── throughput calculation ──────────────────────────────────────────
+        train_samples = len(lm_ds["train"])
+        train_tokens = train_samples * args.block_size
+        elapsed = train_end - train_start
+        samples_per_sec = train_samples / elapsed if elapsed > 0 else float("nan")
+        tokens_per_sec = train_tokens / elapsed if elapsed > 0 else float("nan")
+        print(f"[THROUGHPUT] Round {curr_round}: {samples_per_sec:.2f} samples/sec, {tokens_per_sec:.2f} tokens/sec, elapsed {elapsed:.2f}s")
+
+        # Log to wandb
+        wandb_run.log({
+            "throughput_samples_per_sec": samples_per_sec,
+            "throughput_tokens_per_sec": tokens_per_sec,
+            "train_elapsed_sec": elapsed,
+            "round": curr_round,
+        }, step=curr_round)
+
+        # Save to txt file (append)
+        with open(throughput_log_file, "a") as f:
+            f.write(f"round {curr_round}, samples/sec: {samples_per_sec:.2f}, tokens/sec: {tokens_per_sec:.2f}, elapsed: {elapsed:.2f}s\n")
 
         # ── collect weights to send back ────────────────────────────────────
         if use_peft:

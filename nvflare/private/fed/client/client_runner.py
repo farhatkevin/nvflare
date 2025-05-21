@@ -700,7 +700,7 @@ class ClientRunner(TBI):
         )
         max_sync_timeout = self.get_positive_float_var(
             var_name=ConfigVarName.MAX_RUNNER_SYNC_TIMEOUT,
-            default=60.0,
+            default=100.0,
         )
         synced = False
         sync_start = time.time()

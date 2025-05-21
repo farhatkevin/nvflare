@@ -327,6 +327,8 @@ class HFFileModelPersistor(PTFileModelPersistor):
 
     def save_model_file(self, save_path: str):
         """Optimized version with faster HF operations"""
+        import time
+        agg_start = time.time()
         print(f"💾 SAVING MODEL FILE: {save_path}")
         
         # Get model state dict
@@ -414,6 +416,13 @@ class HFFileModelPersistor(PTFileModelPersistor):
         except Exception as e:
             print(f"❌ ERROR saving model in HF format: {e}")
             print(f"Model was saved in PyTorch format only at {save_path}.pt")
+        agg_end = time.time()
+        elapsed = agg_end - agg_start
+        print(f"[AGGREGATION THROUGHPUT] Model save/aggregation time: {elapsed:.2f} seconds")
+        # Optionally, save to a log file
+        agg_log_file = save_path + "_aggregation_time.txt"
+        with open(agg_log_file, "w") as f:
+            f.write(f"Aggregation/save time: {elapsed:.2f} seconds\n")
 
     def handle_event(self, event: str, fl_ctx: FLContext):
         """Override to add debugging for events"""
@@ -487,6 +496,8 @@ class HFFileModelPersistor(PTFileModelPersistor):
 
     def save_model(self, ml: ModelLearnable, fl_ctx: FLContext):
         """Save model with round information from meta"""
+        import time
+        agg_start = time.time()
         print(f"📥 SAVE MODEL called")
         self._get_persistence_manager(fl_ctx).update(ml)
         
@@ -522,3 +533,10 @@ class HFFileModelPersistor(PTFileModelPersistor):
         else:
             print(f"  ⚠️ No round information found in meta")
             self.save_model_file(self._ckpt_save_path)  # Save standard checkpoint only
+        agg_end = time.time()
+        elapsed = agg_end - agg_start
+        print(f"[AGGREGATION THROUGHPUT] Aggregation+save time: {elapsed:.2f} seconds")
+        # Optionally, save to a log file
+        agg_log_file = os.path.join(os.path.dirname(self._ckpt_save_path), "aggregation_time.txt")
+        with open(agg_log_file, "a") as f:
+            f.write(f"Round: {current_round}, Aggregation+save time: {elapsed:.2f} seconds\n")

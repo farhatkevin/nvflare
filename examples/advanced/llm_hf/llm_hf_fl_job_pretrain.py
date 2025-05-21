@@ -156,10 +156,23 @@ def main():
     print("job_dir=", job_dir)
     job.export_job(job_dir)
 
+    # Track full job throughput
+    import time
+    job_start_time = time.time()
+
     # Run the job
     print("workspace_dir=", workspace_dir)
     print("num_threads=", num_threads)
     job.simulator_run(workspace_dir, threads=num_threads, gpu=args.gpu)
+
+    job_end_time = time.time()
+    elapsed = job_end_time - job_start_time
+    print(f"[FULL JOB THROUGHPUT] Total elapsed time: {elapsed:.2f} seconds")
+
+    # Optionally, save to a file
+    throughput_log_file = os.path.join(job_dir, "full_job_throughput.txt")
+    with open(throughput_log_file, "w") as f:
+        f.write(f"Total elapsed time: {elapsed:.2f} seconds\n")
 
 
 def define_parser():
