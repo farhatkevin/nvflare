@@ -20,7 +20,6 @@ import os
 import random
 from itertools import chain
 import glob
-from dolma.core.paths import cached_path      # NEW
 from tqdm import tqdm         
 
 import datasets
