@@ -57,8 +57,11 @@ class Communicator:
         compression=None,
         cell: Cell = None,
         client_register_interval=2,
-        timeout=5.0,
-        maint_msg_timeout=5.0,
+        # testing 7B
+        # timeout=5.0,
+        # maint_msg_timeout=5.0,
+        timeout=600.0,
+        maint_msg_timeout=30.0,
     ):
         """To init the Communicator.
 

@@ -178,3 +178,7 @@ examples/advanced/llm_hf/run*.txt
 examples/advanced/llm_hf/hf_pretrain/
 examples/advanced/llm_hf/hf_pretrain/*
 examples/advanced/llm_hf/run1.txt
+examples/advanced/llm_hf/data/code
+examples/advanced/llm_hf/data/math
+examples/advanced/llm_hf/data/lbv1
+run*.txt
